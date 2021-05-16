@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "282622214282",
+    "project_id": "orems-156de",
+    "storage_bucket": "orems-156de.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:282622214282:android:31cf46f8421ca2db71ad73",
+        "android_client_info": {
+          "package_name": "com.example.online_real_estate_management_system"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "282622214282-v1fq01bkncnh02d2df3t7kipsk78e9eq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYxSCeUJZ6ddlF9zbx3V37yy9RTvX7kho"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "282622214282-v1fq01bkncnh02d2df3t7kipsk78e9eq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

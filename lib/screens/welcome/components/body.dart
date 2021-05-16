@@ -39,28 +39,16 @@ class Body extends StatelessWidget {
               white: white,
               text: "Signin",
               press: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return LoginScreen();
-                    },
-                  ),
-                );
+                Navigator.pushNamedAndRemoveUntil(
+                    context, LoginScreen.idScreen, (route) => false);
               },
             ),
             RoundedButton(
                 white: white,
                 text: "Sign up free",
                 press: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return SignupScreen();
-                      },
-                    ),
-                  );
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, SignupScreen.idScreen, (route) => false);
                 }),
           ],
         ),

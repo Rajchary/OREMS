@@ -78,6 +78,7 @@
             }
           });
 
+
         // If service worker doesn't succeed in a reasonable amount of time,
         // fallback to plaint <script> tag.
         setTimeout(() => {
@@ -93,6 +94,26 @@
       // Service workers not supported. Just drop the <script> tag.
       loadMainDartJs();
     }
+  </script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+  apiKey: "AIzaSyCWKCajw_7BQ9DkfY6rZt4DS-VvG5DKtkY",
+  authDomain: "orems-156de.firebaseapp.com",
+  databaseURL: "https://orems-156de-default-rtdb.firebaseio.com",
+  projectId: "orems-156de",
+  storageBucket: "orems-156de.appspot.com",
+  messagingSenderId: "282622214282",
+  appId: "1:282622214282:web:a228c744b15b0dbe71ad73",
+  measurementId: "G-J8N13LB7P3"
+};
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
   </script>
 </body>
 </html>
