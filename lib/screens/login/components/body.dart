@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -179,25 +182,36 @@ class Body extends StatelessWidget {
     }))
         .user;
     if (firebaseUser != null) {
-      //User created successfully
-      //Fluttertoast.showToast(msg: "Till now fine");
-      userRef.child(firebaseUser.uid).once().then((DataSnapshot snap) {
-        if (snap.value != null) {
-          var values = snap.value;
-          userDatavalues['name'] = values['name'];
-          userDatavalues['phone'] = values['phone'];
-          userDatavalues['occupation'] = values['occupation'];
-          _saveUserData();
-          showToast("Hola!! You are in..", context);
-          Navigator.pushNamedAndRemoveUntil(
-              context, HomeScreen.idScreen, (route) => false);
-        } else {
-          Navigator.pop(context);
-          showToast("Invalid Credentials !!", context);
-        } //End if
+      //User authenticated successfully
+      if (!kIsWeb) {
+        userRef.child(firebaseUser.uid).once().then((DataSnapshot snap) {
+          if (snap.value != null) {
+            var values = snap.value;
+            userDatavalues['name'] = values['name'];
+            userDatavalues['phone'] = values['phone'];
+            userDatavalues['occupation'] = values['occupation'];
+          //  _saveUserData(context);
+          //  showToast("Hola!! You are in..", context);
+          } else {
+            Navigator.pop(context);
+            showToast("Invalid Credentials !!", context);
+          }
+        });
+      } //End of platfomr check condition
+      final firestoreInstance = FirebaseFirestore.instance;
+      firestoreInstance
+          .collection("users")
+          .doc(firebaseUser.uid)
+          .get()
+          .then((value) {
+        userDatavalues['name'] = value['name'];
+        userDatavalues['phone'] = value['phone'];
+        userDatavalues['occupation'] = value['occupation'];
+        _saveUserData(context);
+        showToast("Hola!! You are in..", context);
       });
-      //Fluttertoast.showToast(msg: "Have you revieved");
-    } else {
+    } //End if
+    else {
       Navigator.pop(context);
       showToast(
           "Ouch! User does not exist please recheck or do register", context);
@@ -205,7 +219,7 @@ class Body extends StatelessWidget {
   }
 }
 
-_saveUserData() async {
+_saveUserData(BuildContext context) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   final nameKey = 'name';
   final occKey = 'occupation';
@@ -213,6 +227,28 @@ _saveUserData() async {
   prefs.setString(nameKey, userDatavalues['name']);
   prefs.setString(occKey, userDatavalues['occupation']);
   prefs.setString(phoneKey, userDatavalues['phone']);
+  prefs.setString(
+      'profileUrl', "https://www.woolha.com/media/2020/03/eevee.png");
+  //String profileUrl = prefs.getString('profileUrl');
+  //if(url==)
+
+  firebase_storage.Reference propertyDatabase;
+  try {
+    propertyDatabase = firebase_storage.FirebaseStorage.instance.ref().child(
+        'images/profiles/${FirebaseAuth.instance.currentUser.uid.toString()}');
+    await propertyDatabase.getDownloadURL().then((value) {
+      prefs.setString('profileUrl', value.toString());
+    });
+    //Fluttertoast.showToast(msg: "value added");
+    Navigator.pushNamedAndRemoveUntil(
+        context, HomeScreen.idScreen, (route) => false);
+  } catch (e) {
+    //Fluttertoast.showToast(msg: "error raised");
+    prefs.setString(
+        'profileUrl', "https://www.woolha.com/media/2020/03/eevee.png");
+    Navigator.pushNamedAndRemoveUntil(
+        context, HomeScreen.idScreen, (route) => false);
+  }
 }
 
 showAlertDialog(BuildContext context) {

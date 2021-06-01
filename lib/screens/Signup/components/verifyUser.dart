@@ -6,9 +6,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:online_real_estate_management_system/components/confirmDialog.dart';
 import 'package:online_real_estate_management_system/constants.dart';
-import 'package:online_real_estate_management_system/main.dart';
 import 'package:online_real_estate_management_system/screens/Home/homeScreen.dart';
 import 'package:online_real_estate_management_system/screens/Signup/signup_screen.dart';
+import 'package:online_real_estate_management_system/screens/userProperties.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class VerifyUser extends StatefulWidget {
   static const String idScreen = "verifyUser";
@@ -27,7 +28,7 @@ class _VerifyUserState extends State<VerifyUser> {
     user.sendEmailVerification();
 
     email = user.email;
-    timer = Timer.periodic(Duration(seconds: 5), (timer) {
+    timer = Timer.periodic(Duration(seconds: 2), (timer) {
       checkEmailVerified();
     });
     super.initState();
@@ -103,7 +104,9 @@ class _VerifyUserState extends State<VerifyUser> {
   }
 
   Future<void> registerUser() async {
-    //userRef.child(user.uid).set(userData);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Fluttertoast.showToast(msg: " ${prefs.getString("name")} signing in..");
+    print(" ${prefs.getString("name")} signing in..");
     Navigator.pushNamedAndRemoveUntil(
         context, HomeScreen.idScreen, (route) => false);
   }

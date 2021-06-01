@@ -37,14 +37,20 @@ dependencies:
   firebase_auth: ^1.1.4
   flutter_svg: ^0.22.0
   google_fonts: ^2.0.0
-  #http: ^0.13.3
+  http: ^0.13.3
   #provider: ^5.0.0
   fluttertoast: ^8.0.6
   google_maps_flutter: ^2.0.3
+  google_maps_flutter_web: ^0.3.0
+  geolocator: ^7.0.3
   image_picker: ^0.7.5
   transparent_image: ^2.0.0
   firebase_dart: ^1.0.0-dev.31
   shared_preferences: ^2.0.5
+  geocoder: ^0.2.1
+  location: ^4.1.1
+  dio: ^4.0.0
+  flutter_polyline_points: ^1.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

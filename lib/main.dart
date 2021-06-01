@@ -4,11 +4,16 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:online_real_estate_management_system/constants.dart';
 import 'package:online_real_estate_management_system/screens/Home/homeScreen.dart';
+import 'package:online_real_estate_management_system/screens/Home/models/profileView.dart';
+import 'package:online_real_estate_management_system/screens/Signup/additionalInfo.dart';
 import 'package:online_real_estate_management_system/screens/Signup/components/verifyUser.dart';
 import 'package:online_real_estate_management_system/screens/Signup/signup_screen.dart';
+import 'package:online_real_estate_management_system/screens/Tenant/components/searchProperty.dart';
 import 'package:online_real_estate_management_system/screens/landlord/components/addImages.dart';
 import 'package:online_real_estate_management_system/screens/landlord/components/addProperty.dart';
+import 'package:online_real_estate_management_system/screens/landlord/components/addfromMap.dart';
 import 'package:online_real_estate_management_system/screens/landlord/landlordHome.dart';
+import 'package:online_real_estate_management_system/screens/landlord/services/addDataFromMap.dart';
 import 'package:online_real_estate_management_system/screens/login/login_screen.dart';
 import 'package:online_real_estate_management_system/screens/welcome/welcome_screen.dart';
 //import 'package:firebase/firebase.dart' as fb;
@@ -44,6 +49,11 @@ class MyApp extends StatelessWidget {
         AddMyProperty.idScreen: (context) => AddMyProperty(),
         AddImages.idScreen: (context) => AddImages(),
         VerifyUser.idScreen: (context) => VerifyUser(),
+        AddMap.idScreen: (context) => AddMap(),
+        ProfileView.idScreen: (context) => ProfileView(),
+        SearchProperty.idScreen: (context) => SearchProperty(),
+        AddInfo.idScreen: (context) => AddInfo(),
+        AddDataFromMap.idScreen: (context) => AddDataFromMap(),
       },
       //home: WelcomeScreen(),
     );

@@ -1,18 +1,21 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:location/location.dart';
 import 'package:online_real_estate_management_system/components/bottomNavigation.dart';
 import 'package:online_real_estate_management_system/components/confirmDialog.dart';
+import 'package:online_real_estate_management_system/components/progressDialog.dart';
 import 'package:online_real_estate_management_system/constants.dart';
-import 'package:online_real_estate_management_system/main.dart';
 import 'package:online_real_estate_management_system/screens/Home/components/body.dart';
+import 'package:online_real_estate_management_system/screens/Home/models/profileView.dart';
 import 'package:online_real_estate_management_system/screens/welcome/welcome_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String idScreen = "home";
@@ -21,55 +24,66 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  //Person person = new Person();
-  final auth = FirebaseAuth.instance;
-  User firebaseUser;
-  String name = " ", phone = "", occupatio = "";
+  firebase_storage.Reference propertyDatabase;
+  String name = " ",
+      phone = "",
+      occupatio = "",
+      imageUrl = "https://www.woolha.com/media/2020/03/eevee.png",
+      profileName = " ";
+  File imageFile;
   DatabaseReference userReference =
       FirebaseDatabase.instance.reference().child("Users");
+  SharedPreferences pref;
   GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
-  Completer<GoogleMapController> _gmController = Completer();
-  GoogleMapController _newGmController; //Defined for future purpose
-  static final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
-  // AddOns ad = new AddOns();
   @override
   void initState() {
     _getUserData();
+    getUserLocation();
     super.initState();
   }
 
+  Future getUserLocation() async {
+    Location location = new Location();
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return null;
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return null;
+      }
+    }
+    final result = await location.getLocation();
+    return result;
+  }
+
   _getUserData() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref = await SharedPreferences.getInstance();
     setState(() {
       name = pref.getString('name');
       occupatio = pref.getString('occupation');
       phone = pref.getString('phone');
+      imageUrl = pref.getString('profileUrl');
+      // Fluttertoast.showToast(msg: "Initiated");
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      firebaseUser = auth.currentUser;
-      DatabaseReference userReference =
-          FirebaseDatabase.instance.reference().child("Users");
-      userReference.child(firebaseUser.uid).once().then((DataSnapshot snap) {
-        if (snap.value != null) {
-          var values = snap.value;
-          userDatavalues['name'] = values['name'];
-          userDatavalues['phone'] = values['phone'];
-          userDatavalues['occupation'] = values['occupation'];
-        }
-      });
-    });
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Maps Screen"),
+        title: Text("Home page"),
       ),
       drawer: Container(
         width: 260.0,
@@ -90,27 +104,31 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   child: Row(
                     children: [
-                      // Image.asset(
-                      //   "assets/icons/person.png",
-                      //   height: 64.0,
-                      //   width: 64.0,
-                      // ),
-                      CircleAvatar(
-                        radius: 50.0,
-                        // backgroundImage: NetworkImage(
-                        //     "file:///C:/Users/lenovo/Desktop/Dp.png"),
-                        child: ClipRRect(
-                          //   child: FadeInImage.memoryNetwork(
-                          //       placeholder: kTransparentImage,
-                          //       image:
-                          //           ""), //Image.asset("assets/images/main_top.png"),
-                          //   borderRadius: BorderRadius.circular(50.0),
-                          // ),
-                          child: Text(
-                            name[0].toString(),
-                            style: TextStyle(
-                              color: Colors.black,//greenThick,
-                              fontSize: 40,
+                      GestureDetector(
+                        onTap: () async {
+                          final action = await AlertDialogs.confirmDialog(
+                              context,
+                              "Upload",
+                              "DO you wanna update new profile image");
+                          if (action == DialogAction.Yes) {
+                            _chooseImage();
+                          }
+                        },
+                        child: CircleAvatar(
+                          radius: 50.0,
+                          backgroundImage: NetworkImage(imageUrl),
+                          onBackgroundImageError: (_, __) {
+                            setState(() {
+                              profileName = name;
+                            });
+                          },
+                          child: ClipRRect(
+                            child: Text(
+                              profileName[0].toString(),
+                              style: TextStyle(
+                                color: Colors.black, //greenThick,
+                                fontSize: 40,
+                              ),
                             ),
                           ),
                         ),
@@ -157,6 +175,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 onTap: () {
                   Fluttertoast.showToast(msg: "Profile view");
+                  Navigator.push(
+                    context,
+                    new MaterialPageRoute(
+                        builder: (BuildContext context) => ProfileView()),
+                  );
                 }, //viewProfile(),
               ),
               ListTile(
@@ -177,19 +200,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      body: Body(), //Stack(
-      //   children: [
-      //     GoogleMap(
-      //       mapType: MapType.normal,
-      //       myLocationEnabled: true,
-      //       initialCameraPosition: _kGooglePlex,
-      //       onMapCreated: (GoogleMapController controller) {
-      //         _gmController.complete(controller);
-      //         _newGmController = controller;
-      //       },
-      //     ),
-      //   ],
-      // ),
+      body: Body(),
       bottomNavigationBar: BottomNavigation(),
     );
   }
@@ -197,6 +208,43 @@ class _HomeScreenState extends State<HomeScreen> {
   viewProfile() {
     //print(person.getName);
     Fluttertoast.showToast(msg: "Profile view");
+  }
+
+  _chooseImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    setState(() {
+      imageFile = File(pickedFile.path);
+    });
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return ProgressDialog(
+            message: "Uploading..",
+          );
+        });
+    uploadProfilePhoto(context).whenComplete(() => Navigator.of(context).pop());
+  }
+
+  Future uploadProfilePhoto(BuildContext context) async {
+    String fileName = FirebaseAuth.instance.currentUser.uid;
+    propertyDatabase = firebase_storage.FirebaseStorage.instance
+        .ref()
+        .child('images/profiles/$fileName');
+
+    await propertyDatabase.putFile(imageFile).whenComplete(() async {
+      await propertyDatabase.getDownloadURL().then((value) {
+        pref.setString('profileUrl', value.toString());
+        Fluttertoast.showToast(msg: "Profile updated");
+        setState(() {
+          imageUrl = pref.getString("profileUrl");
+        });
+      });
+    });
+    setState(() {
+      profileName = " ";
+    });
   }
 
   Future<void> signoutUser() async {
