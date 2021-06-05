@@ -22,90 +22,93 @@ class BottomNavigation extends StatelessWidget {
         ),
       ),
       padding: EdgeInsets.symmetric(vertical: 5),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(
-              primary: Colors.black,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.black,
+              ),
+              onPressed: () {
+                print(route);
+                if (route.toString() != HomeScreen.idScreen)
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, HomeScreen.idScreen, (route) => false);
+              },
+              icon: Icon(
+                Icons.home,
+                color: Colors.white,
+                size: 40,
+              ),
+              label: Text(""),
             ),
-            onPressed: () {
-              print(route);
-              if (route.toString() != HomeScreen.idScreen)
-                Navigator.pushNamedAndRemoveUntil(
-                    context, HomeScreen.idScreen, (route) => false);
-            },
-            icon: Icon(
-              Icons.home,
-              color: Colors.white,
-              size: 40,
+            //SizedBox(width: 5),
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.black,
+              ),
+              onPressed: () {
+                print(route);
+                if (route.toString() != ProfileView.idScreen)
+                  Navigator.pushNamed(context, ProfileView.idScreen);
+              },
+              icon: Icon(
+                Icons.person,
+                color: Colors.white,
+                size: 40,
+              ),
+              label: Text(""),
             ),
-            label: Text(""),
-          ),
-          //SizedBox(width: 5),
-          ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(
-              primary: Colors.black,
+            SizedBox(width: 5),
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.black,
+              ),
+              onPressed: () {
+                if (route.toString() != AddMyProperty.idScreen)
+                  Navigator.pushNamed(context, AddMyProperty.idScreen);
+              },
+              icon: Icon(
+                Icons.add_circle,
+                color: greenThick,
+                size: 40,
+              ),
+              label: Text(""),
             ),
-            onPressed: () {
-              print(route);
-              if (route.toString() != ProfileView.idScreen)
-                Navigator.pushNamed(context, ProfileView.idScreen);
-            },
-            icon: Icon(
-              Icons.person,
-              color: Colors.white,
-              size: 40,
+            SizedBox(width: 5),
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.black,
+              ),
+              onPressed: () {
+                if (route.toString() != AddMap.idScreen)
+                  Navigator.pushNamed(context, AddMap.idScreen);
+              },
+              icon: Icon(
+                Icons.navigation,
+                color: Colors.white,
+                size: 40,
+              ),
+              label: Text(""),
             ),
-            label: Text(""),
-          ),
-          SizedBox(width: 5),
-          ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(
-              primary: Colors.black,
+            //SizedBox(width: 5),
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.black,
+              ),
+              onPressed: () {},
+              icon: Icon(
+                Icons.settings,
+                color: Colors.white,
+                size: 40,
+              ),
+              label: Text(""),
             ),
-            onPressed: () {
-              if (route.toString() != AddMyProperty.idScreen)
-                Navigator.pushNamed(context, AddMyProperty.idScreen);
-            },
-            icon: Icon(
-              Icons.add_circle,
-              color: greenThick,
-              size: 40,
-            ),
-            label: Text(""),
-          ),
-          SizedBox(width: 5),
-          ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(
-              primary: Colors.black,
-            ),
-            onPressed: () {
-              if (route.toString() != AddMap.idScreen)
-                Navigator.pushNamed(context, AddMap.idScreen);
-            },
-            icon: Icon(
-              Icons.navigation,
-              color: Colors.white,
-              size: 40,
-            ),
-            label: Text(""),
-          ),
-          //SizedBox(width: 5),
-          ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(
-              primary: Colors.black,
-            ),
-            onPressed: () {},
-            icon: Icon(
-              Icons.settings,
-              color: Colors.white,
-              size: 40,
-            ),
-            label: Text(""),
-          ),
-          // FloatingActionButton(onPressed: onPressed)
-        ],
+            // FloatingActionButton(onPressed: onPressed)
+          ],
+        ),
       ),
     );
   }

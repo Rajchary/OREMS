@@ -88,36 +88,39 @@ class _ProfileViewState extends State<ProfileView>
               SizedBox(
                 height: 10,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(
-                    width: 5,
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      print(route);
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(Icons.arrow_back_ios_new),
-                    iconSize: 25,
-                    color: iconColor,
-                  ),
-                  SizedBox(width: 230),
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        isDarkMode = isDarkMode ? false : true;
-                        _setMode();
-                      });
-                    },
-                    icon: isDarkMode
-                        ? Icon(Icons.dark_mode)
-                        : Icon(Icons.wb_sunny),
-                    iconSize: 25,
-                    color: iconColor,
-                  ),
-                ],
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(
+                      width: 5,
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        print(route);
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(Icons.arrow_back_ios_new),
+                      iconSize: 25,
+                      color: iconColor,
+                    ),
+                    SizedBox(width: 230),
+                    IconButton(
+                      onPressed: () {
+                        setState(() {
+                          isDarkMode = isDarkMode ? false : true;
+                          _setMode();
+                        });
+                      },
+                      icon: isDarkMode
+                          ? Icon(Icons.dark_mode)
+                          : Icon(Icons.wb_sunny),
+                      iconSize: 25,
+                      color: iconColor,
+                    ),
+                  ],
+                ),
               ),
               SizedBox(
                 height: 15,

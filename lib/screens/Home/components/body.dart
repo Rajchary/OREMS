@@ -17,18 +17,6 @@ class _BodyState extends State<Body> {
       //scrollDirection: Axis.horizontal,
       //padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
       child: Container(
-        //color: Colors.white,
-        // height: 800,
-        // decoration: BoxDecoration(
-        //   gradient: LinearGradient(
-        //     colors: [
-        //       Colors.blue[400],
-        //       Colors.blue[900],
-        //     ],
-        //     begin: Alignment.bottomCenter,
-        //     end: Alignment.topCenter,
-        //   ),
-        // ),
         padding: EdgeInsets.all(15),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -61,13 +49,15 @@ class _BodyState extends State<Body> {
                       width: 25,
                     ),
                     ElevatedButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, SearchProperty.idScreen);
+                      },
                       style: ElevatedButton.styleFrom(
                         primary: greenThick,
                       ),
-                      icon: Icon(Icons.payment),
+                      icon: Icon(Icons.search),
                       label: Text(
-                        "Pay rent",
+                        "Search Property",
                         style: GoogleFonts.rajdhani(
                           textStyle: Theme.of(context).textTheme.headline4,
                           color: Colors.white,
@@ -80,7 +70,9 @@ class _BodyState extends State<Body> {
                       width: 15,
                     ),
                     ElevatedButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, ListProperty.idScreen);
+                      },
                       style: ElevatedButton.styleFrom(
                         primary: greenThick,
                       ),
@@ -99,15 +91,13 @@ class _BodyState extends State<Body> {
                       width: 15,
                     ),
                     ElevatedButton.icon(
-                      onPressed: () {
-                        Navigator.pushNamed(context, SearchProperty.idScreen);
-                      },
+                      onPressed: () {},
                       style: ElevatedButton.styleFrom(
                         primary: greenThick,
                       ),
-                      icon: Icon(Icons.search),
+                      icon: Icon(Icons.payment),
                       label: Text(
-                        "Search Property",
+                        "Pay rent",
                         style: GoogleFonts.rajdhani(
                           textStyle: Theme.of(context).textTheme.headline4,
                           color: Colors.white,

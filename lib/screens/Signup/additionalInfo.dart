@@ -310,7 +310,7 @@ class _AddInfoState extends State<AddInfo> {
         "KYCid": kycId.text.trim(),
       };
       if (!kIsWeb) {
-        userRef.child(firebaseUser.uid).set(userDataMap);
+        await userRef.child(firebaseUser.uid).set(userDataMap);
         showToast("Validate your emil id !!..", context);
       }
       DocumentReference documentReferencer =

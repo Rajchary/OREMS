@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:online_real_estate_management_system/components/progressDialog.dart';
 import 'package:online_real_estate_management_system/constants.dart';
+import 'package:online_real_estate_management_system/screens/Home/homeScreen.dart';
 
 class AddMap extends StatefulWidget {
   static const String idScreen = "MapsScreen";
@@ -34,8 +34,6 @@ class _AddMapState extends State<AddMap> {
         new CameraPosition(target: latlngPosition, zoom: zoom);
     _newGmController
         .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
-    // String address = await AssistantMethods.searchCordinateAddress(position);
-    // print("This is your adress :: ==> $address");
   }
 
   @override
@@ -84,23 +82,14 @@ class _AddMapState extends State<AddMap> {
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(primary: greenThick),
                   onPressed: () async {
-                    showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (BuildContext context) {
-                          return ProgressDialog(
-                            message: "Uploading..",
-                          );
-                        });
-                    // await uploadPropertyData().whenComplete(() =>
-                    //  Fluttertoast.showToast(msg: "Details upload done"));
-                    Navigator.of(context).pop();
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, HomeScreen.idScreen, (route) => false);
                   },
                   icon: Icon(
                     Icons.arrow_forward_ios,
                     color: Colors.white,
                   ),
-                  label: Text("Procede"),
+                  label: Text("Go Home"),
                 ),
               ],
             ),

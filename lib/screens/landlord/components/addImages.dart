@@ -151,6 +151,7 @@ class _AddImagesState extends State<AddImages> {
         "Description": prefs.getString("pDiscription"),
         "Contact": prefs.getString("pContact"),
         "Purpose": prefs.getString("pPurpose"),
+        "Area": prefs.getString("pArea"),
         "Value": prefs.getDouble("pValue"),
         "Image": prefs.getString("pImage"),
         "GeoLocation": prefs.getString("Glocation"),
@@ -196,6 +197,8 @@ class _AddImagesState extends State<AddImages> {
         "Description": prefs.getString("pDiscription"),
         "Contact": prefs.getString("pContact"),
         "Purpose": prefs.getString("pPurpose"),
+        "RoomType": prefs.getString("roomType"),
+        "Area": prefs.getString("pArea"),
         "Value": prefs.getDouble("pValue"),
         "Image": prefs.getString("pImage"),
         "GeoLocation": prefs.getString("Glocation"),
@@ -203,6 +206,7 @@ class _AddImagesState extends State<AddImages> {
         "longitude": prefs.getDouble("pLng"),
         "isNegotiable": prefs.getString("isNegotiable"),
         "isFurnished": prefs.getString("isFurnished"),
+        "uid": FirebaseAuth.instance.currentUser.uid.toString(),
       }).then((value) => Navigator.of(context).pop());
     }
   }

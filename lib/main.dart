@@ -8,15 +8,17 @@ import 'package:online_real_estate_management_system/screens/Home/models/profile
 import 'package:online_real_estate_management_system/screens/Signup/additionalInfo.dart';
 import 'package:online_real_estate_management_system/screens/Signup/components/verifyUser.dart';
 import 'package:online_real_estate_management_system/screens/Signup/signup_screen.dart';
+import 'package:online_real_estate_management_system/screens/Tenant/components/navigateProperty.dart';
+import 'package:online_real_estate_management_system/screens/Tenant/components/property.dart';
 import 'package:online_real_estate_management_system/screens/Tenant/components/searchProperty.dart';
 import 'package:online_real_estate_management_system/screens/landlord/components/addImages.dart';
 import 'package:online_real_estate_management_system/screens/landlord/components/addProperty.dart';
 import 'package:online_real_estate_management_system/screens/landlord/components/addfromMap.dart';
+import 'package:online_real_estate_management_system/screens/landlord/components/listProperties.dart';
 import 'package:online_real_estate_management_system/screens/landlord/landlordHome.dart';
 import 'package:online_real_estate_management_system/screens/landlord/services/addDataFromMap.dart';
 import 'package:online_real_estate_management_system/screens/login/login_screen.dart';
 import 'package:online_real_estate_management_system/screens/welcome/welcome_screen.dart';
-//import 'package:firebase/firebase.dart' as fb;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -54,8 +56,10 @@ class MyApp extends StatelessWidget {
         SearchProperty.idScreen: (context) => SearchProperty(),
         AddInfo.idScreen: (context) => AddInfo(),
         AddDataFromMap.idScreen: (context) => AddDataFromMap(),
+        PropertyView.idScreen: (context) => PropertyView(),
+        NavigateToProperty.idScreen: (context) => NavigateToProperty(),
+        ListProperty.idScreen: (context) => ListProperty(),
       },
-      //home: WelcomeScreen(),
     );
   }
 }

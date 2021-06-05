@@ -7,6 +7,7 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:location/location.dart';
 import 'package:online_real_estate_management_system/components/bottomNavigation.dart';
 import 'package:online_real_estate_management_system/components/confirmDialog.dart';
@@ -24,6 +25,35 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final LocalAuthentication _localAuthentication = LocalAuthentication();
+  String _message = "Not Authorized";
+  Future<bool> checkingForBioMetrics() async {
+    bool canCheckBiometrics = await _localAuthentication.canCheckBiometrics;
+    print(canCheckBiometrics);
+    return canCheckBiometrics;
+  }
+
+  Future<void> _authenticateMe() async {
+    // 8. this method opens a dialog for fingerprint authentication.
+    ////    we do not need to create a dialog nut it popsup from device natively.
+    bool authenticated = false;
+    try {
+      authenticated = await _localAuthentication.authenticateWithBiometrics(
+        localizedReason: "Authenticate for Testing",
+        // message for dialog
+        useErrorDialogs: true, // show error in dialog
+        stickyAuth: true, // native process
+      );
+      setState(() {
+        _message = authenticated ? "Authorized" : "Not Authorized";
+      });
+    } catch (e) {
+      print(e);
+    }
+    if (!mounted) return;
+  }
+
+  //Stable from here
   firebase_storage.Reference propertyDatabase;
   String name = " ",
       phone = "",
@@ -37,6 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
   GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   void initState() {
+    checkingForBioMetrics();
     _getUserData();
     getUserLocation();
     super.initState();

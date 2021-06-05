@@ -30,6 +30,7 @@ class _AddMyPropertyState extends State<AddMyProperty> {
   TextEditingController propertyContactController = new TextEditingController();
 
   TextEditingController propertyValueController = new TextEditingController();
+  TextEditingController propertyAreaController = new TextEditingController();
   TextEditingController propertyLandmarkController =
       new TextEditingController();
   List<String> purpose = ["lease", "Sale", "Manage"];
@@ -155,18 +156,20 @@ class _AddMyPropertyState extends State<AddMyProperty> {
             child: Column(
               children: <Widget>[
                 SizedBox(height: 50),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: Icon(Icons.arrow_back_ios),
-                      iconSize: 35,
-                      color: Colors.white,
-                    ),
-                  ],
+                SingleChildScrollView(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(Icons.arrow_back_ios),
+                        iconSize: 35,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
                 ),
                 SizedBox(
                   height: 25,
@@ -284,66 +287,169 @@ class _AddMyPropertyState extends State<AddMyProperty> {
                     ? Container(
                         child: Column(
                           children: [
-                            Hint(
-                              hint: "Please provide value of the property",
-                            ),
-                            SizedBox(height: 10),
                             currentPurpose == "Sale" ||
                                     currentPurpose == "Manage"
-                                ? RoundedInputField(
-                                    lines: 1,
-                                    hintText: "Value of the property",
-                                    icon: Icons.money,
-                                    onChanged: (value) {},
-                                    textInputType: TextInputType.number,
-                                    textcontroller: propertyValueController,
+                                ? Container(
+                                    child: Column(
+                                      children: [
+                                        Hint(
+                                          hint:
+                                              "Please provide value of the property",
+                                        ),
+                                        SizedBox(height: 10),
+                                        RoundedInputField(
+                                          lines: 1,
+                                          hintText: "Value of the property",
+                                          icon: Icons.money,
+                                          onChanged: (value) {},
+                                          textInputType: TextInputType.number,
+                                          textcontroller:
+                                              propertyValueController,
+                                        ),
+                                        SizedBox(
+                                          height: 15,
+                                        ),
+                                        Hint(
+                                          hint: "Flat's Carpet Area",
+                                        ),
+                                        RoundedInputField(
+                                          lines: 1,
+                                          hintText: "Property area",
+                                          icon: Icons.architecture,
+                                          onChanged: (value) {},
+                                          textInputType: TextInputType.number,
+                                          textcontroller:
+                                              propertyAreaController,
+                                        ),
+                                      ],
+                                    ),
                                   )
                                 : Container(
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: <Widget>[
-                                        Hint(
-                                          hint: "Pay rent duration",
+                                        SizedBox(
+                                          height: 15,
                                         ),
-                                        Center(
-                                          //child: DropDown(),
-                                          child: DropdownButton<String>(
-                                            value: leaseType,
-                                            icon: const Icon(
-                                              Icons.arrow_drop_down,
-                                              color: Colors.white,
-                                              size: 25,
-                                            ),
-                                            iconSize: 24,
-                                            elevation: 16,
-                                            style: const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 25),
-                                            underline: Container(
-                                                height: 2, color: Colors.white),
-                                            onChanged: (String newValue) {
-                                              setState(() {
-                                                leaseType = newValue;
-                                                lease_selected =
-                                                    (leaseType != "Choose..")
-                                                        ? true
-                                                        : false;
-                                              });
-                                            },
-                                            items: _rentTypeList
-                                                .map<DropdownMenuItem<String>>(
-                                                    (String value) {
-                                              return DropdownMenuItem<String>(
-                                                value: value,
-                                                child: Text(value,
-                                                    style: TextStyle(
-                                                        fontSize: 18,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                              );
-                                            }).toList(),
-                                          ),
+                                        SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Column(
+                                                  children: [
+                                                    Hint(
+                                                      hint: "Pay rent duration",
+                                                    ),
+                                                    Center(
+                                                      //child: DropDown(),
+                                                      child: DropdownButton<
+                                                          String>(
+                                                        value: leaseType,
+                                                        icon: const Icon(
+                                                          Icons.arrow_drop_down,
+                                                          color: Colors.white,
+                                                          size: 25,
+                                                        ),
+                                                        iconSize: 24,
+                                                        elevation: 16,
+                                                        style: const TextStyle(
+                                                            color: Colors.black,
+                                                            fontSize: 25),
+                                                        underline: Container(
+                                                            height: 2,
+                                                            color:
+                                                                Colors.white),
+                                                        onChanged:
+                                                            (String newValue) {
+                                                          setState(() {
+                                                            leaseType =
+                                                                newValue;
+                                                            lease_selected =
+                                                                (leaseType !=
+                                                                        "Choose..")
+                                                                    ? true
+                                                                    : false;
+                                                          });
+                                                        },
+                                                        items: _rentTypeList.map<
+                                                            DropdownMenuItem<
+                                                                String>>((String
+                                                            value) {
+                                                          return DropdownMenuItem<
+                                                              String>(
+                                                            value: value,
+                                                            child: Text(value,
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        18,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold)),
+                                                          );
+                                                        }).toList(),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                SizedBox(width: 15),
+                                                Column(
+                                                  children: [
+                                                    Hint(
+                                                      hint: "Prefered tenants",
+                                                    ),
+                                                    Center(
+                                                      //child: DropDown(),
+                                                      child: DropdownButton<
+                                                          String>(
+                                                        value:
+                                                            currentTenantType,
+                                                        icon: const Icon(
+                                                          Icons.arrow_drop_down,
+                                                          color: Colors.white,
+                                                          size: 25,
+                                                        ),
+                                                        iconSize: 24,
+                                                        elevation: 16,
+                                                        style: const TextStyle(
+                                                            color: Colors.black,
+                                                            fontSize: 25),
+                                                        underline: Container(
+                                                            height: 2,
+                                                            color:
+                                                                Colors.white),
+                                                        onChanged:
+                                                            (String newValue) {
+                                                          setState(() {
+                                                            currentTenantType =
+                                                                newValue;
+                                                          });
+                                                        },
+                                                        items: _preferedTenantTypeList.map<
+                                                            DropdownMenuItem<
+                                                                String>>((String
+                                                            value) {
+                                                          return DropdownMenuItem<
+                                                              String>(
+                                                            value: value,
+                                                            child: Text(value,
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        18,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold)),
+                                                          );
+                                                        }).toList(),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )
+                                              ]),
                                         ),
                                         lease_selected
                                             ? RoundedInputField(
@@ -361,87 +467,6 @@ class _AddMyPropertyState extends State<AddMyProperty> {
                                         SizedBox(
                                           height: 15,
                                         ),
-                                        Hint(
-                                          hint: "Prefered tenants",
-                                        ),
-                                        Center(
-                                          //child: DropDown(),
-                                          child: DropdownButton<String>(
-                                            value: currentTenantType,
-                                            icon: const Icon(
-                                              Icons.arrow_drop_down,
-                                              color: Colors.white,
-                                              size: 25,
-                                            ),
-                                            iconSize: 24,
-                                            elevation: 16,
-                                            style: const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 25),
-                                            underline: Container(
-                                                height: 2, color: Colors.white),
-                                            onChanged: (String newValue) {
-                                              setState(() {
-                                                currentTenantType = newValue;
-                                              });
-                                            },
-                                            items: _preferedTenantTypeList
-                                                .map<DropdownMenuItem<String>>(
-                                                    (String value) {
-                                              return DropdownMenuItem<String>(
-                                                value: value,
-                                                child: Text(value,
-                                                    style: TextStyle(
-                                                        fontSize: 18,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                              );
-                                            }).toList(),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 15,
-                                        ),
-                                        Hint(
-                                          hint: "Select the type of room.",
-                                        ),
-                                        SizedBox(
-                                          height: 15,
-                                        ),
-                                        Center(
-                                          child: DropdownButton<String>(
-                                            value: currentRoomType,
-                                            icon: const Icon(
-                                              Icons.arrow_drop_down,
-                                              color: Colors.white,
-                                              size: 25,
-                                            ),
-                                            iconSize: 24,
-                                            elevation: 16,
-                                            style: const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 25),
-                                            underline: Container(
-                                                height: 2, color: Colors.white),
-                                            onChanged: (String newValue) {
-                                              setState(() {
-                                                currentRoomType = newValue;
-                                              });
-                                            },
-                                            items: _roomTypeList
-                                                .map<DropdownMenuItem<String>>(
-                                                    (String value) {
-                                              return DropdownMenuItem<String>(
-                                                value: value,
-                                                child: Text(value,
-                                                    style: TextStyle(
-                                                        fontSize: 18,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                              );
-                                            }).toList(),
-                                          ),
-                                        ),
                                       ],
                                     ),
                                   ),
@@ -449,6 +474,37 @@ class _AddMyPropertyState extends State<AddMyProperty> {
                         ),
                       )
                     : Container(),
+                Hint(
+                  hint: "Select the type of room.",
+                ),
+                Center(
+                  child: DropdownButton<String>(
+                    value: currentRoomType,
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: Colors.white,
+                      size: 25,
+                    ),
+                    iconSize: 24,
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.black, fontSize: 25),
+                    underline: Container(height: 2, color: Colors.white),
+                    onChanged: (String newValue) {
+                      setState(() {
+                        currentRoomType = newValue;
+                      });
+                    },
+                    items: _roomTypeList
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value,
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold)),
+                      );
+                    }).toList(),
+                  ),
+                ),
                 SizedBox(
                   height: 15,
                 ),
@@ -456,111 +512,98 @@ class _AddMyPropertyState extends State<AddMyProperty> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Hint(
-                        hint: "Is Furnished ?",
-                      ),
-                      Center(
-                        child: DropdownButton<String>(
-                          value: isNegotiable,
-                          icon: const Icon(
-                            Icons.arrow_drop_down,
-                            color: Colors.white,
-                            size: 25,
-                          ),
-                          iconSize: 24,
-                          elevation: 16,
-                          style: const TextStyle(
-                              color: Colors.black, fontSize: 25),
-                          underline: Container(height: 2, color: Colors.white),
-                          onChanged: (String newValue) {
-                            setState(() {
-                              isNegotiable = newValue;
-                            });
-                          },
-                          items: <String>["YES", "NO"]
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value,
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold)),
-                            );
-                          }).toList(),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Column(
+                              children: [
+                                Hint(
+                                  hint: "Is Furnished ?",
+                                ),
+                                Center(
+                                  child: DropdownButton<String>(
+                                    value: isNegotiable,
+                                    icon: const Icon(
+                                      Icons.arrow_drop_down,
+                                      color: Colors.white,
+                                      size: 25,
+                                    ),
+                                    iconSize: 24,
+                                    elevation: 16,
+                                    style: const TextStyle(
+                                        color: Colors.black, fontSize: 25),
+                                    underline: Container(
+                                        height: 2, color: Colors.white),
+                                    onChanged: (String newValue) {
+                                      setState(() {
+                                        isNegotiable = newValue;
+                                      });
+                                    },
+                                    items: <String>["YES", "NO"]
+                                        .map<DropdownMenuItem<String>>(
+                                            (String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value,
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold)),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Column(
+                              children: [
+                                Hint(
+                                  hint: "Is Negotiable ?",
+                                ),
+                                Center(
+                                  child: DropdownButton<String>(
+                                    value: isFurnished,
+                                    icon: const Icon(
+                                      Icons.arrow_drop_down,
+                                      color: Colors.white,
+                                      size: 25,
+                                    ),
+                                    iconSize: 24,
+                                    elevation: 16,
+                                    style: const TextStyle(
+                                        color: Colors.black, fontSize: 25),
+                                    underline: Container(
+                                        height: 2, color: Colors.white),
+                                    onChanged: (String newValue) {
+                                      setState(() {
+                                        isFurnished = newValue;
+                                      });
+                                    },
+                                    items: <String>["YES", "NO"]
+                                        .map<DropdownMenuItem<String>>(
+                                            (String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value,
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold)),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
                       SizedBox(
                         height: 15,
-                      ),
-                      Hint(
-                        hint: "Is Negotiable ?",
-                      ),
-                      Center(
-                        child: DropdownButton<String>(
-                          value: isFurnished,
-                          icon: const Icon(
-                            Icons.arrow_drop_down,
-                            color: Colors.white,
-                            size: 25,
-                          ),
-                          iconSize: 24,
-                          elevation: 16,
-                          style: const TextStyle(
-                              color: Colors.black, fontSize: 25),
-                          underline: Container(height: 2, color: Colors.white),
-                          onChanged: (String newValue) {
-                            setState(() {
-                              isFurnished = newValue;
-                            });
-                          },
-                          items: <String>["YES", "NO"]
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value,
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold)),
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Hint(
-                        hint:
-                            "is Your current location is the property location ?",
-                      ),
-                      Center(
-                        child: DropdownButton<String>(
-                          value: currentLocation,
-                          icon: const Icon(
-                            Icons.arrow_drop_down,
-                            color: Colors.white,
-                            size: 25,
-                          ),
-                          iconSize: 24,
-                          elevation: 16,
-                          style: const TextStyle(
-                              color: Colors.black, fontSize: 25),
-                          underline: Container(height: 2, color: Colors.white),
-                          onChanged: (String newValue) {
-                            setState(() {
-                              currentLocation = newValue;
-                            });
-                          },
-                          items: <String>["YES", "NO"]
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value,
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold)),
-                            );
-                          }).toList(),
-                        ),
                       ),
                     ],
                   ),
@@ -657,13 +700,15 @@ class _AddMyPropertyState extends State<AddMyProperty> {
       return "please choose purpose of the property";
     else if (propertyValueController.text.length < 4)
       return "please provide value of the property";
+    else if (propertyAreaController.text.isEmpty)
+      return "Please provide area of your property";
     else if (propertyContactController.text.isEmpty)
       return "Please provide contact for the property";
     else if (leaseType == "Choose.." && currentPurpose == "Lease")
       return "Please provide rent duration type.";
     else if (currentTenantType == "Choose.." && currentPurpose == "Lease")
       return "Please provide prefered tenant type";
-    else if (currentRoomType == "Choose.." && currentPurpose == "Lease")
+    else if (currentRoomType == "Choose..")
       return "please select category of the room";
     else {
       final pref = await SharedPreferences.getInstance();
@@ -674,13 +719,16 @@ class _AddMyPropertyState extends State<AddMyProperty> {
           'pDiscription', propertyDiscriptionController.text.toString());
       pref.setString("pContact", propertyContactController.text.toString());
       pref.setString('pPurpose', currentPurpose);
+      if (currentPurpose == "Sale") {
+        pref.setString("pArea", propertyAreaController.text.toString().trim());
+      }
       if (currentPurpose == "Lease") {
         pref.setString("leaseDuration", leaseType.toString());
         pref.setString("preferedTenants", currentTenantType.toString());
-        pref.setString("roomType", currentRoomType.toString());
       }
+      pref.setString("roomType", currentRoomType.toString());
       assetValue = double.parse(propertyValueController.text.toString());
-      pref.setString("isCurrentLocation", currentLocation);
+      // pref.setString("isCurrentLocation", currentLocation);
       pref.setDouble("pValue", assetValue);
       pref.setString('Glocation', _resultAddress);
       pref.setString("isNegotiable", isNegotiable);

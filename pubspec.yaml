@@ -30,6 +30,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   #firebase: ^9.0.1
   #firebase_dart: ^0.7.15+4
+  carousel_slider: ^3.0.0
   firebase_database: ^6.1.2
   firebase_storage: ^8.0.6
   firebase_core: ^1.1.1
@@ -38,7 +39,9 @@ dependencies:
   flutter_svg: ^0.22.0
   google_fonts: ^2.0.0
   http: ^0.13.3
-  #provider: ^5.0.0
+  rxdart: ^0.26.0
+  path_provider: ^2.0.2
+  flutter_local_notifications: ^6.0.0
   fluttertoast: ^8.0.6
   google_maps_flutter: ^2.0.3
   google_maps_flutter_web: ^0.3.0
@@ -51,6 +54,9 @@ dependencies:
   location: ^4.1.1
   dio: ^4.0.0
   flutter_polyline_points: ^1.0.0
+  url_launcher: ^6.0.6
+  flutter_sms: ^2.3.1
+  local_auth: ^1.1.6
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -82,13 +88,13 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  #fonts:
-  # - family: Schyler
-  #   fonts:
-  #    - asset: fonts/Schyler-Regular.ttf
+  fonts:
+  - family: CustomIcons
+    fonts:
+     - asset: assets/icons/CustomIcons.ttf
   #    - asset: fonts/Schyler-Italic.ttf
   #      style: italic
-  #   - family: Trajan Pro
+  #    - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
