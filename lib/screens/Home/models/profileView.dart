@@ -50,7 +50,7 @@ class _ProfileViewState extends State<ProfileView>
   _getUserData() async {
     pref = await SharedPreferences.getInstance();
     imageUrl = pref.getString("profileUrl");
-    FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection("users")
         .doc("${FirebaseAuth.instance.currentUser.uid.toString()}")
         .get()
@@ -98,7 +98,7 @@ class _ProfileViewState extends State<ProfileView>
                     ),
                     IconButton(
                       onPressed: () {
-                        print(route);
+                        // print(route);
                         Navigator.pop(context);
                       },
                       icon: Icon(Icons.arrow_back_ios_new),
@@ -199,7 +199,8 @@ class _ProfileViewState extends State<ProfileView>
                   fontWeight: FontWeight.bold,
                 ),
                 decoration: InputDecoration(
-                  hintText: 'Name',
+                  hintText: 'Mobile number',
+                  hintStyle: TextStyle(color: Colors.white),
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey),
                   ),
@@ -222,7 +223,8 @@ class _ProfileViewState extends State<ProfileView>
                   fontWeight: FontWeight.bold,
                 ),
                 decoration: InputDecoration(
-                  hintText: 'Name',
+                  hintText: 'Occupation',
+                  hintStyle: TextStyle(color: Colors.white),
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey),
                   ),
@@ -246,7 +248,7 @@ class _ProfileViewState extends State<ProfileView>
                   fontWeight: FontWeight.bold,
                 ),
                 decoration: InputDecoration(
-                  hintText: 'Name',
+                  hintText: 'Address',
                   hintStyle: TextStyle(color: Colors.white),
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey),
@@ -267,8 +269,8 @@ class _ProfileViewState extends State<ProfileView>
                           style: ElevatedButton.styleFrom(
                             primary: greenThick,
                           ),
-                          onPressed: () {
-                            updateUserInfo().whenComplete(() =>
+                          onPressed: () async {
+                            await updateUserInfo().whenComplete(() =>
                                 Fluttertoast.showToast(
                                     msg: 'Details updated successfully'));
                           },
@@ -327,7 +329,8 @@ class _ProfileViewState extends State<ProfileView>
             message: "Uploading..",
           );
         });
-    uploadProfilePhoto(context).whenComplete(() => Navigator.of(context).pop());
+    await uploadProfilePhoto(context)
+        .whenComplete(() => Navigator.of(context).pop());
   }
 
   Future uploadProfilePhoto(BuildContext context) async {
@@ -364,6 +367,7 @@ class _ProfileViewState extends State<ProfileView>
       "name": nameController.text.trim(),
       "phone": phoneController.text.trim(),
       "occupation": occupationController.text.trim(),
+      "userAddress": addressController.text.trim(),
     }, SetOptions(merge: true)).then((value) => Navigator.pop(context));
     isUpdated = false;
   }

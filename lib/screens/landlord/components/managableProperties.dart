@@ -1,35 +1,33 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:online_real_estate_management_system/components/bottomNavigation.dart';
 import 'package:online_real_estate_management_system/components/confirmDialog.dart';
 import 'package:online_real_estate_management_system/components/progressDialog.dart';
-import 'package:online_real_estate_management_system/constants.dart';
 import 'package:online_real_estate_management_system/screens/Home/homeScreen.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
-class ListProperty extends StatefulWidget {
-  static const String idScreen = "ListProperty";
+class ManageProperty extends StatefulWidget {
+  static const idScreen = "ManageProperty";
+  const ManageProperty({Key key}) : super(key: key);
+
   @override
-  _ListPropertyState createState() => _ListPropertyState();
+  _ManagePropertyState createState() => _ManagePropertyState();
 }
 
-class _ListPropertyState extends State<ListProperty>
+class _ManagePropertyState extends State<ManageProperty>
     with WidgetsBindingObserver {
   int properties = 0;
-  int i = 0;
   List<Map<String, dynamic>> _propertyData = [];
   @override
   void initState() {
-    getPropertyDetails();
+    getManagableProperties();
     super.initState();
-    //WidgetsBinding.instance.addObserver(this);
   }
 
-  void getPropertyDetails() async {
+  Future<void> getManagableProperties() async {
     await FirebaseFirestore.instance
         .collection('Property')
         .doc("${FirebaseAuth.instance.currentUser.uid.toString()}")
@@ -37,136 +35,99 @@ class _ListPropertyState extends State<ListProperty>
         .get()
         .then((QuerySnapshot snap) {
       setState(() {
-        i = 0;
+        int i = 0;
         properties = snap.docs.length;
         snap.docs.forEach((record) {
           String docId = record.id.toString();
           _propertyData.add(record.data());
           _propertyData[i]["docId"] = docId;
-          //    print("${_propertyData[i]["docId"]}  $i");
           ++i;
         });
       });
-    });
-    await FirebaseFirestore.instance
-        .collection('Property')
-        .doc('General')
-        .collection('Sale')
-        .where("uid",
-            isEqualTo: "${FirebaseAuth.instance.currentUser.uid.toString()}")
-        .get()
-        .then((QuerySnapshot snap) {
-      setState(() {
-        properties += snap.docs.length;
-        snap.docs.forEach((element) {
-          String docId = element.id.toString();
-          _propertyData.add(element.data());
-          _propertyData[i]["docId"] = docId;
-          //  print("${_propertyData[i]["docId"]}  $i");
-          ++i;
-        });
-      });
-    });
-    await FirebaseFirestore.instance
-        .collection('Property')
-        .doc('General')
-        .collection('Lease')
-        .where("uid",
-            isEqualTo: "${FirebaseAuth.instance.currentUser.uid.toString()}")
-        .get()
-        .then((QuerySnapshot snap) {
-      setState(() {
-        properties += snap.docs.length;
-        snap.docs.forEach((element) {
-          String docId = element.id.toString();
-          _propertyData.add(element.data());
-          _propertyData[i]["docId"] = docId;
-          //    print("${_propertyData[i]["docId"]}  $i");
-          ++i;
-        });
-      });
-    });
-    print("Property count is $properties");
-    if (properties == 0) {
-      final action = await AlertDialogs.confirmDialog(
-          context, "Ouch!", "You haven't added any properties yet",
-          cancel: "", yes: "Ok");
-      if (action == DialogAction.Yes) {
-        Navigator.pushNamedAndRemoveUntil(
-            context, HomeScreen.idScreen, (route) => false);
+      if (properties == 0) {
+        showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) {
+              return Dialog(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(45)),
+                elevation: 16,
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                    color: Color(0xFF1B222E),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  height: 400,
+                  width: 400,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      SvgPicture.asset(
+                        "assets/images/Astronaut-01.svg",
+                        width: 400,
+                        height: 200,
+                      ),
+                      Text(
+                        "Ouch !",
+                        style: GoogleFonts.lobster(
+                          textStyle: Theme.of(context).textTheme.headline4,
+                          color: Colors.blue,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Flexible(
+                        child: Text(
+                          "Their aren't any properties available to sell in your managing basket",
+                          overflow: TextOverflow.visible,
+                          softWrap: true,
+                          maxLines: 3,
+                          style: GoogleFonts.rajdhani(
+                            textStyle: Theme.of(context).textTheme.headline4,
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton(
+                            style:
+                                ElevatedButton.styleFrom(primary: Colors.white),
+                            onPressed: () {
+                              // Navigator.pushNamedAndRemoveUntil(context,
+                              //     HomeScreen.idScreen, (route) => false);
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(
+                              "OK",
+                              style: TextStyle(
+                                  fontSize: 15, color: Colors.pink[400]),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            });
       }
-    }
+    });
   }
 
-  Future<void> deleteProperty(Map<String, dynamic> map) async {
-    if (map["Purpose"] == "Manage") {
-      await FirebaseFirestore.instance
-          .collection('Property')
-          .doc("${FirebaseAuth.instance.currentUser.uid.toString()}")
-          .collection("PropertyDetails")
-          .doc(map["docId"])
-          .delete()
-          .then((value) async {
-        firebase_storage.ListResult result = await firebase_storage
-            .FirebaseStorage.instance
-            .ref()
-            .child(
-                "images/property/${FirebaseAuth.instance.currentUser.uid}/${map["name"]}")
-            .listAll();
-        result.items.forEach((firebase_storage.Reference ref) async {
-          await firebase_storage.FirebaseStorage.instance
-              .ref()
-              .child("${ref.fullPath}")
-              .delete();
-        });
-      });
-    } else if (map["Purpose"] == "Lease") {
-      await FirebaseFirestore.instance
-          .collection('Property')
-          .doc('General')
-          .collection('Lease')
-          .doc(map["docId"])
-          .delete()
-          .then((value) async {
-        firebase_storage.ListResult result = await firebase_storage
-            .FirebaseStorage.instance
-            .ref()
-            .child(
-                "images/property/${FirebaseAuth.instance.currentUser.uid}/${map["name"]}")
-            .listAll();
-        result.items.forEach((firebase_storage.Reference ref) async {
-          await firebase_storage.FirebaseStorage.instance
-              .ref()
-              .child("${ref.fullPath}")
-              .delete();
-        });
-      });
-    } else if (map["Purpose"] == "Sale") {
-      await FirebaseFirestore.instance
-          .collection('Property')
-          .doc('General')
-          .collection('Sale')
-          .doc(map["docId"])
-          .delete()
-          .then((value) async {
-        firebase_storage.ListResult result = await firebase_storage
-            .FirebaseStorage.instance
-            .ref()
-            .child(
-                "images/property/${FirebaseAuth.instance.currentUser.uid}/${map["name"]}")
-            .listAll();
-        result.items.forEach((firebase_storage.Reference ref) async {
-          await firebase_storage.FirebaseStorage.instance
-              .ref()
-              .child("${ref.fullPath}")
-              .delete();
-        });
-      });
-    }
-    showDeleteSuccess();
-  }
-
-  void showDeleteSuccess() {
+  void showUpdateSuccess() {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -176,6 +137,7 @@ class _ListPropertyState extends State<ListProperty>
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(45)),
             elevation: 16,
             child: Container(
+              padding: EdgeInsets.all(15),
               decoration: BoxDecoration(
                 color: Color(0xFF1B222E),
                 borderRadius: BorderRadius.circular(30),
@@ -186,28 +148,31 @@ class _ListPropertyState extends State<ListProperty>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   SvgPicture.asset(
-                    "assets/images/deleted.svg",
+                    "assets/images/update_done.svg",
                     width: 400,
                     height: 200,
                   ),
                   Text(
-                    "Success !",
+                    "Updated !",
                     style: GoogleFonts.lobster(
                       textStyle: Theme.of(context).textTheme.headline4,
                       color: Colors.blue,
-                      fontSize: 17,
+                      fontSize: 25,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  SizedBox(
+                    height: 15,
+                  ),
                   Flexible(
                     child: Text(
-                      "Your property was deleted successfully",
+                      "Your property was successfully added into Sale list",
                       overflow: TextOverflow.visible,
                       softWrap: true,
                       maxLines: 3,
                       style: GoogleFonts.rajdhani(
                         textStyle: Theme.of(context).textTheme.headline4,
-                        color: greenThick,
+                        color: Colors.white,
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                       ),
@@ -248,8 +213,43 @@ class _ListPropertyState extends State<ListProperty>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    getPropertyDetails();
+    getManagableProperties();
     super.didChangeAppLifecycleState(state);
+  }
+
+  Future<void> addFromManageToSale(
+      BuildContext context, Map<String, dynamic> map) async {
+    await FirebaseFirestore.instance
+        .collection('Property')
+        .doc('General')
+        .collection("Sale")
+        .add({
+      "name": map["name"],
+      "Address": map["Address"],
+      "Landmark": map["Landmark"],
+      "Description": map["Description"],
+      "Contact": map["Contact"],
+      "Purpose": map["Purpose"],
+      "RoomType": map["RoomType"],
+      "Area": map["Area"],
+      "Value": map["Value"],
+      "Image": map["Image"],
+      "GeoLocation": map["GeoLocation"],
+      "latitude": map["latitude"],
+      "longitude": map["longitude"],
+      "isNegotiable": map["isNegotiable"],
+      "isFurnished": map["isFurnished"],
+      "uid": map["uid"],
+    }).then((value) async {
+      await FirebaseFirestore.instance
+          .collection('Property')
+          .doc("${FirebaseAuth.instance.currentUser.uid.toString()}")
+          .collection("PropertyDetails")
+          .doc(map["docId"])
+          .delete()
+          .then((value) => Navigator.pop(context));
+      showUpdateSuccess();
+    });
   }
 
   @override
@@ -258,57 +258,46 @@ class _ListPropertyState extends State<ListProperty>
     return Scaffold(
       body: Container(
         height: size.height,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [
-              Colors.indigo,
-              Colors.teal,
-            ],
-          ),
-        ),
+        color: Color(0xFF1B222E),
         child: GridView.builder(
             itemCount: properties,
             gridDelegate:
                 SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1),
             itemBuilder: (context, index) {
-              return GestureDetector(
-                onLongPress: () async {
-                  final action = await AlertDialogs.confirmDialog(
-                      context,
-                      "Delete ?",
-                      "Do you want to delete this property. This action can't be revoked",
-                      yes: "YES",
-                      cancel: "Cancel");
-                  if (action == DialogAction.Yes) {
-                    showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (BuildContext context) {
-                          return ProgressDialog(
-                            message: "Removing..",
-                          );
-                        });
-                    await deleteProperty(_propertyData[index]);
-                  }
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(25.0),
+              return Padding(
+                padding: const EdgeInsets.all(25.0),
+                child: GestureDetector(
+                  onTap: () async {
+                    final action = await AlertDialogs.confirmDialog(
+                        context,
+                        "Update ?",
+                        "Are you sure you wanna make this property to sale",
+                        yes: "Yes",
+                        cancel: "Cancel");
+                    // ignore: unrelated_type_equality_checks
+                    if (action == DialogAction.Yes) {
+                      Fluttertoast.showToast(msg: _propertyData[index]["name"]);
+                      showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            return ProgressDialog(
+                              message: "Updating..",
+                            );
+                          });
+                      await addFromManageToSale(context, _propertyData[index])
+                          .whenComplete(
+                              () => Fluttertoast.showToast(msg: "Update done"));
+                    }
+                  },
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 15),
                     margin: EdgeInsets.all(3),
                     width: double.infinity,
                     height: 700,
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          Colors.white,
-                          Colors.grey,
-                        ],
-                      ),
+                      color: Color(0xFF1B222E),
+                      border: Border.all(color: Colors.white),
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: SingleChildScrollView(
@@ -559,7 +548,6 @@ class _ListPropertyState extends State<ListProperty>
               );
             }),
       ),
-      bottomNavigationBar: BottomNavigation(),
     );
   }
 }

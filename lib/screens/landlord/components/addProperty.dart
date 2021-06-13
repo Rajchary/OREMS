@@ -283,6 +283,20 @@ class _AddMyPropertyState extends State<AddMyProperty> {
                     }).toList(),
                   ),
                 ),
+                SizedBox(
+                  height: 15,
+                ),
+                Hint(
+                  hint: "Flat's Carpet Area",
+                ),
+                RoundedInputField(
+                  lines: 1,
+                  hintText: "Property area",
+                  icon: Icons.architecture,
+                  onChanged: (value) {},
+                  textInputType: TextInputType.number,
+                  textcontroller: propertyAreaController,
+                ),
                 selected
                     ? Container(
                         child: Column(
@@ -305,21 +319,6 @@ class _AddMyPropertyState extends State<AddMyProperty> {
                                           textInputType: TextInputType.number,
                                           textcontroller:
                                               propertyValueController,
-                                        ),
-                                        SizedBox(
-                                          height: 15,
-                                        ),
-                                        Hint(
-                                          hint: "Flat's Carpet Area",
-                                        ),
-                                        RoundedInputField(
-                                          lines: 1,
-                                          hintText: "Property area",
-                                          icon: Icons.architecture,
-                                          onChanged: (value) {},
-                                          textInputType: TextInputType.number,
-                                          textcontroller:
-                                              propertyAreaController,
                                         ),
                                       ],
                                     ),
@@ -521,7 +520,7 @@ class _AddMyPropertyState extends State<AddMyProperty> {
                             Column(
                               children: [
                                 Hint(
-                                  hint: "Is Furnished ?",
+                                  hint: "Is Negotiable ?",
                                 ),
                                 Center(
                                   child: DropdownButton<String>(
@@ -563,7 +562,7 @@ class _AddMyPropertyState extends State<AddMyProperty> {
                             Column(
                               children: [
                                 Hint(
-                                  hint: "Is Negotiable ?",
+                                  hint: "Is Furnished ?",
                                 ),
                                 Center(
                                   child: DropdownButton<String>(
@@ -655,7 +654,8 @@ class _AddMyPropertyState extends State<AddMyProperty> {
                             //     context, AddImages.idScreen);
                             Navigator.pushNamed(
                                 context, AddDataFromMap.idScreen);
-                            Fluttertoast.showToast(msg: "Select Images.");
+                            Fluttertoast.showToast(
+                                msg: "Select Property Location .");
                           } //end local if
                         } //end else
                       },
@@ -702,8 +702,8 @@ class _AddMyPropertyState extends State<AddMyProperty> {
       return "please provide value of the property";
     else if (propertyAreaController.text.isEmpty)
       return "Please provide area of your property";
-    else if (propertyContactController.text.isEmpty)
-      return "Please provide contact for the property";
+    else if (propertyContactController.text.length != 10)
+      return "Please provide a valid contact number";
     else if (leaseType == "Choose.." && currentPurpose == "Lease")
       return "Please provide rent duration type.";
     else if (currentTenantType == "Choose.." && currentPurpose == "Lease")
@@ -719,9 +719,8 @@ class _AddMyPropertyState extends State<AddMyProperty> {
           'pDiscription', propertyDiscriptionController.text.toString());
       pref.setString("pContact", propertyContactController.text.toString());
       pref.setString('pPurpose', currentPurpose);
-      if (currentPurpose == "Sale") {
-        pref.setString("pArea", propertyAreaController.text.toString().trim());
-      }
+      pref.setDouble(
+          "pArea", double.parse(propertyAreaController.text.toString().trim()));
       if (currentPurpose == "Lease") {
         pref.setString("leaseDuration", leaseType.toString());
         pref.setString("preferedTenants", currentTenantType.toString());

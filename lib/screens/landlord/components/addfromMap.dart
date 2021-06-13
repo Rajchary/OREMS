@@ -54,6 +54,7 @@ class _AddMapState extends State<AddMap> {
             myLocationEnabled: true,
             zoomGesturesEnabled: true,
             zoomControlsEnabled: false,
+            mapToolbarEnabled: true,
             onMapCreated: (GoogleMapController controller) {
               _gmController.complete(controller);
               _newGmController = controller;

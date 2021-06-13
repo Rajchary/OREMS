@@ -1,11 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:online_real_estate_management_system/components/confirmDialog.dart';
+import 'package:online_real_estate_management_system/components/progressDialog.dart';
+import 'package:online_real_estate_management_system/components/roundedInputField.dart';
 import 'package:online_real_estate_management_system/constants.dart';
 import 'package:online_real_estate_management_system/screens/Tenant/components/property.dart';
 import 'package:online_real_estate_management_system/screens/landlord/components/addProperty.dart';
@@ -23,8 +27,8 @@ class _SearchPropertyState extends State<SearchProperty> {
   RangeValues assetRangeValues = RangeValues(50000, 50000000);
   RangeLabels assetRangeLabels = RangeLabels("50000", "50000000");
 
-  RangeValues areaRangeValues = RangeValues(150, 22000);
-  RangeLabels areaRangeLabels = RangeLabels("150", "22000");
+  RangeValues areaRangeValues = RangeValues(100, 22000);
+  RangeLabels areaRangeLabels = RangeLabels("100", "22000");
 
   String docId = "";
   int properties = 0;
@@ -66,7 +70,7 @@ class _SearchPropertyState extends State<SearchProperty> {
     if (!_serviceEnabled) {
       _serviceEnabled = await location.requestService();
       if (!_serviceEnabled) {
-        return null;
+        return;
       }
     }
 
@@ -77,7 +81,7 @@ class _SearchPropertyState extends State<SearchProperty> {
         setState(() {
           isLocationEnable = false;
         });
-        return null;
+        return;
       }
     } else {
       setState(() {
@@ -108,6 +112,7 @@ class _SearchPropertyState extends State<SearchProperty> {
       }
     });
   }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -128,7 +133,6 @@ class _SearchPropertyState extends State<SearchProperty> {
             itemCount: properties + 1,
             gridDelegate:
                 SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1),
-            
             itemBuilder: (context, index) {
               return index == 0
                   ? Center(
@@ -256,10 +260,17 @@ class _SearchPropertyState extends State<SearchProperty> {
                                             color: Colors.white,
                                             height: 2,
                                           ),
-                                          onChanged: (String newValue) {
+                                          onChanged: (String newValue) async {
                                             setState(() {
                                               locationType = newValue;
                                             });
+                                            if (locationType ==
+                                                "Manual Location") {
+                                              showManualLocation();
+                                              print(_resultAddress);
+                                            } else {
+                                              getUserLocation();
+                                            }
                                           },
                                           items: <String>[
                                             "Automatic Location",
@@ -663,7 +674,7 @@ class _SearchPropertyState extends State<SearchProperty> {
                                                   padding: EdgeInsets.symmetric(
                                                       horizontal: 15),
                                                   child: RangeSlider(
-                                                    min: 150,
+                                                    min: 100,
                                                     max: 22000,
                                                     values: areaRangeValues,
                                                     labels: areaRangeLabels,
@@ -697,9 +708,17 @@ class _SearchPropertyState extends State<SearchProperty> {
                                         if (selected) {
                                           properties = 0;
                                           _propertyData.clear();
-                                          getProperties();
+                                          showDialog(
+                                              context: context,
+                                              barrierDismissible: false,
+                                              builder: (BuildContext context) {
+                                                return ProgressDialog(
+                                                  message: "Searching ..",
+                                                );
+                                              });
+                                          await getProperties();
+                                          Navigator.pop(context);
                                           await getUserLocation();
-                                          // print(index);
                                         } else
                                           Fluttertoast.showToast(
                                               msg: "Please apply a filter");
@@ -985,6 +1004,88 @@ class _SearchPropertyState extends State<SearchProperty> {
     );
   }
 
+  void showManualLocation() {
+    TextEditingController locationC = new TextEditingController();
+    Size size = MediaQuery.of(context).size;
+    // String address = "";
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return Dialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(45)),
+            elevation: 16,
+            child: Container(
+              padding: EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                color: Color(0xFF1B222E),
+                borderRadius: BorderRadius.circular(30),
+              ),
+              height: size.height * 0.4,
+              width: size.width * 0.4,
+              child: Column(
+                children: [
+                  SvgPicture.asset(
+                    "assets/images/moonLight.svg",
+                    width: size.width * 0.4,
+                    height: size.height * 0.2,
+                  ),
+                  RoundedInputField(
+                    icon: Icons.location_on,
+                    textInputType: TextInputType.phone,
+                    textcontroller: locationC,
+                    lines: 1,
+                  ),
+                  Flexible(
+                    child: Text(
+                      "Provide 6 digit pin code",
+                      overflow: TextOverflow.visible,
+                      softWrap: true,
+                      maxLines: 3,
+                      style: GoogleFonts.rajdhani(
+                        textStyle: Theme.of(context).textTheme.headline4,
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(primary: Colors.white),
+                        onPressed: () {
+                          if (locationC.text.trim().length == 6) {
+                            setState(() {
+                              _resultAddress =
+                                  "Telangana " + locationC.text.trim();
+                              Navigator.pop(context);
+                            });
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "Please provide valid 6 digit PIN code");
+                          }
+                        },
+                        child: Text(
+                          "Set",
+                          style:
+                              TextStyle(fontSize: 15, color: Colors.pink[400]),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
   Future<dynamic> getProperties() async {
     if (type == "Sale") {
       FirebaseFirestore.instance
@@ -1005,7 +1106,8 @@ class _SearchPropertyState extends State<SearchProperty> {
             docId = element.id.toString();
             Map<String, dynamic> mp = element.data();
             if (mp["Area"] >= areaRangeValues.start.toInt() &&
-                mp["Area"] <= areaRangeValues.end.toInt()) {
+                mp["Area"] <= areaRangeValues.end.toInt() &&
+                mp["uid"] != FirebaseAuth.instance.currentUser.uid) {
               _propertyData.add(element.data());
               _propertyData[i]["docId"] = docId;
               ++i;
@@ -1015,7 +1117,8 @@ class _SearchPropertyState extends State<SearchProperty> {
         });
         if (properties == 0) {
           AlertDialogs.confirmDialog(
-              context, "Not Found!", "No results found for your search");
+              context, "Not Found!", "No results found for your search",
+              cancel: "", yes: "Ok");
         }
       });
     } else if (type == "Lease") {
@@ -1038,10 +1141,13 @@ class _SearchPropertyState extends State<SearchProperty> {
           int i = 0;
           snap.docs.forEach((element) {
             docId = element.id.toString();
-            _propertyData.add(element.data());
-            _propertyData[i]["docId"] = docId;
-            ++properties;
-            ++i;
+            Map<String, dynamic> mp = element.data();
+            if (mp["uid"] != FirebaseAuth.instance.currentUser.uid) {
+              _propertyData.add(element.data());
+              _propertyData[i]["docId"] = docId;
+              ++properties;
+              ++i;
+            }
           });
         });
         if (properties == 0) {

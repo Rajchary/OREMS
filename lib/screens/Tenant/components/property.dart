@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,8 +9,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:online_real_estate_management_system/assets/CustomeIcons.dart';
 import 'package:online_real_estate_management_system/screens/Tenant/components/navigateProperty.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:http/http.dart' as http;
 
 class PropertyView extends StatefulWidget {
   static const idScreen = "Property View";
@@ -18,6 +22,7 @@ class PropertyView extends StatefulWidget {
 
 class _PropertyViewState extends State<PropertyView> {
   bool wishlisted = false;
+  bool checked = false;
   int length = 0;
   Icon done = Icon(Icons.done);
   Icon cancel = Icon(Icons.cancel);
@@ -26,9 +31,118 @@ class _PropertyViewState extends State<PropertyView> {
   LatLng dest;
   firebase_storage.Reference propertyDatabase;
 
+  static Future<void> sendNotification(receiver, String pName) async {
+    // var postUrl = "http://fcm.googleapis.com/fcm/send";
+    String serverKey =
+        "AAAAQc2YwIo:APA91bFEi7E37NseKuYFm1iOXwiYEZuudjiZzNY27HkBzhG8sjiPf3QPV1V2w8XA7Vf8XmE7vq5JrxRObveM5cFAsJry1-r1jM_EzvLkyCIoWC-l0H0397xLxjPV6sLQiIQ4pM-_5U8l";
+    final prefs = await SharedPreferences.getInstance();
+    var token = await getToken(receiver);
+    print("Token $token");
+    try {
+      //   Uri.parse("https://api.rnfirebase.io/messaging/send"),
+      final response = await http.post(
+        Uri.parse("https://fcm.googleapis.com/fcm/send"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'key=$serverKey',
+        },
+        body: jsonEncode(
+          <String, dynamic>{
+            'notification': <String, dynamic>{
+              'body':
+                  '${prefs.getString("name")} is willing to connect with you',
+              'title': '$pName'
+            },
+            'priority': 'high',
+            'data': <String, dynamic>{
+              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+              'sound': 'default',
+              'color': 'blue',
+              'id': '1',
+              'status': 'done',
+              'screen': 'Engage',
+              'uid': '${FirebaseAuth.instance.currentUser.uid}'
+            },
+            'to': token,
+          },
+        ),
+      ); //Dio(options).post(postUrl, data: data);
+      print('FCM request for device sent!');
+      if (response.statusCode == 200) {
+        Fluttertoast.showToast(msg: 'Request Sent To Owner');
+      } else {
+        print('notification sending failed with code ${response.statusCode}');
+        // on failure do sth
+      }
+    } catch (e) {
+      print('exception $e');
+    }
+  }
+
+  static Future<String> getToken(userId) async {
+    final FirebaseFirestore _db = FirebaseFirestore.instance;
+
+    var token;
+    await _db
+        .collection('users')
+        .doc(userId)
+        .collection('tokens')
+        .get()
+        .then((snapshot) {
+      snapshot.docs.forEach((doc) {
+        token = doc.id;
+      });
+    });
+
+    return token;
+  }
+
+  Future<void> addToFavourites(String docId, String purpose) async {
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(FirebaseAuth.instance.currentUser.uid.toString())
+        .update({
+      "Favourites.$docId": "$purpose",
+    }).then((_) => Fluttertoast.showToast(msg: "Added to favourites"));
+  }
+
+  Future<void> removeFromFavourites(String docId) async {
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(FirebaseAuth.instance.currentUser.uid.toString())
+        .update({
+      "Favourites.$docId": FieldValue.delete(),
+    }).then((_) => Fluttertoast.showToast(msg: "Removed from favourites"));
+  }
+
+  Future<void> checkIfFavourite(String docId) async {
+    setState(() {
+      checked = true;
+    });
+    Map<String, dynamic> favList;
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(FirebaseAuth.instance.currentUser.uid.toString())
+        .get()
+        .then((doc) {
+      setState(() {
+        favList = doc.data()["Favourites"];
+      });
+    });
+    if (favList != null) {
+      if (favList.containsKey(docId)) {
+        setState(() {
+          wishlisted = true;
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     data = ModalRoute.of(context).settings.arguments;
+    if (!checked) checkIfFavourite(data["docId"]);
     try {
       if (imagesList[0] == null) {
         //setData(context);
@@ -54,18 +168,18 @@ class _PropertyViewState extends State<PropertyView> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              height: MediaQuery.of(context).size.height * .68,
-              width: MediaQuery.of(context).size.width,
+              height: size.height * .68,
+              width: size.width,
               decoration: BoxDecoration(
-                  color: Colors.green[50],
+                  color: Colors.white, //[50],
                   borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(45),
-                      topRight: Radius.circular(45)),
+                      topLeft: Radius.circular(75),
+                      topRight: Radius.circular(0)),
                   boxShadow: [
                     BoxShadow(
-                        color: Colors.black.withOpacity(.2),
-                        offset: Offset(0, -4),
-                        blurRadius: 8),
+                        color: Colors.black.withOpacity(.99),
+                        offset: Offset(5, -25),
+                        blurRadius: 50),
                   ]),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,24 +195,30 @@ class _PropertyViewState extends State<PropertyView> {
                             style: GoogleFonts.lobster(
                               textStyle: Theme.of(context).textTheme.headline4,
                               color: Colors.black,
-                              fontSize: 35,
+                              fontSize: size.width * 0.1,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
                         IconButton(
-                          onPressed: () {
+                          onPressed: () async {
                             setState(() {
                               HapticFeedback.vibrate();
                               wishlisted = !wishlisted;
                             });
+                            if (wishlisted) {
+                              await addToFavourites(
+                                  data["docId"], data["Purpose"]);
+                            } else {
+                              await removeFromFavourites(data["docId"]);
+                            }
                           },
                           icon: Icon(
                             wishlisted
                                 ? CustomIcons.favorite
                                 : CustomIcons.favorite_border,
                             color: wishlisted ? Colors.red : Colors.black,
-                            size: 34,
+                            size: size.width * 0.09,
                           ),
                         ),
                       ],
@@ -119,7 +239,7 @@ class _PropertyViewState extends State<PropertyView> {
                           style: GoogleFonts.lobster(
                             textStyle: Theme.of(context).textTheme.headline4,
                             color: Colors.black,
-                            fontSize: 25,
+                            fontSize: size.width * 0.07,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -139,8 +259,8 @@ class _PropertyViewState extends State<PropertyView> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Container(
-                            width: 120,
-                            height: 77,
+                            width: size.width * 0.3,
+                            height: size.width * 0.2,
                             decoration: BoxDecoration(
                               border: Border.all(
                                   color: Colors.black,
@@ -157,7 +277,7 @@ class _PropertyViewState extends State<PropertyView> {
                                     textStyle:
                                         Theme.of(context).textTheme.headline4,
                                     color: Colors.black,
-                                    fontSize: 18,
+                                    fontSize: size.width * 0.045,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -171,8 +291,8 @@ class _PropertyViewState extends State<PropertyView> {
                             width: 15,
                           ),
                           Container(
-                            width: 120,
-                            height: 77,
+                            width: size.width * 0.3,
+                            height: size.width * 0.2,
                             decoration: BoxDecoration(
                               border: Border.all(
                                   color: Colors.black,
@@ -189,7 +309,7 @@ class _PropertyViewState extends State<PropertyView> {
                                     textStyle:
                                         Theme.of(context).textTheme.headline4,
                                     color: Colors.black,
-                                    fontSize: 18,
+                                    fontSize: size.width * 0.045,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -209,8 +329,8 @@ class _PropertyViewState extends State<PropertyView> {
                                   arguments: dest);
                             },
                             child: Container(
-                              width: 120,
-                              height: 77,
+                              width: size.width * 0.3,
+                              height: size.width * 0.2,
                               decoration: BoxDecoration(
                                 border: Border.all(
                                     color: Colors.black,
@@ -227,13 +347,13 @@ class _PropertyViewState extends State<PropertyView> {
                                       textStyle:
                                           Theme.of(context).textTheme.headline4,
                                       color: Colors.black,
-                                      fontSize: 18,
+                                      fontSize: size.width * 0.045,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                   Icon(
                                     Icons.directions,
-                                    size: 30,
+                                    size: size.width * 0.07,
                                   ),
                                 ],
                               ),
@@ -247,8 +367,8 @@ class _PropertyViewState extends State<PropertyView> {
                               launch("tel://${data["Contact"]}");
                             },
                             child: Container(
-                              width: 120,
-                              height: 77,
+                              width: size.width * 0.3,
+                              height: size.width * 0.2,
                               decoration: BoxDecoration(
                                 border: Border.all(
                                     color: Colors.black,
@@ -265,13 +385,13 @@ class _PropertyViewState extends State<PropertyView> {
                                       textStyle:
                                           Theme.of(context).textTheme.headline4,
                                       color: Colors.black,
-                                      fontSize: 18,
+                                      fontSize: size.width * 0.045,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                   Icon(
                                     Icons.call,
-                                    size: 30,
+                                    size: size.width * 0.07,
                                   ),
                                 ],
                               ),
@@ -298,7 +418,7 @@ class _PropertyViewState extends State<PropertyView> {
                                 textStyle:
                                     Theme.of(context).textTheme.headline4,
                                 color: Colors.black,
-                                fontSize: 18,
+                                fontSize: size.width * 0.045,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -320,7 +440,7 @@ class _PropertyViewState extends State<PropertyView> {
                                       textStyle:
                                           Theme.of(context).textTheme.headline4,
                                       color: Colors.black,
-                                      fontSize: 18,
+                                      fontSize: size.width * 0.045,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -370,25 +490,27 @@ class _PropertyViewState extends State<PropertyView> {
                 style: GoogleFonts.rajdhani(
                   textStyle: Theme.of(context).textTheme.headline4,
                   color: Colors.white,
-                  fontSize: 18,
+                  fontSize: size.width * 0.045,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
             SizedBox(
-              width: 15,
+              width: size.width * 0.04,
             ),
             FloatingActionButton.extended(
               heroTag: null,
               icon: Icon(Icons.send),
               backgroundColor: Colors.indigo.shade900,
-              onPressed: () {},
+              onPressed: () {
+                sendNotification(data["uid"], data["name"]);
+              },
               label: Text(
                 "Request Lease",
                 style: GoogleFonts.rajdhani(
                   textStyle: Theme.of(context).textTheme.headline4,
                   color: Colors.white,
-                  fontSize: 18,
+                  fontSize: size.width * 0.045,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -426,10 +548,9 @@ class _PropertyViewState extends State<PropertyView> {
       try {
         if (imagesList[0] == null) {}
       } catch (Exception) {
-        print("not updated");
+        // print("not updated");
       }
       length = imagesList.length;
     });
-    // print("Called");
   }
 }

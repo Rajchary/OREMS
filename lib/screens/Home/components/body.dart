@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:online_real_estate_management_system/constants.dart';
 import 'package:online_real_estate_management_system/screens/Tenant/components/searchProperty.dart';
 import 'package:online_real_estate_management_system/screens/landlord/components/listProperties.dart';
+import 'package:online_real_estate_management_system/screens/landlord/components/managableProperties.dart';
 import 'package:online_real_estate_management_system/services/actionBanner.dart';
 
 class Body extends StatefulWidget {
@@ -119,11 +120,7 @@ class _BodyState extends State<Body> {
                   "Now selling your property was made easy. you can easily sell your property by clicking below",
               buttonText: "Sell My Property",
               press: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) => ListProperty()),
-                );
+                Navigator.pushNamed(context, ManageProperty.idScreen);
               },
             ),
           ],

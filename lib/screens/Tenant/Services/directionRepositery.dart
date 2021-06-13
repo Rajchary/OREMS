@@ -22,6 +22,7 @@ class DirectionRepositery {
       },
     );
     if (response.statusCode == 200) {
+      print(response.data);
       return Directions.fromMap(response.data);
     }
     return null;

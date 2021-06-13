@@ -309,10 +309,10 @@ class _AddInfoState extends State<AddInfo> {
         "KYCDocument": currentDoccument.trim(),
         "KYCid": kycId.text.trim(),
       };
-      if (!kIsWeb) {
-        await userRef.child(firebaseUser.uid).set(userDataMap);
-        showToast("Validate your emil id !!..", context);
-      }
+      // if (!kIsWeb) {
+      //   await userRef.child(firebaseUser.uid).set(userDataMap);
+      //   showToast("Validate your emil id !!..", context);
+      // }
       DocumentReference documentReferencer =
           userCollection.doc(firebaseUser.uid);
       UserData userC = UserData(

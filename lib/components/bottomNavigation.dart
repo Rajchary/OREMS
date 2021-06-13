@@ -13,6 +13,7 @@ class BottomNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var route = ModalRoute.of(context).settings.name;
+    Size size = MediaQuery.of(context).size;
     return Container(
       decoration: BoxDecoration(
         color: Colors.black,
@@ -25,14 +26,13 @@ class BottomNavigation extends StatelessWidget {
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.black,
-              ),
+            SizedBox(
+              width: size.width * 0.07,
+            ),
+            IconButton(
               onPressed: () {
-                print(route);
                 if (route.toString() != HomeScreen.idScreen)
                   Navigator.pushNamedAndRemoveUntil(
                       context, HomeScreen.idScreen, (route) => false);
@@ -42,15 +42,12 @@ class BottomNavigation extends StatelessWidget {
                 color: Colors.white,
                 size: 40,
               ),
-              label: Text(""),
             ),
-            //SizedBox(width: 5),
-            ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.black,
-              ),
+            SizedBox(
+              width: size.width * 0.05,
+            ),
+            IconButton(
               onPressed: () {
-                print(route);
                 if (route.toString() != ProfileView.idScreen)
                   Navigator.pushNamed(context, ProfileView.idScreen);
               },
@@ -59,13 +56,11 @@ class BottomNavigation extends StatelessWidget {
                 color: Colors.white,
                 size: 40,
               ),
-              label: Text(""),
             ),
-            SizedBox(width: 5),
-            ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.black,
-              ),
+            SizedBox(
+              width: size.width * 0.05,
+            ),
+            IconButton(
               onPressed: () {
                 if (route.toString() != AddMyProperty.idScreen)
                   Navigator.pushNamed(context, AddMyProperty.idScreen);
@@ -75,38 +70,36 @@ class BottomNavigation extends StatelessWidget {
                 color: greenThick,
                 size: 40,
               ),
-              label: Text(""),
             ),
-            SizedBox(width: 5),
-            ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.black,
+            SizedBox(
+              width: size.width * 0.05,
+            ),
+            IconButton(
+              onPressed: () {
+                // if (route.toString() != AddMap.idScreen)
+                //   Navigator.pushNamed(context, AddMap.idScreen);
+                
+              },
+              icon: Icon(
+                Icons.monetization_on_outlined,
+                color: Colors.white,
+                size: 40,
               ),
+            ),
+            SizedBox(
+              width: size.width * 0.05,
+            ),
+            IconButton(
               onPressed: () {
                 if (route.toString() != AddMap.idScreen)
                   Navigator.pushNamed(context, AddMap.idScreen);
               },
               icon: Icon(
-                Icons.navigation,
-                color: Colors.white,
-                size: 40,
-              ),
-              label: Text(""),
-            ),
-            //SizedBox(width: 5),
-            ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.black,
-              ),
-              onPressed: () {},
-              icon: Icon(
                 Icons.settings,
                 color: Colors.white,
                 size: 40,
               ),
-              label: Text(""),
             ),
-            // FloatingActionButton(onPressed: onPressed)
           ],
         ),
       ),

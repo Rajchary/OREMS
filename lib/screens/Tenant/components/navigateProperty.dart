@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -36,10 +37,6 @@ class _NavigateToPropertyState extends State<NavigateToProperty> {
         desiredAccuracy: LocationAccuracy.high);
 
     currentPosition = position;
-
-    // setState(() {
-    //   start = LatLng(position.latitude, position.longitude);
-    // });
     start = LatLng(position.latitude, position.longitude);
     CameraPosition cameraPosition =
         new CameraPosition(target: start, zoom: zoom, tilt: 64);
@@ -59,12 +56,14 @@ class _NavigateToPropertyState extends State<NavigateToProperty> {
   Widget build(BuildContext context) {
     setState(() {
       dest = ModalRoute.of(context).settings.arguments;
-      print("${dest.hashCode}  ${dest.longitude}");
+      //  print("${dest.hashCode}  ${dest.longitude}");
     });
     try {
       if (dest != null) {
-        _addMarkers("Destination", dest);
-        //  _addMarkers("Origin", start);
+        if (_destination == null) {
+          _addMarkers("Destination", dest);
+          Fluttertoast.showToast(msg: "msg");
+        }
       }
     } catch (E) {
       print("Error");
@@ -80,6 +79,7 @@ class _NavigateToPropertyState extends State<NavigateToProperty> {
             buildingsEnabled: true,
             tiltGesturesEnabled: true,
             mapToolbarEnabled: true,
+            trafficEnabled: true,
             initialCameraPosition: _initialCameraPosition,
             onMapCreated: (GoogleMapController controller) {
               _googleMapController = controller;
@@ -133,9 +133,16 @@ class _NavigateToPropertyState extends State<NavigateToProperty> {
       floatingActionButton: Container(
         padding: EdgeInsets.symmetric(vertical: 10),
         width: MediaQuery.of(context).size.width,
-        child: Row(
+        child: //SingleChildScrollView(
+            //scrollDirection: Axis.horizontal,
+            //child:
+            Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            // SizedBox(
+            //   width: 25,
+            // ),
             FloatingActionButton.extended(
               heroTag: null,
               enableFeedback: true,
@@ -145,7 +152,7 @@ class _NavigateToPropertyState extends State<NavigateToProperty> {
                 _googleMapController.animateCamera(_info != null
                     ? CameraUpdate.newLatLngBounds(_info.bounds, 100.0)
                     : CameraUpdate.newCameraPosition(CameraPosition(
-                        target: _origin.position, zoom: 20, tilt: 60)));
+                        target: _destination.position, zoom: 20, tilt: 60)));
                 locatePosition(20);
               },
               label: Text(
@@ -158,6 +165,31 @@ class _NavigateToPropertyState extends State<NavigateToProperty> {
                 ),
               ),
             ),
+            // SizedBox(
+            //   width: 5,
+            // ),
+            // FloatingActionButton.extended(
+            //   heroTag: null,
+            //   enableFeedback: true,
+            //   icon: Icon(Icons.directions),
+            //   backgroundColor: Colors.indigo.shade900,
+            //   onPressed: () async {
+            //     final directions = await DirectionRepositery().getDirection(
+            //         origin: _origin.position,
+            //         destination: _destination.position);
+            //     setState(() => _info = directions);
+            //     if (_info != null) Fluttertoast.showToast(msg: "Called");
+            //   },
+            //   label: Text(
+            //     "Directions",
+            //     style: GoogleFonts.rajdhani(
+            //       textStyle: Theme.of(context).textTheme.headline4,
+            //       color: Colors.white,
+            //       fontSize: 18,
+            //       fontWeight: FontWeight.bold,
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
@@ -176,9 +208,6 @@ class _NavigateToPropertyState extends State<NavigateToProperty> {
         _googleMapController.animateCamera(CameraUpdate.newCameraPosition(
             CameraPosition(target: _origin.position, zoom: 20, tilt: 65)));
       });
-      final directions = await DirectionRepositery().getDirection(
-          origin: _origin.position, destination: _destination.position);
-      setState(() => _info = directions);
     } else if (place == "Destination") {
       setState(() {
         _destination = Marker(
@@ -190,6 +219,9 @@ class _NavigateToPropertyState extends State<NavigateToProperty> {
         _googleMapController.animateCamera(CameraUpdate.newCameraPosition(
             CameraPosition(target: _destination.position, zoom: 20, tilt: 65)));
       });
+      // final directions = await DirectionRepositery().getDirection(
+      //     origin: _origin.position, destination: _destination.position);
+      // setState(() => _info = directions);
     }
   }
 }

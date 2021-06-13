@@ -54,9 +54,11 @@ dependencies:
   location: ^4.1.1
   dio: ^4.0.0
   flutter_polyline_points: ^1.0.0
+  no_context_navigation: ^2.0.0
   url_launcher: ^6.0.6
   flutter_sms: ^2.3.1
   local_auth: ^1.1.6
+  firebase_messaging: ^10.0.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

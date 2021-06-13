@@ -1,314 +1,201 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:online_real_estate_management_system/components/bottomNavigation.dart';
+import 'package:online_real_estate_management_system/assets/CustomeIcons.dart';
 import 'package:online_real_estate_management_system/components/confirmDialog.dart';
-import 'package:online_real_estate_management_system/components/progressDialog.dart';
-import 'package:online_real_estate_management_system/constants.dart';
-import 'package:online_real_estate_management_system/screens/Home/homeScreen.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:online_real_estate_management_system/screens/Tenant/components/property.dart';
 
-class ListProperty extends StatefulWidget {
-  static const String idScreen = "ListProperty";
+class Favourites extends StatefulWidget {
+  static const idScreen = "Favourites";
+  const Favourites({Key key}) : super(key: key);
+
   @override
-  _ListPropertyState createState() => _ListPropertyState();
+  _FavouritesState createState() => _FavouritesState();
 }
 
-class _ListPropertyState extends State<ListProperty>
-    with WidgetsBindingObserver {
-  int properties = 0;
-  int i = 0;
+class _FavouritesState extends State<Favourites> {
   List<Map<String, dynamic>> _propertyData = [];
-  @override
-  void initState() {
-    getPropertyDetails();
-    super.initState();
-    //WidgetsBinding.instance.addObserver(this);
-  }
-
-  void getPropertyDetails() async {
+  int properties = 0;
+  Size size;
+  bool wishlisted = true;
+  Future<void> getFavourites() async {
+    Map<String, dynamic> favList;
     await FirebaseFirestore.instance
-        .collection('Property')
-        .doc("${FirebaseAuth.instance.currentUser.uid.toString()}")
-        .collection("PropertyDetails")
+        .collection("users")
+        .doc(FirebaseAuth.instance.currentUser.uid.toString())
         .get()
-        .then((QuerySnapshot snap) {
+        .then((doc) {
       setState(() {
-        i = 0;
-        properties = snap.docs.length;
-        snap.docs.forEach((record) {
-          String docId = record.id.toString();
-          _propertyData.add(record.data());
-          _propertyData[i]["docId"] = docId;
-          //    print("${_propertyData[i]["docId"]}  $i");
-          ++i;
-        });
+        favList = doc.data()["Favourites"];
       });
     });
-    await FirebaseFirestore.instance
-        .collection('Property')
-        .doc('General')
-        .collection('Sale')
-        .where("uid",
-            isEqualTo: "${FirebaseAuth.instance.currentUser.uid.toString()}")
-        .get()
-        .then((QuerySnapshot snap) {
-      setState(() {
-        properties += snap.docs.length;
-        snap.docs.forEach((element) {
-          String docId = element.id.toString();
-          _propertyData.add(element.data());
-          _propertyData[i]["docId"] = docId;
-          //  print("${_propertyData[i]["docId"]}  $i");
-          ++i;
-        });
-      });
-    });
-    await FirebaseFirestore.instance
-        .collection('Property')
-        .doc('General')
-        .collection('Lease')
-        .where("uid",
-            isEqualTo: "${FirebaseAuth.instance.currentUser.uid.toString()}")
-        .get()
-        .then((QuerySnapshot snap) {
-      setState(() {
-        properties += snap.docs.length;
-        snap.docs.forEach((element) {
-          String docId = element.id.toString();
-          _propertyData.add(element.data());
-          _propertyData[i]["docId"] = docId;
-          //    print("${_propertyData[i]["docId"]}  $i");
-          ++i;
-        });
-      });
-    });
-    print("Property count is $properties");
-    if (properties == 0) {
-      final action = await AlertDialogs.confirmDialog(
-          context, "Ouch!", "You haven't added any properties yet",
-          cancel: "", yes: "Ok");
-      if (action == DialogAction.Yes) {
-        Navigator.pushNamedAndRemoveUntil(
-            context, HomeScreen.idScreen, (route) => false);
-      }
-    }
-  }
-
-  Future<void> deleteProperty(Map<String, dynamic> map) async {
-    if (map["Purpose"] == "Manage") {
-      await FirebaseFirestore.instance
-          .collection('Property')
-          .doc("${FirebaseAuth.instance.currentUser.uid.toString()}")
-          .collection("PropertyDetails")
-          .doc(map["docId"])
-          .delete()
-          .then((value) async {
-        firebase_storage.ListResult result = await firebase_storage
-            .FirebaseStorage.instance
-            .ref()
-            .child(
-                "images/property/${FirebaseAuth.instance.currentUser.uid}/${map["name"]}")
-            .listAll();
-        result.items.forEach((firebase_storage.Reference ref) async {
-          await firebase_storage.FirebaseStorage.instance
-              .ref()
-              .child("${ref.fullPath}")
-              .delete();
-        });
-      });
-    } else if (map["Purpose"] == "Lease") {
-      await FirebaseFirestore.instance
-          .collection('Property')
-          .doc('General')
-          .collection('Lease')
-          .doc(map["docId"])
-          .delete()
-          .then((value) async {
-        firebase_storage.ListResult result = await firebase_storage
-            .FirebaseStorage.instance
-            .ref()
-            .child(
-                "images/property/${FirebaseAuth.instance.currentUser.uid}/${map["name"]}")
-            .listAll();
-        result.items.forEach((firebase_storage.Reference ref) async {
-          await firebase_storage.FirebaseStorage.instance
-              .ref()
-              .child("${ref.fullPath}")
-              .delete();
-        });
-      });
-    } else if (map["Purpose"] == "Sale") {
-      await FirebaseFirestore.instance
-          .collection('Property')
-          .doc('General')
-          .collection('Sale')
-          .doc(map["docId"])
-          .delete()
-          .then((value) async {
-        firebase_storage.ListResult result = await firebase_storage
-            .FirebaseStorage.instance
-            .ref()
-            .child(
-                "images/property/${FirebaseAuth.instance.currentUser.uid}/${map["name"]}")
-            .listAll();
-        result.items.forEach((firebase_storage.Reference ref) async {
-          await firebase_storage.FirebaseStorage.instance
-              .ref()
-              .child("${ref.fullPath}")
-              .delete();
-        });
-      });
-    }
-    showDeleteSuccess();
-  }
-
-  void showDeleteSuccess() {
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return Dialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(45)),
-            elevation: 16,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Color(0xFF1B222E),
-                borderRadius: BorderRadius.circular(30),
-              ),
-              height: 400,
-              width: 400,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SvgPicture.asset(
-                    "assets/images/deleted.svg",
-                    width: 400,
-                    height: 200,
-                  ),
-                  Text(
-                    "Success !",
-                    style: GoogleFonts.lobster(
-                      textStyle: Theme.of(context).textTheme.headline4,
-                      color: Colors.blue,
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
+    if (favList == null || favList.length == 0) {
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return Dialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(45)),
+              elevation: 16,
+              child: Container(
+                padding: EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  color: Color(0xFF1B222E),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                height: size.height * 0.45,
+                width: size.width * 0.45,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SvgPicture.asset(
+                      "assets/images/No message.svg",
+                      width: size.width * 0.4,
+                      height: size.height * 0.2,
                     ),
-                  ),
-                  Flexible(
-                    child: Text(
-                      "Your property was deleted successfully",
-                      overflow: TextOverflow.visible,
-                      softWrap: true,
-                      maxLines: 3,
-                      style: GoogleFonts.rajdhani(
+                    Text(
+                      "Ouch !",
+                      style: GoogleFonts.lobster(
                         textStyle: Theme.of(context).textTheme.headline4,
-                        color: greenThick,
-                        fontSize: 15,
+                        color: Colors.blue,
+                        fontSize: 25,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(primary: Colors.white),
-                        onPressed: () {
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, HomeScreen.idScreen, (route) => false);
-                        },
-                        child: Text(
-                          "OK",
-                          style:
-                              TextStyle(fontSize: 15, color: Colors.pink[400]),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Flexible(
+                      child: Text(
+                        "Their aren't any properties added to your favourites yet",
+                        overflow: TextOverflow.visible,
+                        softWrap: true,
+                        maxLines: 3,
+                        style: GoogleFonts.rajdhani(
+                          textStyle: Theme.of(context).textTheme.headline4,
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          style:
+                              ElevatedButton.styleFrom(primary: Colors.white),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(
+                            "OK",
+                            style: TextStyle(
+                                fontSize: 15, color: Colors.pink[400]),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
-        });
+            );
+          });
+    } else {
+      favList.forEach((key, value) async {
+        if (value == "Lease") {
+          await addLeasedProperties(key);
+        } else if (value == "Sale") {
+          await addSaleProperties(key);
+        }
+      });
+      print("Properties added till now are $properties");
+    }
+  }
+
+  Future<void> addLeasedProperties(String docId) async {
+    await FirebaseFirestore.instance
+        .collection("Property")
+        .doc("General")
+        .collection("Lease")
+        .doc(docId)
+        .get()
+        .then((value) async {
+      setState(() {
+        ++properties;
+        _propertyData.add(value.data());
+        _propertyData[properties - 1]["docId"] = docId;
+      });
+    });
+  }
+
+  Future<void> addSaleProperties(String docId) async {
+    await FirebaseFirestore.instance
+        .collection("Property")
+        .doc("General")
+        .collection("Sale")
+        .doc(docId)
+        .get()
+        .then((value) async {
+      setState(() {
+        ++properties;
+        _propertyData.add(value.data());
+        _propertyData[properties - 1]["docId"] = docId;
+      });
+    });
   }
 
   @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
+  void initState() {
+    getFavourites();
+    super.initState();
   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    getPropertyDetails();
-    super.didChangeAppLifecycleState(state);
+  Future<void> removeFromFavourites(String docId) async {
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(FirebaseAuth.instance.currentUser.uid.toString())
+        .update({
+      "Favourites.$docId": FieldValue.delete(),
+    }).then((_) => Fluttertoast.showToast(msg: "Removed from favourites"));
   }
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
         height: size.height,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [
-              Colors.indigo,
-              Colors.teal,
-            ],
-          ),
-        ),
+        color: Color(0xFF1B222E),
         child: GridView.builder(
             itemCount: properties,
             gridDelegate:
                 SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1),
             itemBuilder: (context, index) {
-              return GestureDetector(
-                onLongPress: () async {
-                  final action = await AlertDialogs.confirmDialog(
-                      context,
-                      "Delete ?",
-                      "Do you want to delete this property. This action can't be revoked",
-                      yes: "YES",
-                      cancel: "Cancel");
-                  if (action == DialogAction.Yes) {
-                    showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (BuildContext context) {
-                          return ProgressDialog(
-                            message: "Removing..",
-                          );
-                        });
-                    await deleteProperty(_propertyData[index]);
-                  }
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(25.0),
+              return Padding(
+                padding: const EdgeInsets.all(25.0),
+                child: GestureDetector(
+                  onTap: () async {
+                    Navigator.pushNamed(context, PropertyView.idScreen,
+                        arguments: _propertyData[index]);
+                  },
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 15),
                     margin: EdgeInsets.all(3),
                     width: double.infinity,
-                    height: 700,
+                    height: size.height * 0.7,
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          Colors.white,
-                          Colors.grey,
-                        ],
-                      ),
+                      color: Color(0xFF1B222E),
+                      border: Border.all(color: Colors.white),
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: SingleChildScrollView(
@@ -317,6 +204,47 @@ class _ListPropertyState extends State<ListProperty>
                         children: <Widget>[
                           SizedBox(
                             height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              IconButton(
+                                onPressed: () async {
+                                  setState(() {
+                                    HapticFeedback.vibrate();
+                                    wishlisted = !wishlisted;
+                                  });
+                                  if (!wishlisted) {
+                                    final action = await AlertDialogs.confirmDialog(
+                                        context,
+                                        "Remove ?",
+                                        "Are you sure you wanna remove this property from your favourites",
+                                        yes: "Yes",
+                                        cancel: "No");
+                                    if (action == DialogAction.Yes) {
+                                      await removeFromFavourites(
+                                          _propertyData[index]["docId"]);
+                                      setState(() {
+                                        properties = 0;
+                                        getFavourites();
+                                      });
+                                    } else {
+                                      setState(() {
+                                        wishlisted = true;
+                                      });
+                                    }
+                                  }
+                                },
+                                icon: Icon(
+                                  wishlisted
+                                      ? CustomIcons.favorite
+                                      : CustomIcons.favorite_border,
+                                  color: wishlisted ? Colors.red : Colors.black,
+                                  size: size.width * 0.09,
+                                ),
+                              ),
+                            ],
                           ),
                           ClipRRect(
                             borderRadius: BorderRadius.only(
@@ -559,7 +487,6 @@ class _ListPropertyState extends State<ListProperty>
               );
             }),
       ),
-      bottomNavigationBar: BottomNavigation(),
     );
   }
 }

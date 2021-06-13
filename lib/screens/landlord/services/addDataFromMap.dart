@@ -144,6 +144,7 @@ class _AddDataFromMapState extends State<AddDataFromMap> {
                         prefs.setString("Glocation", _resultAddress);
                         //print(_resultAddress);
                         //print(origin.position.toString());
+                        Fluttertoast.showToast(msg: "Select Images");
                         Navigator.popAndPushNamed(context, AddImages.idScreen);
                       } else {
                         Fluttertoast.showToast(msg: "Retrying please wait");
