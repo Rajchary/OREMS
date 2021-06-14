@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">282622214282-v1fq01bkncnh02d2df3t7kipsk78e9eq.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">282622214282</string>
+    <string name="google_api_key" translatable="false">AIzaSyCYxSCeUJZ6ddlF9zbx3V37yy9RTvX7kho</string>
+    <string name="google_app_id" translatable="false">1:282622214282:android:31cf46f8421ca2db71ad73</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCYxSCeUJZ6ddlF9zbx3V37yy9RTvX7kho</string>
+    <string name="google_storage_bucket" translatable="false">orems-156de.appspot.com</string>
+    <string name="project_id" translatable="false">orems-156de</string>
+</resources>

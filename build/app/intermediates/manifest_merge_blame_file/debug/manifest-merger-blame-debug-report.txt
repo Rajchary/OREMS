@@ -1,0 +1,615 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.online_real_estate_management_system"
+4    android:versionCode="1"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+9        android:targetSdkVersion="30" />
+10    <!--
+11         Flutter needs it to communicate with the running application
+12         to allow setting breakpoints, to provide hot reload, etc.
+13    -->
+14    <uses-permission android:name="android.permission.INTERNET" />
+14-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:3:5-67
+14-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:3:22-64
+15    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+15-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:4:5-79
+15-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:4:22-76
+16    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+16-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:5:5-79
+16-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:5:22-76
+17    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+17-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:6:5-81
+17-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:6:22-78
+18    <uses-permission android:name="android.permission.VIBRATE" />
+18-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:7:5-66
+18-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:7:22-63
+19    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+19-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:8:5-73
+19-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:8:22-71
+20    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+20-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:9:5-71
+20-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:9:22-69
+21    <uses-permission android:name="android.permission.WAKE_LOCK" />
+21-->[:firebase_messaging] F:\FlutterProjects\online_real_estate_management_system\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:8:5-68
+21-->[:firebase_messaging] F:\FlutterProjects\online_real_estate_management_system\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:8:22-65
+22    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+22-->[:image_picker] F:\FlutterProjects\online_real_estate_management_system\build\image_picker\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-80
+22-->[:image_picker] F:\FlutterProjects\online_real_estate_management_system\build\image_picker\intermediates\library_manifest\debug\AndroidManifest.xml:7:22-77
+23    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+23-->[:image_picker] F:\FlutterProjects\online_real_estate_management_system\build\image_picker\intermediates\library_manifest\debug\AndroidManifest.xml:8:5-81
+23-->[:image_picker] F:\FlutterProjects\online_real_estate_management_system\build\image_picker\intermediates\library_manifest\debug\AndroidManifest.xml:8:22-78
+24    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+24-->[:flutter_local_notifications] F:\FlutterProjects\online_real_estate_management_system\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-81
+24-->[:flutter_local_notifications] F:\FlutterProjects\online_real_estate_management_system\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:7:22-78
+25    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" /> <!-- Required by older versions of Google Play services to create IID tokens -->
+25-->[:flutter_local_notifications] F:\FlutterProjects\online_real_estate_management_system\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:9:5-81
+25-->[:flutter_local_notifications] F:\FlutterProjects\online_real_estate_management_system\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:9:22-78
+26    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+26-->[com.google.firebase:firebase-messaging:22.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\9e79ee792af9c67cbf110f099b01350c\jetified-firebase-messaging-22.0.0\AndroidManifest.xml:25:5-82
+26-->[com.google.firebase:firebase-messaging:22.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\9e79ee792af9c67cbf110f099b01350c\jetified-firebase-messaging-22.0.0\AndroidManifest.xml:25:22-79
+27
+28    <uses-feature
+28-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\fb04f806008cfecf180bc36c6a7dd723\jetified-play-services-maps-17.0.0\AndroidManifest.xml:26:5-28:35
+29        android:glEsVersion="0x00020000"
+29-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\fb04f806008cfecf180bc36c6a7dd723\jetified-play-services-maps-17.0.0\AndroidManifest.xml:27:9-41
+30        android:required="true" />
+30-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\fb04f806008cfecf180bc36c6a7dd723\jetified-play-services-maps-17.0.0\AndroidManifest.xml:28:9-32
+31
+32    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
+32-->[com.google.android.gms:play-services-measurement:19.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\1b790c85db8f65f3effb056d05a780b2\jetified-play-services-measurement-19.0.0\AndroidManifest.xml:26:5-110
+32-->[com.google.android.gms:play-services-measurement:19.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\1b790c85db8f65f3effb056d05a780b2\jetified-play-services-measurement-19.0.0\AndroidManifest.xml:26:22-107
+33
+34    <application
+34-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:10:4-63:19
+35        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+35-->[androidx.core:core:1.3.2] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\5ff0e9ca13716a55dc46258c591d2cdc\core-1.3.2\AndroidManifest.xml:24:18-86
+36        android:debuggable="true"
+37        android:icon="@mipmap/ic_launcher"
+37-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:12:9-43
+38        android:label="online_real_estate_management_system" >
+38-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:11:9-61
+39        <activity
+39-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:13:9-51:20
+40            android:name="com.example.online_real_estate_management_system.MainActivity"
+40-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:14:13-41
+41            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+41-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:17:13-163
+42            android:hardwareAccelerated="true"
+42-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:18:13-47
+43            android:launchMode="singleTop"
+43-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:15:13-43
+44            android:showWhenLocked="true"
+44-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:19:13-42
+45            android:theme="@style/LaunchTheme"
+45-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:16:13-47
+46            android:turnScreenOn="true"
+46-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:20:13-40
+47            android:windowSoftInputMode="adjustResize" >
+47-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:21:13-55
+48
+49            <!--
+50                 Specifies an Android theme to apply to this Activity as soon as
+51                 the Android process has started. This theme is visible to the user
+52                 while the Flutter UI initializes. After that, this theme continues
+53                 to determine the Window background behind the Flutter UI.
+54            -->
+55            <meta-data
+55-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:26:13-29:17
+56                android:name="io.flutter.embedding.android.NormalTheme"
+56-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:27:15-70
+57                android:resource="@style/NormalTheme" />
+57-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:28:15-52
+58
+59            <!--
+60                 Displays an Android View that continues showing the launch screen
+61                 Drawable until Flutter paints its first frame, then this splash
+62                 screen fades out. A splash screen is useful to avoid any visual
+63                 gap between the end of Android's launch screen and the painting of
+64                 Flutter's first frame.
+65            -->
+66            <meta-data
+66-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:36:13-39:17
+67                android:name="io.flutter.embedding.android.SplashScreenDrawable"
+67-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:37:15-79
+68                android:resource="@drawable/launch_background" />
+68-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:38:15-61
+69
+70            <intent-filter>
+70-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:40:13-43:29
+71                <action android:name="android.intent.action.MAIN" />
+71-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:41:17-68
+71-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:41:25-66
+72
+73                <category android:name="android.intent.category.LAUNCHER" />
+73-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:42:17-76
+73-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:42:27-74
+74            </intent-filter>
+75            <intent-filter>
+75-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:45:13-49:29
+76                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+76-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:46:15-76
+76-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:46:23-73
+77                <action android:name="FLUTTER_NOTIFICATION_CLICK" />
+77-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:47:15-66
+77-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:47:23-64
+78                <action android:name="android.intent.category.DEFAULT" />
+78-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:48:15-71
+78-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:48:23-69
+79            </intent-filter>
+80        </activity>
+81
+82        <meta-data
+82-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:53:9-55:55
+83            android:name="com.google.firebase.messaging.default_notification_channel_id"
+83-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:54:13-89
+84            android:value="high_importance_channel" />
+84-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:55:13-52
+85        <!--
+86             Don't delete the meta-data below.
+87             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+88        -->
+89        <meta-data
+89-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:58:9-60:33
+90            android:name="flutterEmbedding"
+90-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:59:13-44
+91            android:value="2" />
+91-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:60:13-30
+92        <meta-data
+92-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:61:9-62:73
+93            android:name="com.google.android.geo.API_KEY"
+93-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:61:20-65
+94            android:value="AIzaSyCYxSCeUJZ6ddlF9zbx3V37yy9RTvX7kho" />
+94-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:62:16-71
+95
+96        <service
+96-->[:firebase_database] F:\FlutterProjects\online_real_estate_management_system\build\firebase_database\intermediates\library_manifest\debug\AndroidManifest.xml:8:9-12:19
+97            android:name="com.google.firebase.components.ComponentDiscoveryService"
+97-->[:firebase_database] F:\FlutterProjects\online_real_estate_management_system\build\firebase_database\intermediates\library_manifest\debug\AndroidManifest.xml:8:18-89
+98            android:directBootAware="true"
+98-->[com.google.firebase:firebase-common:20.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\4011e8a672227885f7ee895db123efd4\jetified-firebase-common-20.0.0\AndroidManifest.xml:35:13-43
+99            android:exported="false" >
+99-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:76:13-37
+100            <meta-data
+100-->[:firebase_database] F:\FlutterProjects\online_real_estate_management_system\build\firebase_database\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-11:85
+101                android:name="com.google.firebase.components:io.flutter.plugins.firebase.database.FlutterFirebaseAppRegistrar"
+101-->[:firebase_database] F:\FlutterProjects\online_real_estate_management_system\build\firebase_database\intermediates\library_manifest\debug\AndroidManifest.xml:10:17-127
+102                android:value="com.google.firebase.components.ComponentRegistrar" />
+102-->[:firebase_database] F:\FlutterProjects\online_real_estate_management_system\build\firebase_database\intermediates\library_manifest\debug\AndroidManifest.xml:11:17-82
+103            <meta-data
+103-->[:cloud_firestore] F:\FlutterProjects\online_real_estate_management_system\build\cloud_firestore\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-11:85
+104                android:name="com.google.firebase.components:io.flutter.plugins.firebase.firestore.FlutterFirebaseFirestoreRegistrar"
+104-->[:cloud_firestore] F:\FlutterProjects\online_real_estate_management_system\build\cloud_firestore\intermediates\library_manifest\debug\AndroidManifest.xml:10:17-134
+105                android:value="com.google.firebase.components.ComponentRegistrar" />
+105-->[:cloud_firestore] F:\FlutterProjects\online_real_estate_management_system\build\cloud_firestore\intermediates\library_manifest\debug\AndroidManifest.xml:11:17-82
+106            <meta-data
+106-->[:firebase_auth] F:\FlutterProjects\online_real_estate_management_system\build\firebase_auth\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-11:85
+107                android:name="com.google.firebase.components:io.flutter.plugins.firebase.auth.FlutterFirebaseAuthRegistrar"
+107-->[:firebase_auth] F:\FlutterProjects\online_real_estate_management_system\build\firebase_auth\intermediates\library_manifest\debug\AndroidManifest.xml:10:17-124
+108                android:value="com.google.firebase.components.ComponentRegistrar" />
+108-->[:firebase_auth] F:\FlutterProjects\online_real_estate_management_system\build\firebase_auth\intermediates\library_manifest\debug\AndroidManifest.xml:11:17-82
+109            <meta-data
+109-->[:firebase_storage] F:\FlutterProjects\online_real_estate_management_system\build\firebase_storage\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-11:85
+110                android:name="com.google.firebase.components:io.flutter.plugins.firebase.storage.FlutterFirebaseAppRegistrar"
+110-->[:firebase_storage] F:\FlutterProjects\online_real_estate_management_system\build\firebase_storage\intermediates\library_manifest\debug\AndroidManifest.xml:10:17-126
+111                android:value="com.google.firebase.components.ComponentRegistrar" />
+111-->[:firebase_storage] F:\FlutterProjects\online_real_estate_management_system\build\firebase_storage\intermediates\library_manifest\debug\AndroidManifest.xml:11:17-82
+112            <meta-data
+112-->[:firebase_messaging] F:\FlutterProjects\online_real_estate_management_system\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:34:13-36:85
+113                android:name="com.google.firebase.components:io.flutter.plugins.firebase.messaging.FlutterFirebaseAppRegistrar"
+113-->[:firebase_messaging] F:\FlutterProjects\online_real_estate_management_system\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:35:17-128
+114                android:value="com.google.firebase.components.ComponentRegistrar" />
+114-->[:firebase_messaging] F:\FlutterProjects\online_real_estate_management_system\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:36:17-82
+115            <meta-data
+115-->[:firebase_core] F:\FlutterProjects\online_real_estate_management_system\build\firebase_core\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-11:85
+116                android:name="com.google.firebase.components:io.flutter.plugins.firebase.core.FlutterFirebaseCoreRegistrar"
+116-->[:firebase_core] F:\FlutterProjects\online_real_estate_management_system\build\firebase_core\intermediates\library_manifest\debug\AndroidManifest.xml:10:17-124
+117                android:value="com.google.firebase.components.ComponentRegistrar" />
+117-->[:firebase_core] F:\FlutterProjects\online_real_estate_management_system\build\firebase_core\intermediates\library_manifest\debug\AndroidManifest.xml:11:17-82
+118            <meta-data
+118-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:77:13-79:85
+119                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
+119-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:78:17-109
+120                android:value="com.google.firebase.components.ComponentRegistrar" />
+120-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:79:17-82
+121            <meta-data
+121-->[com.google.firebase:firebase-messaging:22.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\9e79ee792af9c67cbf110f099b01350c\jetified-firebase-messaging-22.0.0\AndroidManifest.xml:52:13-54:85
+122                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar"
+122-->[com.google.firebase:firebase-messaging:22.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\9e79ee792af9c67cbf110f099b01350c\jetified-firebase-messaging-22.0.0\AndroidManifest.xml:53:17-119
+123                android:value="com.google.firebase.components.ComponentRegistrar" />
+123-->[com.google.firebase:firebase-messaging:22.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\9e79ee792af9c67cbf110f099b01350c\jetified-firebase-messaging-22.0.0\AndroidManifest.xml:54:17-82
+124            <meta-data
+124-->[com.google.firebase:firebase-datatransport:18.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\9d3e98308cfcd526a70ffe37e9c106b9\jetified-firebase-datatransport-18.0.0\AndroidManifest.xml:28:13-30:85
+125                android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar"
+125-->[com.google.firebase:firebase-datatransport:18.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\9d3e98308cfcd526a70ffe37e9c106b9\jetified-firebase-datatransport-18.0.0\AndroidManifest.xml:29:17-115
+126                android:value="com.google.firebase.components.ComponentRegistrar" />
+126-->[com.google.firebase:firebase-datatransport:18.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\9d3e98308cfcd526a70ffe37e9c106b9\jetified-firebase-datatransport-18.0.0\AndroidManifest.xml:30:17-82
+127            <meta-data
+127-->[com.google.firebase:firebase-firestore:23.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\12ee7e702f1f2e969550dedc4a7f43dc\jetified-firebase-firestore-23.0.1\AndroidManifest.xml:20:13-22:85
+128                android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
+128-->[com.google.firebase:firebase-firestore:23.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\12ee7e702f1f2e969550dedc4a7f43dc\jetified-firebase-firestore-23.0.1\AndroidManifest.xml:21:17-111
+129                android:value="com.google.firebase.components.ComponentRegistrar" />
+129-->[com.google.firebase:firebase-firestore:23.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\12ee7e702f1f2e969550dedc4a7f43dc\jetified-firebase-firestore-23.0.1\AndroidManifest.xml:22:17-82
+130            <meta-data
+130-->[com.google.firebase:firebase-storage:20.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\12a90617f9e2f7474d0ce1842cab18f9\jetified-firebase-storage-20.0.0\AndroidManifest.xml:33:13-35:85
+131                android:name="com.google.firebase.components:com.google.firebase.storage.StorageRegistrar"
+131-->[com.google.firebase:firebase-storage:20.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\12a90617f9e2f7474d0ce1842cab18f9\jetified-firebase-storage-20.0.0\AndroidManifest.xml:34:17-107
+132                android:value="com.google.firebase.components.ComponentRegistrar" />
+132-->[com.google.firebase:firebase-storage:20.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\12a90617f9e2f7474d0ce1842cab18f9\jetified-firebase-storage-20.0.0\AndroidManifest.xml:35:17-82
+133            <meta-data
+133-->[com.google.firebase:firebase-database:20.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\ff8f2ecbb140e3c63bbd34211a232a66\jetified-firebase-database-20.0.0\AndroidManifest.xml:32:13-34:85
+134                android:name="com.google.firebase.components:com.google.firebase.database.DatabaseRegistrar"
+134-->[com.google.firebase:firebase-database:20.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\ff8f2ecbb140e3c63bbd34211a232a66\jetified-firebase-database-20.0.0\AndroidManifest.xml:33:17-109
+135                android:value="com.google.firebase.components.ComponentRegistrar" />
+135-->[com.google.firebase:firebase-database:20.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\ff8f2ecbb140e3c63bbd34211a232a66\jetified-firebase-database-20.0.0\AndroidManifest.xml:34:17-82
+136            <meta-data
+136-->[com.google.android.gms:play-services-measurement-api:19.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\4e12513ce6f49f112def35eddf425468\jetified-play-services-measurement-api-19.0.0\AndroidManifest.xml:30:13-32:85
+137                android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar"
+137-->[com.google.android.gms:play-services-measurement-api:19.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\4e12513ce6f49f112def35eddf425468\jetified-play-services-measurement-api-19.0.0\AndroidManifest.xml:31:17-139
+138                android:value="com.google.firebase.components.ComponentRegistrar" />
+138-->[com.google.android.gms:play-services-measurement-api:19.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\4e12513ce6f49f112def35eddf425468\jetified-play-services-measurement-api-19.0.0\AndroidManifest.xml:32:17-82
+139            <meta-data
+139-->[com.google.firebase:firebase-installations:17.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e012e8876d0c0f1b086de8318f21a0b9\jetified-firebase-installations-17.0.0\AndroidManifest.xml:18:13-20:85
+140                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
+140-->[com.google.firebase:firebase-installations:17.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e012e8876d0c0f1b086de8318f21a0b9\jetified-firebase-installations-17.0.0\AndroidManifest.xml:19:17-127
+141                android:value="com.google.firebase.components.ComponentRegistrar" />
+141-->[com.google.firebase:firebase-installations:17.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e012e8876d0c0f1b086de8318f21a0b9\jetified-firebase-installations-17.0.0\AndroidManifest.xml:20:17-82
+142        </service>
+143        <service
+143-->[:firebase_messaging] F:\FlutterProjects\online_real_estate_management_system\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:12:9-15:72
+144            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingBackgroundService"
+144-->[:firebase_messaging] F:\FlutterProjects\online_real_estate_management_system\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:13:13-107
+145            android:exported="false"
+145-->[:firebase_messaging] F:\FlutterProjects\online_real_estate_management_system\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:14:13-37
+146            android:permission="android.permission.BIND_JOB_SERVICE" />
+146-->[:firebase_messaging] F:\FlutterProjects\online_real_estate_management_system\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:15:13-69
+147        <service
+147-->[:firebase_messaging] F:\FlutterProjects\online_real_estate_management_system\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:16:9-22:19
+148            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingService"
+148-->[:firebase_messaging] F:\FlutterProjects\online_real_estate_management_system\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:17:13-97
+149            android:exported="false" >
+149-->[:firebase_messaging] F:\FlutterProjects\online_real_estate_management_system\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:18:13-37
+150            <intent-filter>
+150-->[:firebase_messaging] F:\FlutterProjects\online_real_estate_management_system\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:19:13-21:29
+151                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+151-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:46:15-76
+151-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:46:23-73
+152            </intent-filter>
+153        </service>
+154
+155        <receiver
+155-->[:firebase_messaging] F:\FlutterProjects\online_real_estate_management_system\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:24:9-31:20
+156            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingReceiver"
+156-->[:firebase_messaging] F:\FlutterProjects\online_real_estate_management_system\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:25:13-98
+157            android:exported="true"
+157-->[:firebase_messaging] F:\FlutterProjects\online_real_estate_management_system\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:26:13-36
+158            android:permission="com.google.android.c2dm.permission.SEND" >
+158-->[:firebase_messaging] F:\FlutterProjects\online_real_estate_management_system\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:27:13-73
+159            <intent-filter>
+159-->[:firebase_messaging] F:\FlutterProjects\online_real_estate_management_system\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:28:13-30:29
+160                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+160-->[:firebase_messaging] F:\FlutterProjects\online_real_estate_management_system\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:29:17-81
+160-->[:firebase_messaging] F:\FlutterProjects\online_real_estate_management_system\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:29:25-78
+161            </intent-filter>
+162        </receiver>
+163
+164        <provider
+164-->[:firebase_messaging] F:\FlutterProjects\online_real_estate_management_system\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:39:9-43:38
+165            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingInitProvider"
+165-->[:firebase_messaging] F:\FlutterProjects\online_real_estate_management_system\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:40:13-102
+166            android:authorities="com.example.online_real_estate_management_system.flutterfirebasemessaginginitprovider"
+166-->[:firebase_messaging] F:\FlutterProjects\online_real_estate_management_system\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:41:13-88
+167            android:exported="false"
+167-->[:firebase_messaging] F:\FlutterProjects\online_real_estate_management_system\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:42:13-37
+168            android:initOrder="99" />
+168-->[:firebase_messaging] F:\FlutterProjects\online_real_estate_management_system\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:43:13-35
+169        <provider
+169-->[:image_picker] F:\FlutterProjects\online_real_estate_management_system\build\image_picker\intermediates\library_manifest\debug\AndroidManifest.xml:11:9-19:20
+170            android:name="io.flutter.plugins.imagepicker.ImagePickerFileProvider"
+170-->[:image_picker] F:\FlutterProjects\online_real_estate_management_system\build\image_picker\intermediates\library_manifest\debug\AndroidManifest.xml:12:13-82
+171            android:authorities="com.example.online_real_estate_management_system.flutter.image_provider"
+171-->[:image_picker] F:\FlutterProjects\online_real_estate_management_system\build\image_picker\intermediates\library_manifest\debug\AndroidManifest.xml:13:13-74
+172            android:exported="false"
+172-->[:image_picker] F:\FlutterProjects\online_real_estate_management_system\build\image_picker\intermediates\library_manifest\debug\AndroidManifest.xml:14:13-37
+173            android:grantUriPermissions="true" >
+173-->[:image_picker] F:\FlutterProjects\online_real_estate_management_system\build\image_picker\intermediates\library_manifest\debug\AndroidManifest.xml:15:13-47
+174            <meta-data
+174-->[:image_picker] F:\FlutterProjects\online_real_estate_management_system\build\image_picker\intermediates\library_manifest\debug\AndroidManifest.xml:16:13-18:75
+175                android:name="android.support.FILE_PROVIDER_PATHS"
+175-->[:image_picker] F:\FlutterProjects\online_real_estate_management_system\build\image_picker\intermediates\library_manifest\debug\AndroidManifest.xml:17:17-67
+176                android:resource="@xml/flutter_image_picker_file_paths" />
+176-->[:image_picker] F:\FlutterProjects\online_real_estate_management_system\build\image_picker\intermediates\library_manifest\debug\AndroidManifest.xml:18:17-72
+177        </provider>
+178
+179        <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />
+179-->[:flutter_local_notifications] F:\FlutterProjects\online_real_estate_management_system\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:12:9-106
+179-->[:flutter_local_notifications] F:\FlutterProjects\online_real_estate_management_system\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:12:19-103
+180        <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver" >
+180-->[:flutter_local_notifications] F:\FlutterProjects\online_real_estate_management_system\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:13:9-20:20
+180-->[:flutter_local_notifications] F:\FlutterProjects\online_real_estate_management_system\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:13:19-107
+181            <intent-filter>
+181-->[:flutter_local_notifications] F:\FlutterProjects\online_real_estate_management_system\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:14:13-19:29
+182                <action android:name="android.intent.action.BOOT_COMPLETED" />
+182-->[:flutter_local_notifications] F:\FlutterProjects\online_real_estate_management_system\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:15:17-79
+182-->[:flutter_local_notifications] F:\FlutterProjects\online_real_estate_management_system\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:15:25-76
+183                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+183-->[:flutter_local_notifications] F:\FlutterProjects\online_real_estate_management_system\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:16:17-84
+183-->[:flutter_local_notifications] F:\FlutterProjects\online_real_estate_management_system\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:16:25-81
+184                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+184-->[:flutter_local_notifications] F:\FlutterProjects\online_real_estate_management_system\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:17:17-82
+184-->[:flutter_local_notifications] F:\FlutterProjects\online_real_estate_management_system\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:17:25-79
+185                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+185-->[:flutter_local_notifications] F:\FlutterProjects\online_real_estate_management_system\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:18:17-82
+185-->[:flutter_local_notifications] F:\FlutterProjects\online_real_estate_management_system\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:18:25-79
+186            </intent-filter>
+187        </receiver>
+188
+189        <activity
+189-->[:url_launcher] F:\FlutterProjects\online_real_estate_management_system\build\url_launcher\intermediates\library_manifest\debug\AndroidManifest.xml:8:9-11:74
+190            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
+190-->[:url_launcher] F:\FlutterProjects\online_real_estate_management_system\build\url_launcher\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-74
+191            android:exported="false"
+191-->[:url_launcher] F:\FlutterProjects\online_real_estate_management_system\build\url_launcher\intermediates\library_manifest\debug\AndroidManifest.xml:10:13-37
+192            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+192-->[:url_launcher] F:\FlutterProjects\online_real_estate_management_system\build\url_launcher\intermediates\library_manifest\debug\AndroidManifest.xml:11:13-71
+193
+194        <service
+194-->[:location] F:\FlutterProjects\online_real_estate_management_system\build\location\intermediates\library_manifest\debug\AndroidManifest.xml:11:9-15:56
+195            android:name="com.lyokone.location.FlutterLocationService"
+195-->[:location] F:\FlutterProjects\online_real_estate_management_system\build\location\intermediates\library_manifest\debug\AndroidManifest.xml:12:13-71
+196            android:enabled="true"
+196-->[:location] F:\FlutterProjects\online_real_estate_management_system\build\location\intermediates\library_manifest\debug\AndroidManifest.xml:13:13-35
+197            android:exported="false"
+197-->[:location] F:\FlutterProjects\online_real_estate_management_system\build\location\intermediates\library_manifest\debug\AndroidManifest.xml:14:13-37
+198            android:foregroundServiceType="location" />
+198-->[:location] F:\FlutterProjects\online_real_estate_management_system\build\location\intermediates\library_manifest\debug\AndroidManifest.xml:15:13-53
+199
+200        <activity
+200-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:27:9-44:20
+201            android:name="com.google.firebase.auth.internal.GenericIdpActivity"
+201-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:28:13-80
+202            android:excludeFromRecents="true"
+202-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:29:13-46
+203            android:exported="true"
+203-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:30:13-36
+204            android:launchMode="singleTask"
+204-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:31:13-44
+205            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+205-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:32:13-72
+206            <intent-filter>
+206-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:33:13-43:29
+207                <action android:name="android.intent.action.VIEW" />
+207-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:34:17-69
+207-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:34:25-66
+208
+209                <category android:name="android.intent.category.DEFAULT" />
+209-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:36:17-76
+209-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:36:27-73
+210                <category android:name="android.intent.category.BROWSABLE" />
+210-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:37:17-78
+210-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:37:27-75
+211
+212                <data
+212-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:39:17-42:51
+213                    android:host="firebase.auth"
+213-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:40:21-49
+214                    android:path="/"
+214-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:41:21-37
+215                    android:scheme="genericidp" />
+215-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:42:21-48
+216            </intent-filter>
+217        </activity>
+218        <activity
+218-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:45:9-62:20
+219            android:name="com.google.firebase.auth.internal.RecaptchaActivity"
+219-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:46:13-79
+220            android:excludeFromRecents="true"
+220-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:47:13-46
+221            android:exported="true"
+221-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:48:13-36
+222            android:launchMode="singleTask"
+222-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:49:13-44
+223            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+223-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:50:13-72
+224            <intent-filter>
+224-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:51:13-61:29
+225                <action android:name="android.intent.action.VIEW" />
+225-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:34:17-69
+225-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:34:25-66
+226
+227                <category android:name="android.intent.category.DEFAULT" />
+227-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:36:17-76
+227-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:36:27-73
+228                <category android:name="android.intent.category.BROWSABLE" />
+228-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:37:17-78
+228-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:37:27-75
+229
+230                <data
+230-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:39:17-42:51
+231                    android:host="firebase.auth"
+231-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:40:21-49
+232                    android:path="/"
+232-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:41:21-37
+233                    android:scheme="recaptcha" />
+233-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:42:21-48
+234            </intent-filter>
+235        </activity>
+236
+237        <service
+237-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:64:9-73:19
+238            android:name="com.google.firebase.auth.api.fallback.service.FirebaseAuthFallbackService"
+238-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:65:13-101
+239            android:enabled="true"
+239-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:66:13-35
+240            android:exported="false" >
+240-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:67:13-37
+241            <intent-filter>
+241-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:68:13-72:29
+242                <action android:name="com.google.firebase.auth.api.gms.service.START" />
+242-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:69:17-89
+242-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:69:25-86
+243
+244                <category android:name="android.intent.category.DEFAULT" />
+244-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:36:17-76
+244-->[com.google.firebase:firebase-auth:21.0.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\e0a72f6116a7d01de5e016d5224bc350\jetified-firebase-auth-21.0.1\AndroidManifest.xml:36:27-73
+245            </intent-filter>
+246        </service>
+247
+248        <activity
+248-->[com.google.android.gms:play-services-auth:19.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\3e7c29aa76440597a4a0732312952c1f\jetified-play-services-auth-19.0.0\AndroidManifest.xml:23:9-27:75
+249            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+249-->[com.google.android.gms:play-services-auth:19.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\3e7c29aa76440597a4a0732312952c1f\jetified-play-services-auth-19.0.0\AndroidManifest.xml:24:13-93
+250            android:excludeFromRecents="true"
+250-->[com.google.android.gms:play-services-auth:19.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\3e7c29aa76440597a4a0732312952c1f\jetified-play-services-auth-19.0.0\AndroidManifest.xml:25:13-46
+251            android:exported="false"
+251-->[com.google.android.gms:play-services-auth:19.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\3e7c29aa76440597a4a0732312952c1f\jetified-play-services-auth-19.0.0\AndroidManifest.xml:26:13-37
+252            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+252-->[com.google.android.gms:play-services-auth:19.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\3e7c29aa76440597a4a0732312952c1f\jetified-play-services-auth-19.0.0\AndroidManifest.xml:27:13-72
+253        <!--
+254            Service handling Google Sign-In user revocation. For apps that do not integrate with
+255            Google Sign-In, this service will never be started.
+256        -->
+257        <service
+257-->[com.google.android.gms:play-services-auth:19.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\3e7c29aa76440597a4a0732312952c1f\jetified-play-services-auth-19.0.0\AndroidManifest.xml:33:9-37:51
+258            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+258-->[com.google.android.gms:play-services-auth:19.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\3e7c29aa76440597a4a0732312952c1f\jetified-play-services-auth-19.0.0\AndroidManifest.xml:34:13-89
+259            android:exported="true"
+259-->[com.google.android.gms:play-services-auth:19.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\3e7c29aa76440597a4a0732312952c1f\jetified-play-services-auth-19.0.0\AndroidManifest.xml:35:13-36
+260            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+260-->[com.google.android.gms:play-services-auth:19.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\3e7c29aa76440597a4a0732312952c1f\jetified-play-services-auth-19.0.0\AndroidManifest.xml:36:13-107
+261            android:visibleToInstantApps="true" />
+261-->[com.google.android.gms:play-services-auth:19.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\3e7c29aa76440597a4a0732312952c1f\jetified-play-services-auth-19.0.0\AndroidManifest.xml:37:13-48
+262
+263        <receiver
+263-->[com.google.firebase:firebase-messaging:22.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\9e79ee792af9c67cbf110f099b01350c\jetified-firebase-messaging-22.0.0\AndroidManifest.xml:28:9-35:20
+264            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+264-->[com.google.firebase:firebase-messaging:22.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\9e79ee792af9c67cbf110f099b01350c\jetified-firebase-messaging-22.0.0\AndroidManifest.xml:29:13-78
+265            android:exported="true"
+265-->[com.google.firebase:firebase-messaging:22.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\9e79ee792af9c67cbf110f099b01350c\jetified-firebase-messaging-22.0.0\AndroidManifest.xml:30:13-36
+266            android:permission="com.google.android.c2dm.permission.SEND" >
+266-->[com.google.firebase:firebase-messaging:22.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\9e79ee792af9c67cbf110f099b01350c\jetified-firebase-messaging-22.0.0\AndroidManifest.xml:31:13-73
+267            <intent-filter>
+267-->[:firebase_messaging] F:\FlutterProjects\online_real_estate_management_system\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:28:13-30:29
+268                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+268-->[:firebase_messaging] F:\FlutterProjects\online_real_estate_management_system\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:29:17-81
+268-->[:firebase_messaging] F:\FlutterProjects\online_real_estate_management_system\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:29:25-78
+269            </intent-filter>
+270        </receiver>
+271        <!--
+272             FirebaseMessagingService performs security checks at runtime,
+273             but set to not exported to explicitly avoid allowing another app to call it.
+274        -->
+275        <service
+275-->[com.google.firebase:firebase-messaging:22.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\9e79ee792af9c67cbf110f099b01350c\jetified-firebase-messaging-22.0.0\AndroidManifest.xml:41:9-48:19
+276            android:name="com.google.firebase.messaging.FirebaseMessagingService"
+276-->[com.google.firebase:firebase-messaging:22.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\9e79ee792af9c67cbf110f099b01350c\jetified-firebase-messaging-22.0.0\AndroidManifest.xml:42:13-82
+277            android:directBootAware="true"
+277-->[com.google.firebase:firebase-messaging:22.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\9e79ee792af9c67cbf110f099b01350c\jetified-firebase-messaging-22.0.0\AndroidManifest.xml:43:13-43
+278            android:exported="false" >
+278-->[com.google.firebase:firebase-messaging:22.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\9e79ee792af9c67cbf110f099b01350c\jetified-firebase-messaging-22.0.0\AndroidManifest.xml:44:13-37
+279            <intent-filter android:priority="-500" >
+279-->[:firebase_messaging] F:\FlutterProjects\online_real_estate_management_system\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:19:13-21:29
+280                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+280-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:46:15-76
+280-->F:\FlutterProjects\online_real_estate_management_system\android\app\src\main\AndroidManifest.xml:46:23-73
+281            </intent-filter>
+282        </service>
+283        <service
+283-->[com.google.android.datatransport:transport-backend-cct:3.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\933eac0d12b1ebaef7965757f10c0914\jetified-transport-backend-cct-3.0.0\AndroidManifest.xml:29:9-35:19
+284            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+284-->[com.google.android.datatransport:transport-backend-cct:3.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\933eac0d12b1ebaef7965757f10c0914\jetified-transport-backend-cct-3.0.0\AndroidManifest.xml:30:13-103
+285            android:exported="false" >
+285-->[com.google.android.datatransport:transport-backend-cct:3.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\933eac0d12b1ebaef7965757f10c0914\jetified-transport-backend-cct-3.0.0\AndroidManifest.xml:31:13-37
+286            <meta-data
+286-->[com.google.android.datatransport:transport-backend-cct:3.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\933eac0d12b1ebaef7965757f10c0914\jetified-transport-backend-cct-3.0.0\AndroidManifest.xml:32:13-34:39
+287                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+287-->[com.google.android.datatransport:transport-backend-cct:3.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\933eac0d12b1ebaef7965757f10c0914\jetified-transport-backend-cct-3.0.0\AndroidManifest.xml:33:17-94
+288                android:value="cct" />
+288-->[com.google.android.datatransport:transport-backend-cct:3.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\933eac0d12b1ebaef7965757f10c0914\jetified-transport-backend-cct-3.0.0\AndroidManifest.xml:34:17-36
+289        </service>
+290
+291        <provider
+291-->[com.google.firebase:firebase-common:20.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\4011e8a672227885f7ee895db123efd4\jetified-firebase-common-20.0.0\AndroidManifest.xml:26:9-31:39
+292            android:name="com.google.firebase.provider.FirebaseInitProvider"
+292-->[com.google.firebase:firebase-common:20.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\4011e8a672227885f7ee895db123efd4\jetified-firebase-common-20.0.0\AndroidManifest.xml:27:13-77
+293            android:authorities="com.example.online_real_estate_management_system.firebaseinitprovider"
+293-->[com.google.firebase:firebase-common:20.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\4011e8a672227885f7ee895db123efd4\jetified-firebase-common-20.0.0\AndroidManifest.xml:28:13-72
+294            android:directBootAware="true"
+294-->[com.google.firebase:firebase-common:20.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\4011e8a672227885f7ee895db123efd4\jetified-firebase-common-20.0.0\AndroidManifest.xml:29:13-43
+295            android:exported="false"
+295-->[com.google.firebase:firebase-common:20.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\4011e8a672227885f7ee895db123efd4\jetified-firebase-common-20.0.0\AndroidManifest.xml:30:13-37
+296            android:initOrder="100" /> <!-- Needs to be explicitly declared on P+ -->
+296-->[com.google.firebase:firebase-common:20.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\4011e8a672227885f7ee895db123efd4\jetified-firebase-common-20.0.0\AndroidManifest.xml:31:13-36
+297        <uses-library
+297-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\fb04f806008cfecf180bc36c6a7dd723\jetified-play-services-maps-17.0.0\AndroidManifest.xml:33:9-35:40
+298            android:name="org.apache.http.legacy"
+298-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\fb04f806008cfecf180bc36c6a7dd723\jetified-play-services-maps-17.0.0\AndroidManifest.xml:34:13-50
+299            android:required="false" />
+299-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\fb04f806008cfecf180bc36c6a7dd723\jetified-play-services-maps-17.0.0\AndroidManifest.xml:35:13-37
+300
+301        <activity
+301-->[com.google.android.gms:play-services-base:17.1.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\23457c784871587ecad2caf6affc2261\jetified-play-services-base-17.1.0\AndroidManifest.xml:23:9-26:75
+302            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+302-->[com.google.android.gms:play-services-base:17.1.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\23457c784871587ecad2caf6affc2261\jetified-play-services-base-17.1.0\AndroidManifest.xml:24:13-79
+303            android:exported="false"
+303-->[com.google.android.gms:play-services-base:17.1.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\23457c784871587ecad2caf6affc2261\jetified-play-services-base-17.1.0\AndroidManifest.xml:25:13-37
+304            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+304-->[com.google.android.gms:play-services-base:17.1.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\23457c784871587ecad2caf6affc2261\jetified-play-services-base-17.1.0\AndroidManifest.xml:26:13-72
+305
+306        <receiver
+306-->[com.google.android.gms:play-services-measurement:19.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\1b790c85db8f65f3effb056d05a780b2\jetified-play-services-measurement-19.0.0\AndroidManifest.xml:29:9-33:20
+307            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
+307-->[com.google.android.gms:play-services-measurement:19.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\1b790c85db8f65f3effb056d05a780b2\jetified-play-services-measurement-19.0.0\AndroidManifest.xml:30:13-85
+308            android:enabled="true"
+308-->[com.google.android.gms:play-services-measurement:19.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\1b790c85db8f65f3effb056d05a780b2\jetified-play-services-measurement-19.0.0\AndroidManifest.xml:31:13-35
+309            android:exported="false" >
+309-->[com.google.android.gms:play-services-measurement:19.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\1b790c85db8f65f3effb056d05a780b2\jetified-play-services-measurement-19.0.0\AndroidManifest.xml:32:13-37
+310        </receiver>
+311
+312        <service
+312-->[com.google.android.gms:play-services-measurement:19.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\1b790c85db8f65f3effb056d05a780b2\jetified-play-services-measurement-19.0.0\AndroidManifest.xml:35:9-38:40
+313            android:name="com.google.android.gms.measurement.AppMeasurementService"
+313-->[com.google.android.gms:play-services-measurement:19.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\1b790c85db8f65f3effb056d05a780b2\jetified-play-services-measurement-19.0.0\AndroidManifest.xml:36:13-84
+314            android:enabled="true"
+314-->[com.google.android.gms:play-services-measurement:19.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\1b790c85db8f65f3effb056d05a780b2\jetified-play-services-measurement-19.0.0\AndroidManifest.xml:37:13-35
+315            android:exported="false" />
+315-->[com.google.android.gms:play-services-measurement:19.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\1b790c85db8f65f3effb056d05a780b2\jetified-play-services-measurement-19.0.0\AndroidManifest.xml:38:13-37
+316        <service
+316-->[com.google.android.gms:play-services-measurement:19.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\1b790c85db8f65f3effb056d05a780b2\jetified-play-services-measurement-19.0.0\AndroidManifest.xml:39:9-43:72
+317            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
+317-->[com.google.android.gms:play-services-measurement:19.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\1b790c85db8f65f3effb056d05a780b2\jetified-play-services-measurement-19.0.0\AndroidManifest.xml:40:13-87
+318            android:enabled="true"
+318-->[com.google.android.gms:play-services-measurement:19.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\1b790c85db8f65f3effb056d05a780b2\jetified-play-services-measurement-19.0.0\AndroidManifest.xml:41:13-35
+319            android:exported="false"
+319-->[com.google.android.gms:play-services-measurement:19.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\1b790c85db8f65f3effb056d05a780b2\jetified-play-services-measurement-19.0.0\AndroidManifest.xml:42:13-37
+320            android:permission="android.permission.BIND_JOB_SERVICE" />
+320-->[com.google.android.gms:play-services-measurement:19.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\1b790c85db8f65f3effb056d05a780b2\jetified-play-services-measurement-19.0.0\AndroidManifest.xml:43:13-69
+321
+322        <meta-data
+322-->[com.google.android.gms:play-services-basement:17.1.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\561c23f0f4eb50e4b642cd49832fcd64\jetified-play-services-basement-17.1.1\AndroidManifest.xml:23:9-25:69
+323            android:name="com.google.android.gms.version"
+323-->[com.google.android.gms:play-services-basement:17.1.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\561c23f0f4eb50e4b642cd49832fcd64\jetified-play-services-basement-17.1.1\AndroidManifest.xml:24:13-58
+324            android:value="@integer/google_play_services_version" />
+324-->[com.google.android.gms:play-services-basement:17.1.1] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\561c23f0f4eb50e4b642cd49832fcd64\jetified-play-services-basement-17.1.1\AndroidManifest.xml:25:13-66
+325
+326        <service
+326-->[com.google.android.datatransport:transport-runtime:3.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\7b828af5ddf622653e31814d06df9930\jetified-transport-runtime-3.0.0\AndroidManifest.xml:26:9-30:19
+327            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+327-->[com.google.android.datatransport:transport-runtime:3.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\7b828af5ddf622653e31814d06df9930\jetified-transport-runtime-3.0.0\AndroidManifest.xml:27:13-117
+328            android:exported="false"
+328-->[com.google.android.datatransport:transport-runtime:3.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\7b828af5ddf622653e31814d06df9930\jetified-transport-runtime-3.0.0\AndroidManifest.xml:28:13-37
+329            android:permission="android.permission.BIND_JOB_SERVICE" >
+329-->[com.google.android.datatransport:transport-runtime:3.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\7b828af5ddf622653e31814d06df9930\jetified-transport-runtime-3.0.0\AndroidManifest.xml:29:13-69
+330        </service>
+331
+332        <receiver
+332-->[com.google.android.datatransport:transport-runtime:3.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\7b828af5ddf622653e31814d06df9930\jetified-transport-runtime-3.0.0\AndroidManifest.xml:32:9-34:40
+333            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+333-->[com.google.android.datatransport:transport-runtime:3.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\7b828af5ddf622653e31814d06df9930\jetified-transport-runtime-3.0.0\AndroidManifest.xml:33:13-132
+334            android:exported="false" />
+334-->[com.google.android.datatransport:transport-runtime:3.0.0] C:\Users\lenovo\.gradle\caches\transforms-2\files-2.1\7b828af5ddf622653e31814d06df9930\jetified-transport-runtime-3.0.0\AndroidManifest.xml:34:13-37
+335    </application>
+336
+337</manifest>

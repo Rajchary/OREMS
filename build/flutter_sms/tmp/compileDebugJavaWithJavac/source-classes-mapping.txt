@@ -1,0 +1,2 @@
+com/example/flutter_sms/BuildConfig.java
+ com.example.flutter_sms.BuildConfig
