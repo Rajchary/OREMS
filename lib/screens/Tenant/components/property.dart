@@ -34,7 +34,7 @@ class _PropertyViewState extends State<PropertyView> {
   static Future<void> sendNotification(receiver, String pName) async {
     // var postUrl = "http://fcm.googleapis.com/fcm/send";
     String serverKey =
-        "AAAAQc2YwIo:APA91bFEi7E37NseKuYFm1iOXwiYEZuudjiZzNY27HkBzhG8sjiPf3QPV1V2w8XA7Vf8XmE7vq5JrxRObveM5cFAsJry1-r1jM_EzvLkyCIoWC-l0H0397xLxjPV6sLQiIQ4pM-_5U8l";
+        "Paste your server key here";
     final prefs = await SharedPreferences.getInstance();
     var token = await getToken(receiver);
     print("Token $token");
