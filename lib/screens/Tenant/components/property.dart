@@ -31,13 +31,18 @@ class _PropertyViewState extends State<PropertyView> {
   LatLng dest;
   firebase_storage.Reference propertyDatabase;
 
-  static Future<void> sendNotification(receiver, String pName) async {
-    // var postUrl = "http://fcm.googleapis.com/fcm/send";
+  static Future<void> sendNotification(
+      receiver, String pName, String docId, String purpose) async {
     String serverKey =
-        "Paste your server key here";
+        "AAAAQc2YwIo:APA91bFEi7E37NseKuYFm1iOXwiYEZuudjiZzNY27HkBzhG8sjiPf3QPV1V2w8XA7Vf8XmE7vq5JrxRObveM5cFAsJry1-r1jM_EzvLkyCIoWC-l0H0397xLxjPV6sLQiIQ4pM-_5U8l";
     final prefs = await SharedPreferences.getInstance();
     var token = await getToken(receiver);
     print("Token $token");
+    Map<String, dynamic> postData = {
+      "uid": "${FirebaseAuth.instance.currentUser.uid}",
+      "docId": "$docId",
+      "Purpose": "$purpose",
+    };
     try {
       //   Uri.parse("https://api.rnfirebase.io/messaging/send"),
       final response = await http.post(
@@ -61,18 +66,19 @@ class _PropertyViewState extends State<PropertyView> {
               'id': '1',
               'status': 'done',
               'screen': 'Engage',
-              'uid': '${FirebaseAuth.instance.currentUser.uid}'
+              'postData': postData,
+              // 'docId': "$docId",
+              // 'uid': '${FirebaseAuth.instance.currentUser.uid}'
             },
             'to': token,
           },
         ),
-      ); //Dio(options).post(postUrl, data: data);
+      );
       print('FCM request for device sent!');
       if (response.statusCode == 200) {
         Fluttertoast.showToast(msg: 'Request Sent To Owner');
       } else {
         print('notification sending failed with code ${response.statusCode}');
-        // on failure do sth
       }
     } catch (e) {
       print('exception $e');
@@ -503,7 +509,8 @@ class _PropertyViewState extends State<PropertyView> {
               icon: Icon(Icons.send),
               backgroundColor: Colors.indigo.shade900,
               onPressed: () {
-                sendNotification(data["uid"], data["name"]);
+                sendNotification(
+                    data["uid"], data["name"], data["docId"], data["Purpose"]);
               },
               label: Text(
                 "Request Lease",

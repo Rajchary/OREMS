@@ -340,7 +340,13 @@ class _ProfileViewState extends State<ProfileView>
         .child('images/profiles/$fileName');
 
     await propertyDatabase.putFile(imageFile).whenComplete(() async {
-      await propertyDatabase.getDownloadURL().then((value) {
+      await propertyDatabase.getDownloadURL().then((value) async {
+        await FirebaseFirestore.instance
+            .collection("users")
+            .doc(FirebaseAuth.instance.currentUser.uid)
+            .set({
+          "ProfilePicture": value,
+        });
         pref.setString('profileUrl', value.toString());
         Fluttertoast.showToast(msg: "Profile updated");
         setState(() {

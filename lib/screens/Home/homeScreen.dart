@@ -17,9 +17,9 @@ import 'package:online_real_estate_management_system/components/progressDialog.d
 import 'package:online_real_estate_management_system/constants.dart';
 import 'package:online_real_estate_management_system/main.dart';
 import 'package:online_real_estate_management_system/screens/Home/components/body.dart';
+import 'package:online_real_estate_management_system/screens/Home/models/ClientProfileCheck.dart';
 import 'package:online_real_estate_management_system/screens/Home/models/profileView.dart';
 import 'package:online_real_estate_management_system/screens/Tenant/components/favourites.dart';
-import 'package:online_real_estate_management_system/screens/landlord/components/listProperties.dart';
 import 'package:online_real_estate_management_system/screens/landlord/components/managableProperties.dart';
 import 'package:online_real_estate_management_system/screens/welcome/welcome_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -89,10 +89,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _configureSelectNotification() {
     selectedNotificationSubject.stream.listen((String payload) async {
+      print(payload);
       if (!visited) {
-        await Navigator.pushNamed(context, ManageProperty.idScreen);
+        await Navigator.pushNamed(context, ProfileCheck.idScreen,
+            arguments: payload);
         setState(() {
-          selectedNotificationSubject.close();
           visited = true;
         });
       }
@@ -127,7 +128,12 @@ class _HomeScreenState extends State<HomeScreen> {
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print("Message ${message.data["screen"]}");
+      print("Message recieved with payload ${message.data["postData"]}");
+      //   print("Message ${message.data["postData"].runtimeType}");
+      setState(() {
+        visited = false;
+        print(visited);
+      });
       RemoteNotification notification = message.notification;
       AndroidNotification android = message.notification?.android;
 
@@ -148,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
               // other properties...
             ),
           ),
-          payload: "${message.data["uid"]}",
+          payload: "${message.data["postData"]}",
         );
       }
     });
@@ -380,7 +386,13 @@ class _HomeScreenState extends State<HomeScreen> {
         .child('images/profiles/$fileName');
 
     await propertyDatabase.putFile(imageFile).whenComplete(() async {
-      await propertyDatabase.getDownloadURL().then((value) {
+      await propertyDatabase.getDownloadURL().then((value) async {
+        await FirebaseFirestore.instance
+            .collection("users")
+            .doc(FirebaseAuth.instance.currentUser.uid)
+            .set({
+          "ProfilePicture": value,
+        });
         pref.setString('profileUrl', value.toString());
         Fluttertoast.showToast(msg: "Profile updated");
         setState(() {

@@ -6,14 +6,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:online_real_estate_management_system/components/already_have_an_account.dart';
 import 'package:online_real_estate_management_system/components/progressDialog.dart';
 import 'package:online_real_estate_management_system/components/roundedButton.dart';
 import 'package:online_real_estate_management_system/components/roundedInputField.dart';
 import 'package:online_real_estate_management_system/components/roundedPasswordField.dart';
-import 'package:online_real_estate_management_system/components/textFieldContainer.dart';
 import 'package:online_real_estate_management_system/constants.dart';
 import 'package:online_real_estate_management_system/main.dart';
 import 'package:online_real_estate_management_system/screens/Home/homeScreen.dart';
@@ -26,6 +24,7 @@ class Body extends StatelessWidget {
 ////Intialzing TextEditing Controllers
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  Map<String, dynamic> userDatavalues = {};
   Person person = new Person();
   Body({
     Key key,
@@ -190,8 +189,8 @@ class Body extends StatelessWidget {
             userDatavalues['name'] = values['name'];
             userDatavalues['phone'] = values['phone'];
             userDatavalues['occupation'] = values['occupation'];
-          //  _saveUserData(context);
-          //  showToast("Hola!! You are in..", context);
+            //  _saveUserData(context);
+            //  showToast("Hola!! You are in..", context);
           } else {
             Navigator.pop(context);
             showToast("Invalid Credentials !!", context);
@@ -207,7 +206,7 @@ class Body extends StatelessWidget {
         userDatavalues['name'] = value['name'];
         userDatavalues['phone'] = value['phone'];
         userDatavalues['occupation'] = value['occupation'];
-        _saveUserData(context);
+        _saveUserData(context, userDatavalues);
         showToast("Hola!! You are in..", context);
       });
     } //End if
@@ -219,7 +218,7 @@ class Body extends StatelessWidget {
   }
 }
 
-_saveUserData(BuildContext context) async {
+_saveUserData(BuildContext context, Map<String, dynamic> userDatavalues) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   final nameKey = 'name';
   final occKey = 'occupation';

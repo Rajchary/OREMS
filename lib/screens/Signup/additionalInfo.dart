@@ -324,6 +324,8 @@ class _AddInfoState extends State<AddInfo> {
         paddress: prefs.getString("userAddress").trim(),
         kycdocument: prefs.getString("kycdocument").trim(),
         kycid: prefs.getString("kycid").trim(),
+        rating: 5,
+        ratingCount: 1,
       );
       var data = userC.toJson();
       await documentReferencer

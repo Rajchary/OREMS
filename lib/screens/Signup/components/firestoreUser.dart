@@ -9,6 +9,8 @@ class UserData {
   String paddress;
   String kycdocument;
   String kycid;
+  double rating;
+  double ratingCount;
   UserData({
     @required this.email,
     @required this.name,
@@ -18,6 +20,8 @@ class UserData {
     @required this.paddress,
     @required this.kycdocument,
     @required this.kycid,
+    @required this.rating,
+    @required this.ratingCount,
   });
 
   UserData.fromJson(Map<String, dynamic> json) {
@@ -29,6 +33,8 @@ class UserData {
     paddress = json['userAddress'];
     kycdocument = json['kycdocument'];
     kycid = json['kycid'];
+    rating = json['Rating'];
+    ratingCount = json['ratingCount'];
   }
 
   Map<String, dynamic> toJson() {
@@ -42,6 +48,8 @@ class UserData {
     data['kycid'] = this.kycid;
     data['kycdocument'] = this.kycdocument;
     data['userAddress'] = this.paddress;
+    data['Rating'] = this.rating;
+    data['ratingCount'] = this.ratingCount;
     return data;
   }
 }

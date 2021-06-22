@@ -8,6 +8,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:online_real_estate_management_system/components/bioMetricAuth.dart';
 import 'package:online_real_estate_management_system/constants.dart';
 import 'package:online_real_estate_management_system/screens/Home/homeScreen.dart';
+import 'package:online_real_estate_management_system/screens/Home/models/ClientProfileCheck.dart';
 import 'package:online_real_estate_management_system/screens/Home/models/profileView.dart';
 import 'package:online_real_estate_management_system/screens/Signup/additionalInfo.dart';
 import 'package:online_real_estate_management_system/screens/Signup/components/verifyUser.dart';
@@ -83,8 +84,6 @@ void main() async {
 DatabaseReference userRef =
     FirebaseDatabase.instance.reference().child("Users");
 
-var userDatavalues = {'name': '', 'phone': '', 'occupatio': ''};
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -117,6 +116,7 @@ class MyApp extends StatelessWidget {
         ManageProperty.idScreen: (context) => ManageProperty(),
         BioAuth.idScreen: (context) => BioAuth(),
         Favourites.idScreen: (context) => Favourites(),
+        ProfileCheck.idScreen: (context) => ProfileCheck(),
       },
     );
   }
