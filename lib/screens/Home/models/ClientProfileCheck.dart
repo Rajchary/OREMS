@@ -1,8 +1,14 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:online_real_estate_management_system/components/confirmDialog.dart';
+import 'package:online_real_estate_management_system/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class ProfileCheck extends StatefulWidget {
   static const idScreen = "ProfileCheck";
@@ -14,7 +20,6 @@ class ProfileCheck extends StatefulWidget {
 
 class _ProfileCheckState extends State<ProfileCheck> {
   double one = 1, two = 2, three = 3, four = 4, five = 5;
-  String uid = "tRml8y7IIQYPa43HobAzZbawtf02";
   Size size;
   String imageUrl = "https://www.woolha.com/media/2020/03/eevee.png";
   Map<String, dynamic> userData = {};
@@ -79,6 +84,8 @@ class _ProfileCheckState extends State<ProfileCheck> {
 
   @override
   void initState() {
+    // userData["Rating"] = 3;
+    //  getUserData(data["uid"]);
     super.initState();
   }
 
@@ -304,18 +311,12 @@ class _ProfileCheckState extends State<ProfileCheck> {
               SizedBox(
                 height: size.height * .015,
               ),
-              // ElevatedButton(
-              //     onPressed: () async {
-              //       getRemarksOfUser(uid);
-              //     },
-              //     child: Text("Get")),
               Container(
                 height: 100,
                 child: GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 1,
                         childAspectRatio: size.width / (size.height / 9)),
-                    // scrollDirection: Axis.vertical,
                     itemCount: (issues == null || issues.length == 0)
                         ? 1
                         : issues.length,
@@ -453,10 +454,167 @@ class _ProfileCheckState extends State<ProfileCheck> {
                   ),
                 ],
               ),
+              SizedBox(
+                height: size.height * .015,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ConstrainedBox(
+                    constraints: BoxConstraints.tightFor(
+                      height: size.height * .055,
+                      width: size.width * 0.65,
+                    ),
+                    child: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.black,
+                      ),
+                      onPressed: () async {
+                        final action = await AlertDialogs.confirmDialog(context,
+                            "Reject ?", "Are you sure you wanna do that",
+                            yes: "Yes", cancel: "No");
+                        if (action == DialogAction.Yes) {
+                          Navigator.pop(context);
+                        }
+                      },
+                      label: Text(
+                        "Cancel",
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.rajdhani(
+                          textStyle: Theme.of(context).textTheme.headline4,
+                          color: Colors.red,
+                          fontSize: size.width * .075,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      icon: Icon(
+                        Icons.cancel_outlined,
+                        color: Colors.red,
+                        size: size.width * .065,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: size.height * .017,
+                  ),
+                  ConstrainedBox(
+                    constraints: BoxConstraints.tightFor(
+                      height: size.height * .055,
+                      width: size.width * 0.65,
+                    ),
+                    child: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.black,
+                      ),
+                      onPressed: () async {
+                        final action = await AlertDialogs.confirmDialog(context,
+                            "Approve ?", "Are you sure you wanna do that",
+                            yes: "Yes", cancel: "No");
+                        if (action == DialogAction.Yes) {
+                          await sendNotification(
+                              data["uid"],
+                              propertyData["name"],
+                              data["docId"],
+                              propertyData["Purpose"]);
+                        }
+                      },
+                      label: Text(
+                        "Approve",
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.rajdhani(
+                          textStyle: Theme.of(context).textTheme.headline4,
+                          color: greenThick,
+                          fontSize: size.width * .075,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      icon: Icon(
+                        Icons.done,
+                        color: greenThick,
+                        size: size.width * .065,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: size.height * .015,
+                  ),
+                ],
+              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  static Future<void> sendNotification(
+      receiver, String pName, String docId, String purpose) async {
+    String serverKey =
+        "AAAAQc2YwIo:APA91bFEi7E37NseKuYFm1iOXwiYEZuudjiZzNY27HkBzhG8sjiPf3QPV1V2w8XA7Vf8XmE7vq5JrxRObveM5cFAsJry1-r1jM_EzvLkyCIoWC-l0H0397xLxjPV6sLQiIQ4pM-_5U8l";
+    final prefs = await SharedPreferences.getInstance();
+    var token = await getToken(receiver);
+    print("Token $token");
+    Map<String, dynamic> postData = {
+      "uid": "${FirebaseAuth.instance.currentUser.uid}",
+      "docId": "$docId",
+      "Purpose": "$purpose",
+      "to": "Tenant",
+    };
+    try {
+      final response = await http.post(
+        Uri.parse("https://fcm.googleapis.com/fcm/send"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'key=$serverKey',
+        },
+        body: jsonEncode(
+          <String, dynamic>{
+            'notification': <String, dynamic>{
+              'body': '${prefs.getString("name")} has approved your request',
+              'title': '$pName'
+            },
+            'priority': 'high',
+            'data': <String, dynamic>{
+              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+              'sound': 'default',
+              'color': 'blue',
+              'id': '002',
+              'status': 'done',
+              'screen': 'To Tenant',
+              'postData': postData,
+              // 'docId': "$docId",
+              // 'uid': '${FirebaseAuth.instance.currentUser.uid}'
+            },
+            'to': token,
+          },
+        ),
+      );
+      print('FCM request for device sent!');
+      if (response.statusCode == 200) {
+        Fluttertoast.showToast(msg: 'Acknowledgement Sent To Tenant');
+      } else {
+        print('notification sending failed with code ${response.statusCode}');
+      }
+    } catch (e) {
+      print('exception $e');
+    }
+  }
+
+  static Future<String> getToken(userId) async {
+    final FirebaseFirestore _db = FirebaseFirestore.instance;
+
+    var token;
+    await _db
+        .collection('users')
+        .doc(userId)
+        .collection('tokens')
+        .get()
+        .then((snapshot) {
+      snapshot.docs.forEach((doc) {
+        token = doc.id;
+      });
+    });
+
+    return token;
   }
 }

@@ -19,6 +19,8 @@ class Favourites extends StatefulWidget {
 
 class _FavouritesState extends State<Favourites> {
   List<Map<String, dynamic>> _propertyData = [];
+  String unAvailableImage = "https://img.pngio.com/lighting-and-home-furnishi" +
+      "ng-products-represented-by-bostrom-png-unavailable-300_300.png";
   int properties = 0;
   Size size;
   bool wishlisted = true;
@@ -115,7 +117,9 @@ class _FavouritesState extends State<Favourites> {
         if (value == "Lease") {
           await addLeasedProperties(key);
         } else if (value == "Sale") {
-          await addSaleProperties(key);
+          await addSaleProperties(key).whenComplete(() {
+            print("Properties length till now are ${_propertyData.length}");
+          });
         }
       });
       print("Properties added till now are $properties");
@@ -130,11 +134,16 @@ class _FavouritesState extends State<Favourites> {
         .doc(docId)
         .get()
         .then((value) async {
-      setState(() {
-        ++properties;
-        _propertyData.add(value.data());
-        _propertyData[properties - 1]["docId"] = docId;
-      });
+      if (value.exists) {
+        setState(() {
+          ++properties;
+          _propertyData.add(value.data());
+          _propertyData[properties - 1]["docId"] = docId;
+          _propertyData[properties - 1]["Status"] = "Available";
+        });
+      } else {
+        await addMissedOutProperties(docId);
+      }
     });
   }
 
@@ -146,10 +155,32 @@ class _FavouritesState extends State<Favourites> {
         .doc(docId)
         .get()
         .then((value) async {
+      if (value.exists) {
+        setState(() {
+          ++properties;
+          _propertyData.add(value.data());
+          _propertyData[properties - 1]["docId"] = docId;
+          _propertyData[properties - 1]["Status"] = "Available";
+        });
+      } else {
+        await addMissedOutProperties(docId);
+      }
+    });
+  }
+
+  Future<void> addMissedOutProperties(String docId) async {
+    await FirebaseFirestore.instance
+        .collection("Property")
+        .doc("General")
+        .collection("MovedOuts")
+        .doc(docId)
+        .get()
+        .then((value) async {
       setState(() {
         ++properties;
         _propertyData.add(value.data());
         _propertyData[properties - 1]["docId"] = docId;
+        _propertyData[properties - 1]["Status"] = "NotAvailable";
       });
     });
   }
@@ -185,8 +216,26 @@ class _FavouritesState extends State<Favourites> {
                 padding: const EdgeInsets.all(25.0),
                 child: GestureDetector(
                   onTap: () async {
-                    Navigator.pushNamed(context, PropertyView.idScreen,
-                        arguments: _propertyData[index]);
+                    if (_propertyData[index]["Status"] == "Available") {
+                      Navigator.pushNamed(context, PropertyView.idScreen,
+                          arguments: _propertyData[index]);
+                    } else {
+                      final action = await AlertDialogs.confirmDialog(
+                          context,
+                          "Pardon",
+                          "This property is currently unavailable.It is " +
+                              "either leased out or sold out please try removing this property",
+                          yes: "Remove");
+                      if (action == DialogAction.Yes) {
+                        await removeFromFavourites(
+                            _propertyData[index]["docId"]);
+                        setState(() {
+                          wishlisted = true;
+                          properties = 0;
+                          getFavourites();
+                        });
+                      }
+                    }
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 15),
@@ -226,6 +275,7 @@ class _FavouritesState extends State<Favourites> {
                                       await removeFromFavourites(
                                           _propertyData[index]["docId"]);
                                       setState(() {
+                                        wishlisted = true;
                                         properties = 0;
                                         getFavourites();
                                       });
@@ -256,7 +306,9 @@ class _FavouritesState extends State<Favourites> {
                             // },
                             child: Image.network(
                                 //'https://media.istockphoto.com/photos/beautiful-luxury-home-exterior-at-twilight-picture-id1026205392?k=6&m=1026205392&s=612x612&w=0&h=pe0Pqbm7GKHl7cmEjf9Drc7Fp-JwJ6aTywsGfm5eQm4=',
-                                _propertyData[index]["Image"],
+                                _propertyData[index]["Status"] == "Available"
+                                    ? _propertyData[index]["Image"]
+                                    : unAvailableImage,
                                 width: 300,
                                 height: 150,
                                 fit: BoxFit.fill),

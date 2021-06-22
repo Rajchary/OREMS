@@ -69,50 +69,6 @@ class Body extends StatelessWidget {
                   // if (value == "n") showAlertDialog(context);
                 },
                 icon: Icons.person),
-            // SizedBox(
-            //   height: size.height * 0.015,
-            // ),
-            // // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 37),
-            //   child: TextFormField(
-            //     style: TextStyle(
-            //       color: greenThick,
-            //     ),
-            //     decoration: InputDecoration(
-            //         labelText: "Username",
-            //         hintText: "Username",
-            //         hintStyle: TextStyle(color: Colors.grey),
-            //         fillColor: Colors.white,
-            //         filled: false,
-            //         prefixIcon: Padding(
-            //           padding:
-            //               EdgeInsets.symmetric(horizontal: size.width * 0.05),
-            //           child: Icon(
-            //             Icons.person,
-            //             color: greenThick,
-            //           ),
-            //         ),
-            //         focusedBorder: OutlineInputBorder(
-            //           borderSide:
-            //               const BorderSide(color: greenThick, width: 3.0),
-            //           borderRadius: BorderRadius.circular(25),
-            //         ),
-            //         enabledBorder: OutlineInputBorder(
-            //           borderSide: BorderSide(color: Colors.grey, width: 3.0),
-            //           borderRadius: BorderRadius.circular(20),
-            //         )),
-            //     validator: (value) {
-            //       if (value.isEmpty) {
-            //         return "required";
-            //       } else
-            //         return null;
-            //     },
-            //   ),
-            // ),
-            // //textcontroller : _username,
-            // SizedBox(
-            //   height: size.height * 0.015,
-            // ),
             RoundedPasswordField(
               hintText: "Password",
               passwordController: password,
@@ -139,10 +95,8 @@ class Body extends StatelessWidget {
             SizedBox(height: size.height * 0.03),
             AlreadyHaveAnAccount(
               press: () {
-                //showAlertDialog(context);
                 Navigator.pushNamedAndRemoveUntil(
                     context, SignupScreen.idScreen, (route) => false);
-                //}
               },
             )
           ],

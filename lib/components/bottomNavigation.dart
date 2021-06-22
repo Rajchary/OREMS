@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:online_real_estate_management_system/constants.dart';
+import 'package:online_real_estate_management_system/screens/Home/Services/postUpiTxn.dart';
 import 'package:online_real_estate_management_system/screens/Home/homeScreen.dart';
 import 'package:online_real_estate_management_system/screens/Home/models/ClientProfileCheck.dart';
+import 'package:online_real_estate_management_system/screens/Home/models/makePayment.dart';
 import 'package:online_real_estate_management_system/screens/Home/models/profileView.dart';
 import 'package:online_real_estate_management_system/screens/landlord/components/addProperty.dart';
 import 'package:online_real_estate_management_system/screens/landlord/components/addfromMap.dart';
@@ -77,7 +79,7 @@ class BottomNavigation extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, ProfileCheck.idScreen);
+                // Navigator.pushNamed(context, MakePayment.idScreen);
               },
               icon: Icon(
                 Icons.monetization_on_outlined,

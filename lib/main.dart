@@ -7,8 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:online_real_estate_management_system/components/bioMetricAuth.dart';
 import 'package:online_real_estate_management_system/constants.dart';
+import 'package:online_real_estate_management_system/screens/Home/Services/listUpi.dart';
+import 'package:online_real_estate_management_system/screens/Home/Services/postUpiTxn.dart';
 import 'package:online_real_estate_management_system/screens/Home/homeScreen.dart';
 import 'package:online_real_estate_management_system/screens/Home/models/ClientProfileCheck.dart';
+import 'package:online_real_estate_management_system/screens/Home/models/makePayment.dart';
 import 'package:online_real_estate_management_system/screens/Home/models/profileView.dart';
 import 'package:online_real_estate_management_system/screens/Signup/additionalInfo.dart';
 import 'package:online_real_estate_management_system/screens/Signup/components/verifyUser.dart';
@@ -62,7 +65,7 @@ void main() async {
         InitializationSettings(android: initializationSettingsAndroid);
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: (String payload) async {
-      print("Notification payload $payload");
+      print("from main.dart Notification payload $payload");
       selectedNotificationSubject.add(payload);
       navService.pushNamed(ListProperty.idScreen);
     });
@@ -94,7 +97,7 @@ class MyApp extends StatelessWidget {
           ThemeData(primaryColor: greenThick, scaffoldBackgroundColor: blackC),
       initialRoute: FirebaseAuth.instance.currentUser == null
           ? WelcomeScreen.idScreen
-          : BioAuth.idScreen,
+          : HomeScreen.idScreen, //BioAuth.idScreen,
       routes: {
         LoginScreen.idScreen: (context) => LoginScreen(),
         SignupScreen.idScreen: (context) => SignupScreen(),
@@ -117,6 +120,9 @@ class MyApp extends StatelessWidget {
         BioAuth.idScreen: (context) => BioAuth(),
         Favourites.idScreen: (context) => Favourites(),
         ProfileCheck.idScreen: (context) => ProfileCheck(),
+        MakePayment.idScreen: (context) => MakePayment(),
+        ListUpi.idScreen: (context) => ListUpi(),
+        PostTxn.idScreen: (context) => PostTxn(),
       },
     );
   }

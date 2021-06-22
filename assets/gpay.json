@@ -28,8 +28,8 @@
             "merchantName": "Example Merchant Name"
         },
         "transactionInfo": {
-            "countryCode": "IND",
-            "currencyCode": "INR"
+            "countryCode": "US",
+            "currencyCode": "USD"
         }
     }
 }

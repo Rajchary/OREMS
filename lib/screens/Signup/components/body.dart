@@ -139,7 +139,10 @@ class Body extends StatelessWidget {
             SizedBox(height: size.height * 0.05),
             AlreadyHaveAnAccount(
                 login: false,
-                press: () {
+                press: () async {
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  prefs.clear();
                   Navigator.pushNamedAndRemoveUntil(
                       context, LoginScreen.idScreen, (route) => false);
                 }),

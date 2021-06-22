@@ -42,6 +42,7 @@ class _PropertyViewState extends State<PropertyView> {
       "uid": "${FirebaseAuth.instance.currentUser.uid}",
       "docId": "$docId",
       "Purpose": "$purpose",
+      "to": "Owner",
     };
     try {
       //   Uri.parse("https://api.rnfirebase.io/messaging/send"),
@@ -65,7 +66,7 @@ class _PropertyViewState extends State<PropertyView> {
               'color': 'blue',
               'id': '1',
               'status': 'done',
-              'screen': 'Engage',
+              'screen': 'To Owner',
               'postData': postData,
               // 'docId': "$docId",
               // 'uid': '${FirebaseAuth.instance.currentUser.uid}'
@@ -513,7 +514,7 @@ class _PropertyViewState extends State<PropertyView> {
                     data["uid"], data["name"], data["docId"], data["Purpose"]);
               },
               label: Text(
-                "Request Lease",
+                "Request",
                 style: GoogleFonts.rajdhani(
                   textStyle: Theme.of(context).textTheme.headline4,
                   color: Colors.white,

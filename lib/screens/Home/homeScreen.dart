@@ -18,6 +18,7 @@ import 'package:online_real_estate_management_system/constants.dart';
 import 'package:online_real_estate_management_system/main.dart';
 import 'package:online_real_estate_management_system/screens/Home/components/body.dart';
 import 'package:online_real_estate_management_system/screens/Home/models/ClientProfileCheck.dart';
+import 'package:online_real_estate_management_system/screens/Home/models/makePayment.dart';
 import 'package:online_real_estate_management_system/screens/Home/models/profileView.dart';
 import 'package:online_real_estate_management_system/screens/Tenant/components/favourites.dart';
 import 'package:online_real_estate_management_system/screens/landlord/components/managableProperties.dart';
@@ -56,11 +57,13 @@ class _HomeScreenState extends State<HomeScreen> {
     final InitializationSettings initializationSettings =
         InitializationSettings(android: initializationSettingsAndroid);
 
-    await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: (String payload) async {
-      print("Recieved new notification  $payload");
-      selectNotification(payload);
-    });
+    try {
+      await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+          onSelectNotification: (String payload) async {
+        print("Recieved new notification  $payload");
+        selectNotification(payload);
+      });
+    } catch (e) {}
 
     RemoteMessage initialMessage =
         await FirebaseMessaging.instance.getInitialMessage();
@@ -89,21 +92,30 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _configureSelectNotification() {
     selectedNotificationSubject.stream.listen((String payload) async {
-      print(payload);
       if (!visited) {
-        await Navigator.pushNamed(context, ProfileCheck.idScreen,
-            arguments: payload);
-        setState(() {
-          visited = true;
-        });
+        if (payload.contains("Owner")) {
+          print("Condition Match Owner");
+          print(payload);
+          await Navigator.pushNamed(context, ProfileCheck.idScreen,
+              arguments: payload);
+          setState(() {
+            visited = true;
+          });
+        } else if (payload.contains("Tenant")) {
+          print("Condition Match Tenant");
+          print(payload);
+          await Navigator.pushNamed(context, MakePayment.idScreen,
+              arguments: payload);
+          setState(() {
+            visited = true;
+          });
+        } else {
+          print("Condition misMatch");
+        }
+      } else {
+        print("Visited is set to True");
       }
     });
-  }
-
-  @override
-  void dispose() {
-    selectedNotificationSubject.close();
-    super.dispose();
   }
 
   @override
@@ -209,6 +221,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // Save it to Firestore
     if (fcmToken != null) {
+      await _db
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser.uid)
+          .collection('tokens')
+          .get()
+          .then((value) {
+        value.docs.forEach((element) {
+          element.reference.delete();
+        });
+      });
+
       var tokens = _db
           .collection('users')
           .doc(FirebaseAuth.instance.currentUser.uid)
@@ -411,12 +434,10 @@ class _HomeScreenState extends State<HomeScreen> {
         context, WelcomeScreen.idScreen, (route) => false);
     Fluttertoast.showToast(msg: "Logged out Succeffully");
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('name', "");
-    prefs.setString('phone', "");
-    prefs.setString('occupation', "");
+    prefs.clear();
   }
 }
 
 class MessageArguments {
-  MessageArguments(RemoteMessage message, bool bool);
+  MessageArguments(RemoteMessage message, bool boolean);
 }

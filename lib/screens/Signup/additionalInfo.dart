@@ -36,7 +36,7 @@ class _AddInfoState extends State<AddInfo> {
   SharedPreferences prefs;
   TextEditingController kycId;
   TextEditingController paddress;
-
+  TextEditingController upiController;
   TextInputType textInputType = TextInputType.text;
   @override
   void initState() {
@@ -150,6 +150,19 @@ class _AddInfoState extends State<AddInfo> {
                 },
                 icon: Icons.home,
               ),
+              SizedBox(
+                height: 10,
+              ),
+              RoundedInputField(
+                hintText: "@Upi_id",
+                textInputType: textInputType,
+                textcontroller: upiController,
+                lines: 1,
+                onChanged: (value) {
+                  validate(value);
+                },
+                icon: Icons.payment,
+              ),
               SizedBox(height: 10),
               Center(
                 child: DropdownButton<String>(
@@ -227,7 +240,10 @@ class _AddInfoState extends State<AddInfo> {
               SizedBox(height: size.height * 0.02),
               AlreadyHaveAnAccount(
                   login: false,
-                  press: () {
+                  press: () async {
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    prefs.clear();
                     Navigator.pushNamedAndRemoveUntil(
                         context, LoginScreen.idScreen, (route) => false);
                   }),
@@ -262,8 +278,14 @@ class _AddInfoState extends State<AddInfo> {
   }
 
   bool finalValidation() {
-    if (paddress.text.isEmpty || kycId.text.isEmpty) {
+    if (paddress.text.isEmpty ||
+        kycId.text.isEmpty ||
+        upiController.text.isEmpty) {
       Fluttertoast.showToast(msg: "That's an empty field");
+      return false;
+    } else if (!upiController.text.contains("@") ||
+        upiController.text.split("@").length != 2) {
+      Fluttertoast.showToast(msg: "Please provide a valid UPI id");
       return false;
     } else if (currentOccupation == 'What describes you best') {
       Fluttertoast.showToast(msg: "Please select the occupation");
@@ -299,6 +321,7 @@ class _AddInfoState extends State<AddInfo> {
       prefs.setString("userAddress", paddress.text.trim());
       prefs.setString("kycdocument", currentDoccument.trim());
       prefs.setString("kycid", kycId.text.trim());
+      prefs.setString("upiId", upiController.text.trim());
       Map userDataMap = {
         "name": prefs.getString("name").trim(),
         "email": prefs.getString("email").trim(),
@@ -324,6 +347,7 @@ class _AddInfoState extends State<AddInfo> {
         paddress: prefs.getString("userAddress").trim(),
         kycdocument: prefs.getString("kycdocument").trim(),
         kycid: prefs.getString("kycid").trim(),
+        upi_id: prefs.getString("upiId"),
         rating: 5,
         ratingCount: 1,
       );
@@ -348,5 +372,6 @@ class _AddInfoState extends State<AddInfo> {
     prefs.setString("kycid", "");
     prefs.setString("kycdocument", "");
     prefs.setString("email", "");
+    prefs.setString("upiId", "");
   }
 }

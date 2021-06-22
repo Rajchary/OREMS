@@ -2,6 +2,10 @@ _discoveryapis_commons
 2.12
 file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/_discoveryapis_commons-1.0.0/
 file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/_discoveryapis_commons-1.0.0/lib/
+animated_text_kit
+2.12
+file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/animated_text_kit-4.2.1/
+file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/animated_text_kit-4.2.1/lib/
 args
 2.12
 file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/args-2.1.0/
@@ -66,6 +70,10 @@ cupertino_icons
 2.12
 file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-1.0.2/
 file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-1.0.2/lib/
+decimal
+2.12
+file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/decimal-1.2.0/
+file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/decimal-1.2.0/lib/
 dio
 2.12
 file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/dio-4.0.0/
@@ -370,6 +378,10 @@ quiver
 2.12
 file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/quiver-3.0.1/
 file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/quiver-3.0.1/lib/
+rational
+2.12
+file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/rational-1.2.1/
+file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/rational-1.2.1/lib/
 rxdart
 2.12
 file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/rxdart-0.26.0/
@@ -446,6 +458,14 @@ typed_data
 2.12
 file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/typed_data-1.3.0/
 file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/typed_data-1.3.0/lib/
+universal_io
+2.12
+file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/universal_io-2.0.4/
+file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/universal_io-2.0.4/lib/
+upi_pay
+2.12
+file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/upi_pay-1.0.0/
+file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/upi_pay-1.0.0/lib/
 url_launcher
 2.12
 file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher-6.0.6/

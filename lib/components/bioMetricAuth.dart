@@ -16,55 +16,63 @@ class BioAuth extends StatefulWidget {
 class _BioAuthState extends State<BioAuth> {
   LocalAuthentication auth = LocalAuthentication();
   bool _canCheckBioMetric;
-  List<BiometricType> _availableBiometrics;
+ // List<BiometricType> _availableBiometrics;
   String authorized = "Not Authorized";
+  bool isDeviceSupported=false;
 
   Future<void> _checkBioMetric() async {
+    bool _isDeviseSupported = await auth.isDeviceSupported();
     bool canCheckBioMetric;
     try {
       canCheckBioMetric = await auth.canCheckBiometrics;
+      if (!canCheckBioMetric) {
+        Navigator.pushNamedAndRemoveUntil(
+            context, HomeScreen.idScreen, (route) => false);
+      }
     } on PlatformException catch (e) {
-      //  print(e);
+      Navigator.pushNamedAndRemoveUntil(
+          context, HomeScreen.idScreen, (route) => false);
     }
+
     if (!mounted) return;
     setState(() {
       _canCheckBioMetric = canCheckBioMetric;
+      isDeviceSupported = _isDeviseSupported;
     });
   }
 
-  Future<void> _getAvailableBioMetrics() async {
-    List<BiometricType> availableBioMetrics;
-    try {
-      availableBioMetrics = await auth.getAvailableBiometrics();
-    } on PlatformException catch (e) {
-      print(e);
-    }
-    setState(() {
-      _availableBiometrics = availableBioMetrics;
-    });
-  }
+  // Future<void> _getAvailableBioMetrics() async {
+  //   List<BiometricType> availableBioMetrics;
+  //   try {
+  //     availableBioMetrics = await auth.getAvailableBiometrics();
+  //   } on PlatformException catch (e) {}
+  //   setState(() {
+  //     _availableBiometrics = availableBioMetrics;
+  //   });
+  // }
 
   Future<void> _authenticate() async {
     bool authenticated = false;
     try {
       authenticated = await auth.authenticate(
-        localizedReason:
-            "Provide your Pin or Pattern or FingerPrint to access the HUBBLE",
-        useErrorDialogs: true,
-        stickyAuth: true,
-        biometricOnly: true,
-      );
+          localizedReason:
+              "Provide your Pin or Pattern or FingerPrint to access Hubble",
+          useErrorDialogs: true,
+          stickyAuth: true,
+          biometricOnly: isDeviceSupported,
+          sensitiveTransaction: true);
     } on PlatformException catch (e) {
-      print(e);
+      // print(e);
     }
     if (!mounted) return;
+    authorized = authenticated ? "Authorized Successfully" : "Not Authorized";
     setState(() {
       authorized = authenticated ? "Authorized Successfully" : "Not Authorized";
       if (authenticated) {
+        auth.stopAuthentication();
         Navigator.pushNamedAndRemoveUntil(
             context, HomeScreen.idScreen, (route) => false);
-        auth.stopAuthentication();
-        //dispose();
+        // dispose();
       }
       // print(authorized);
     });
@@ -74,7 +82,7 @@ class _BioAuthState extends State<BioAuth> {
   void initState() {
     super.initState();
     _checkBioMetric();
-    _getAvailableBioMetrics();
+  //  _getAvailableBioMetrics();
   }
 
   @override

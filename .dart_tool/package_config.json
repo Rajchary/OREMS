@@ -8,6 +8,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "animated_text_kit",
+      "rootUri": "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/animated_text_kit-4.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "args",
       "rootUri": "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/args-2.1.0",
       "packageUri": "lib/",
@@ -100,6 +106,12 @@
     {
       "name": "cupertino_icons",
       "rootUri": "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-1.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "decimal",
+      "rootUri": "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/decimal-1.2.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -584,6 +596,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "rational",
+      "rootUri": "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/rational-1.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "rxdart",
       "rootUri": "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/rxdart-0.26.0",
       "packageUri": "lib/",
@@ -704,6 +722,18 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "universal_io",
+      "rootUri": "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/universal_io-2.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "upi_pay",
+      "rootUri": "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/upi_pay-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "url_launcher",
       "rootUri": "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher-6.0.6",
       "packageUri": "lib/",
@@ -794,7 +824,7 @@
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2021-06-15T13:10:31.139423Z",
+  "generated": "2021-06-21T06:19:23.181146Z",
   "generator": "pub",
   "generatorVersion": "2.14.0-136.0.dev"
 }

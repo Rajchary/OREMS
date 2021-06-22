@@ -692,7 +692,7 @@ class _AddMyPropertyState extends State<AddMyProperty> {
       return "name should not left empty";
     else if (propertyAddressController.text.length <= 15)
       return "please fill in some address";
-    else if (propertyLandmarkController.text.length <= 10)
+    else if (propertyLandmarkController.text.length <= 5)
       return "Please provide landmark for better results";
     else if (propertyDiscriptionController.text.length <= 10)
       return "please add some description";
