@@ -1,16 +1,4 @@
+[![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2FCharysayz)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2FRajchary%2FOREMS) 
 # online_real_estate_management_system
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Hey their this repositery is regarding online real estate management system . This is a cross platform application build using flutter framework which is the future of cross platform frameworks. This application acts like a bridge between the landlords and tenants. Landlords can easily manage their properties at their finger tips using this application.
