@@ -186,8 +186,8 @@ class _ManagePropertyState extends State<ManageProperty>
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(primary: Colors.white),
                         onPressed: () {
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, HomeScreen.idScreen, (route) => false);
+                          Navigator.pop(context);
+                          Navigator.pop(context);
                         },
                         child: Text(
                           "OK",

@@ -36,7 +36,7 @@ class _AddInfoState extends State<AddInfo> {
   SharedPreferences prefs;
   TextEditingController kycId;
   TextEditingController paddress;
-  TextEditingController upiController;
+  TextEditingController upiController = new TextEditingController();
   TextInputType textInputType = TextInputType.text;
   @override
   void initState() {
@@ -224,12 +224,14 @@ class _AddInfoState extends State<AddInfo> {
                         ),
                         RoundedButton(
                             text: "Signup",
-                            press: () {
+                            press: () async {
                               if (finalValidation()) {
-                                registerNewUser(context).whenComplete(() {
+                                int result = await registerNewUser(context);
+                                //Future<int> expected = Future<int>.parse(1);
+                                if (result == 1) {
                                   Navigator.pushNamedAndRemoveUntil(context,
                                       VerifyUser.idScreen, (route) => false);
-                                });
+                                }
                               }
                             },
                             white: Colors.white),
@@ -298,7 +300,7 @@ class _AddInfoState extends State<AddInfo> {
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');
 
-  Future<void> registerNewUser(BuildContext context) async {
+  Future<int> registerNewUser(BuildContext context) async {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -307,15 +309,35 @@ class _AddInfoState extends State<AddInfo> {
             message: "Registering..",
           );
         });
-    final User firebaseUser = (await _firebaseAuth
-            .createUserWithEmailAndPassword(
-                email: prefs.getString("email"),
-                password: prefs.getString("password"))
-            .catchError((errormsg) {
+    UserCredential firebaseUser;
+    try {
+      firebaseUser = await _firebaseAuth.createUserWithEmailAndPassword(
+          email: prefs.getString("email"),
+          password: prefs.getString("password"));
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        Fluttertoast.showToast(msg: 'The password provided is too weak.');
+        Navigator.pop(context);
+        return 0;
+      } else if (e.code == 'email-already-in-use') {
+        Fluttertoast.showToast(
+            msg: 'The account already exists for that email.');
+        Navigator.pop(context);
+        return 0;
+      }
+    } catch (e) {
+      Fluttertoast.showToast(msg: "Error Occured");
       Navigator.pop(context);
-      showToast("Error " + errormsg.toString(), context);
-    }))
-        .user;
+      return 0;
+    }
+    // final UserCredential firebaseUser = await _firebaseAuth
+    //         .createUserWithEmailAndPassword(
+    //             email: prefs.getString("email"),
+    //             password: prefs.getString("password"))
+    //         .catchError((errormsg) {
+    //   Navigator.pop(context);
+    //   showToast("Error " + errormsg.toString(), context);
+    // }).user;
     if (firebaseUser != null) {
       //User created successfully
       prefs.setString("userAddress", paddress.text.trim());
@@ -336,8 +358,8 @@ class _AddInfoState extends State<AddInfo> {
       //   await userRef.child(firebaseUser.uid).set(userDataMap);
       //   showToast("Validate your emil id !!..", context);
       // }
-      DocumentReference documentReferencer =
-          userCollection.doc(firebaseUser.uid);
+      DocumentReference documentReferencer = userCollection
+          .doc(FirebaseAuth.instance.currentUser.uid); //firebaseUser.uid);
       UserData userC = UserData(
         email: prefs.getString("email").trim(),
         name: prefs.getString("name").trim(),
@@ -348,6 +370,7 @@ class _AddInfoState extends State<AddInfo> {
         kycdocument: prefs.getString("kycdocument").trim(),
         kycid: prefs.getString("kycid").trim(),
         upi_id: prefs.getString("upiId"),
+        profilePicture: "https://www.woolha.com/media/2020/03/eevee.png",
         rating: 5,
         ratingCount: 1,
       );
@@ -358,12 +381,16 @@ class _AddInfoState extends State<AddInfo> {
           .onError((error, stackTrace) {
         Fluttertoast.showToast(
             msg: "Some technical error we are working on it..");
+        Navigator.pop(context);
+        return 0;
       });
       await _saveUserData(context);
     } else {
       Navigator.pop(context);
       showToast("Oops! Something went wrong..", context);
+      return 0;
     }
+    return 1;
   }
 
   _saveUserData(BuildContext context) {

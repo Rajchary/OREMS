@@ -260,6 +260,7 @@ class _PostTxnState extends State<PostTxn> {
   }
 
   Future<void> saveTransaction() async {
+    final prefs = await SharedPreferences.getInstance();
     await FirebaseFirestore.instance
         .collection("Transactions")
         .doc(FirebaseAuth.instance.currentUser.uid)
@@ -271,13 +272,13 @@ class _PostTxnState extends State<PostTxn> {
       "Status": "${postTxnData["Status"]}",
       "Date": "${postTxnData["Date"]}",
       "To": "${userData["name"]}",
+      "ProfilePicture": "${userData["ProfilePicture"]}",
       "Amount": "${postTxnData["amount"]}",
       "TxnNote": purpose == "Lease"
           ? "For leasing ${propertyData["name"]}"
           : "For buying the property ${propertyData["name"]}",
       "upi_id": "${userData["upi_id"]}"
     }).whenComplete(() async {
-      final prefs = await SharedPreferences.getInstance();
       await FirebaseFirestore.instance
           .collection("Transactions")
           .doc(postTxnData["uid"])
@@ -289,6 +290,7 @@ class _PostTxnState extends State<PostTxn> {
         "Status": "${postTxnData["Status"]}",
         "Date": "${postTxnData["Date"]}",
         "From": "${prefs.getString("name")}",
+        "ProfilePicture": "${prefs.getString("profileUrl")}",
         "Amount": "${postTxnData["amount"]}",
         "TxnNote": purpose == "Lease"
             ? "For leasing out ${propertyData["name"]}"

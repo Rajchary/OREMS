@@ -116,6 +116,8 @@ class _SearchPropertyState extends State<SearchProperty> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
+    final double itemWidth = size.width / 1.2;
     return Scaffold(
       body: Container(
         height: size.height,
@@ -131,8 +133,8 @@ class _SearchPropertyState extends State<SearchProperty> {
         ),
         child: GridView.builder(
             itemCount: properties + 1,
-            gridDelegate:
-                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 1, childAspectRatio: (itemWidth / itemHeight)),
             itemBuilder: (context, index) {
               return index == 0
                   ? Center(
@@ -144,23 +146,23 @@ class _SearchPropertyState extends State<SearchProperty> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               SizedBox(
-                                height: 20,
+                                height: size.height * .002,
                               ),
                               Row(
                                 children: [
                                   SizedBox(
-                                    width: 25,
+                                    width: size.width * .045,
                                   ),
                                   IconButton(
                                     onPressed: () {
                                       Navigator.pop(context);
                                     },
                                     icon: Icon(Icons.arrow_back_ios),
-                                    iconSize: 35,
+                                    iconSize: size.width * .085,
                                     color: Colors.white,
                                   ),
                                   SizedBox(
-                                    width: 230,
+                                    width: size.width * .6,
                                   ),
                                   IconButton(
                                     onPressed: () {
@@ -175,12 +177,12 @@ class _SearchPropertyState extends State<SearchProperty> {
                                         ? Icon(
                                             Icons.location_searching_rounded,
                                             color: greenThick,
-                                            size: 35,
+                                            size: size.width * .085,
                                           )
                                         : Icon(
                                             Icons.location_disabled,
                                             color: Colors.red,
-                                            size: 35,
+                                            size: size.width * .085,
                                           ),
                                   )
                                 ],
@@ -241,7 +243,7 @@ class _SearchPropertyState extends State<SearchProperty> {
                                           }).toList(),
                                         ),
                                         SizedBox(
-                                          width: 15,
+                                          width: size.width * .035,
                                         ),
                                         DropdownButton<String>(
                                           dropdownColor: Colors.black,
@@ -347,7 +349,7 @@ class _SearchPropertyState extends State<SearchProperty> {
                                                       ),
                                                     ),
                                                     SizedBox(
-                                                      width: 10,
+                                                      width: size.width * .04,
                                                     ),
                                                     ElevatedButton.icon(
                                                       style: ElevatedButton
@@ -394,7 +396,7 @@ class _SearchPropertyState extends State<SearchProperty> {
                                                   ],
                                                 ),
                                                 SizedBox(
-                                                  height: 15,
+                                                  height: size.height * .004,
                                                 ),
                                                 Row(
                                                   mainAxisAlignment:
@@ -448,7 +450,7 @@ class _SearchPropertyState extends State<SearchProperty> {
                                                       }).toList(),
                                                     ),
                                                     SizedBox(
-                                                      width: 45,
+                                                      width: size.width * .075,
                                                     ),
                                                     DropdownButton<String>(
                                                       dropdownColor:
@@ -502,7 +504,7 @@ class _SearchPropertyState extends State<SearchProperty> {
                                                   ],
                                                 ),
                                                 SizedBox(
-                                                  height: 20,
+                                                  height: size.height * .01,
                                                 ),
                                                 Hint(hint: "Rent range "),
                                                 Padding(
@@ -588,7 +590,7 @@ class _SearchPropertyState extends State<SearchProperty> {
                                                       ),
                                                     ),
                                                     SizedBox(
-                                                      width: 10,
+                                                      width: size.width * .03,
                                                     ),
                                                     ElevatedButton.icon(
                                                       style: ElevatedButton
@@ -635,7 +637,7 @@ class _SearchPropertyState extends State<SearchProperty> {
                                                   ],
                                                 ),
                                                 SizedBox(
-                                                  height: 15,
+                                                  height: size.height * .015,
                                                 ),
                                                 Hint(
                                                   hint: "Select Asset Value",
@@ -1022,7 +1024,7 @@ class _SearchPropertyState extends State<SearchProperty> {
                 color: Color(0xFF1B222E),
                 borderRadius: BorderRadius.circular(30),
               ),
-              height: size.height * 0.4,
+              height: size.height * 0.45,
               width: size.width * 0.4,
               child: Column(
                 children: [
@@ -1046,13 +1048,13 @@ class _SearchPropertyState extends State<SearchProperty> {
                       style: GoogleFonts.rajdhani(
                         textStyle: Theme.of(context).textTheme.headline4,
                         color: Colors.white,
-                        fontSize: 15,
+                        fontSize: size.width * .045,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                   SizedBox(
-                    height: 15,
+                    height: size.height * .015,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -1073,8 +1075,9 @@ class _SearchPropertyState extends State<SearchProperty> {
                         },
                         child: Text(
                           "Set",
-                          style:
-                              TextStyle(fontSize: 15, color: Colors.pink[400]),
+                          style: TextStyle(
+                              fontSize: size.width * .035,
+                              color: Colors.pink[400]),
                         ),
                       ),
                     ],

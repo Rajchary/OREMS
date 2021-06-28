@@ -8,11 +8,15 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:online_real_estate_management_system/components/bioMetricAuth.dart';
 import 'package:online_real_estate_management_system/constants.dart';
 import 'package:online_real_estate_management_system/screens/Home/Services/listUpi.dart';
+import 'package:online_real_estate_management_system/screens/Home/Services/postRating.dart';
 import 'package:online_real_estate_management_system/screens/Home/Services/postUpiTxn.dart';
+import 'package:online_real_estate_management_system/screens/Home/Services/transactioDetails.dart';
 import 'package:online_real_estate_management_system/screens/Home/homeScreen.dart';
 import 'package:online_real_estate_management_system/screens/Home/models/ClientProfileCheck.dart';
+import 'package:online_real_estate_management_system/screens/Home/models/cashFlows.dart';
 import 'package:online_real_estate_management_system/screens/Home/models/makePayment.dart';
 import 'package:online_real_estate_management_system/screens/Home/models/profileView.dart';
+import 'package:online_real_estate_management_system/screens/Home/models/rateUser.dart';
 import 'package:online_real_estate_management_system/screens/Signup/additionalInfo.dart';
 import 'package:online_real_estate_management_system/screens/Signup/components/verifyUser.dart';
 import 'package:online_real_estate_management_system/screens/Signup/signup_screen.dart';
@@ -123,6 +127,10 @@ class MyApp extends StatelessWidget {
         MakePayment.idScreen: (context) => MakePayment(),
         ListUpi.idScreen: (context) => ListUpi(),
         PostTxn.idScreen: (context) => PostTxn(),
+        CashFlows.idScreen: (context) => CashFlows(),
+        RateUser.idScreen: (context) => RateUser(),
+        PostRating.idScreen: (context) => PostRating(),
+        TxnDetails.idScreen: (context) => TxnDetails(),
       },
     );
   }

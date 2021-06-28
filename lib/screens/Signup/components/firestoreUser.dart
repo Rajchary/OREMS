@@ -10,6 +10,7 @@ class UserData {
   String kycdocument;
   String kycid;
   String upi_id;
+  String profilePicture;
   double rating;
   double ratingCount;
 
@@ -23,6 +24,7 @@ class UserData {
     @required this.kycdocument,
     @required this.kycid,
     @required this.upi_id,
+    @required this.profilePicture,
     @required this.rating,
     @required this.ratingCount,
   });
@@ -39,6 +41,7 @@ class UserData {
     rating = json['Rating'];
     ratingCount = json['ratingCount'];
     upi_id = json["upi_id"];
+    profilePicture = json["ProfilePicture"];
   }
 
   Map<String, dynamic> toJson() {
@@ -55,6 +58,7 @@ class UserData {
     data['upi_id'] = this.upi_id;
     data['Rating'] = this.rating;
     data['ratingCount'] = this.ratingCount;
+    data["ProfilePicture"] = this.profilePicture;
     return data;
   }
 }

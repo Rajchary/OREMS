@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:online_real_estate_management_system/assets/CustomeIcons.dart';
 import 'package:online_real_estate_management_system/screens/Tenant/components/navigateProperty.dart';
+import 'package:online_real_estate_management_system/services/Notification.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -68,8 +69,6 @@ class _PropertyViewState extends State<PropertyView> {
               'status': 'done',
               'screen': 'To Owner',
               'postData': postData,
-              // 'docId': "$docId",
-              // 'uid': '${FirebaseAuth.instance.currentUser.uid}'
             },
             'to': token,
           },
@@ -512,6 +511,15 @@ class _PropertyViewState extends State<PropertyView> {
               onPressed: () {
                 sendNotification(
                     data["uid"], data["name"], data["docId"], data["Purpose"]);
+                // CustomNotification.notifyUser(
+                //     data["uid"],
+                //     data["name"],
+                //     data["docId"],
+                //     data["Purpose"],
+                //     "is willing to connect with you",
+                //     "Owner",
+                //     "001",
+                //     "Request Sent To Owner");
               },
               label: Text(
                 "Request",

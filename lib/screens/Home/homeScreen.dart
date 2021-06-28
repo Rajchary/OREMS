@@ -161,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
               channel.id,
               channel.name,
               channel.description,
-              icon: "@mipmap/ic_launcher",
+              icon: "@mipmap/logo_ico",
               playSound: true,
               // other properties...
             ),
@@ -413,7 +413,7 @@ class _HomeScreenState extends State<HomeScreen> {
         await FirebaseFirestore.instance
             .collection("users")
             .doc(FirebaseAuth.instance.currentUser.uid)
-            .set({
+            .update({
           "ProfilePicture": value,
         });
         pref.setString('profileUrl', value.toString());

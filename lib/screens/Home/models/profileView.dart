@@ -344,7 +344,7 @@ class _ProfileViewState extends State<ProfileView>
         await FirebaseFirestore.instance
             .collection("users")
             .doc(FirebaseAuth.instance.currentUser.uid)
-            .set({
+            .update({
           "ProfilePicture": value,
         });
         pref.setString('profileUrl', value.toString());

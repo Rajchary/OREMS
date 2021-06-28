@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:online_real_estate_management_system/components/confirmDialog.dart';
 import 'package:online_real_estate_management_system/constants.dart';
+import 'package:online_real_estate_management_system/services/Notification.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -516,6 +517,15 @@ class _ProfileCheckState extends State<ProfileCheck> {
                               propertyData["name"],
                               data["docId"],
                               propertyData["Purpose"]);
+                          // CustomNotification.notifyUser(
+                          //     data["uid"],
+                          //     data["name"],
+                          //     data["docId"],
+                          //     propertyData["Purpose"],
+                          //     "has approved your request",
+                          //     "Tenant",
+                          //     "002",
+                          //     "Acknowledgement sent!");
                         }
                       },
                       label: Text(
